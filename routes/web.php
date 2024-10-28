@@ -20,7 +20,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 //admin
     Route::get('admin', [AdminController::class,'show'])->name('admin.show');
     Route::get('report', [AdminController::class,'report'])->name('report.form');
-    Route::post('sendReport', [CarController::class, 'store'])->name("store.report");
+    Route::post('reportSend', [CarController::class, 'store'])->name("store.report");
 });
 
 Route::middleware('auth')->group(function () {
