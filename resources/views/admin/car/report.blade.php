@@ -21,7 +21,7 @@
                 @endforeach
             @endif
 
-            <form action="{{route('store.report')}}" method="POST">
+            <form action="{{route('store.report' , ['id' => $carId])}}" method="POST">
                 @csrf
 
                 <!-- Car Data -->
@@ -29,93 +29,57 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="carBrand">برند:</label>
-                        <select class="form-control" id="carBrand" name="carBrand">
-                            <option value="سالم">سالم</option>
-                            <option value="ناسالم">ناسالم</option>
-                        </select>
+                        <input type="text" class="form-control" id="carBrand" name="carBrand" placeholder="برند خودرو را وارد کنید">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="carModel">مدل:</label>
-                        <select class="form-control" id="carModel" name="carModel">
-                            <option value="سالم">سالم</option>
-                            <option value="ناسالم">ناسالم</option>
-                        </select>
+                        <input type="text" class="form-control" id="carModel" name="carModel" placeholder="مدل خودرو را وارد کنید">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="carTip">نوع:</label>
-                        <select class="form-control" id="carTip" name="carTip">
-                            <option value="سالم">سالم</option>
-                            <option value="ناسالم">ناسالم</option>
-                        </select>
+                        <input type="text" class="form-control" id="carTip" name="carTip" placeholder="نوع خودرو را وارد کنید">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="carColor">رنگ:</label>
-                        <select class="form-control" id="carColor" name="carColor">
-                            <option value="سالم">سالم</option>
-                            <option value="ناسالم">ناسالم</option>
-                        </select>
+                        <input type="text" class="form-control" id="carColor" name="carColor" placeholder="رنگ خودرو را وارد کنید">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="carBody">بدنه:</label>
-                        <select class="form-control" id="carBody" name="carBody">
-                            <option value="سالم">سالم</option>
-                            <option value="ناسالم">ناسالم</option>
-                        </select>
+                        <input type="text" class="form-control" id="carBody" name="carBody" placeholder="بدنه خودرو را وارد کنید">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="carGearbox">گیربکس:</label>
-                        <select class="form-control" id="carGearbox" name="carGearbox">
-                            <option value="سالم">سالم</option>
-                            <option value="ناسالم">ناسالم</option>
-                        </select>
+                        <input type="text" class="form-control" id="carGearbox" name="carGearbox" placeholder="گیربکس خودرو را وارد کنید">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="carEngineVolume">حجم موتور:</label>
-                        <select class="form-control" id="carEngineVolume" name="carEngineVolume">
-                            <option value="سالم">سالم</option>
-                            <option value="ناسالم">ناسالم</option>
-                        </select>
+                        <input type="text" class="form-control" id="carEngineVolume" name="carEngineVolume" placeholder="حجم موتور را وارد کنید">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="carFuel">نوع سوخت:</label>
-                        <select class="form-control" id="carFuel" name="carFuel">
-                            <option value="سالم">سالم</option>
-                            <option value="ناسالم">ناسالم</option>
-                        </select>
+                        <input type="text" class="form-control" id="carFuel" name="carFuel" placeholder="نوع سوخت را وارد کنید">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="carYear">سال:</label>
-                        <select class="form-control" id="carYear" name="carYear">
-                            <option value="سالم">سالم</option>
-                            <option value="ناسالم">ناسالم</option>
-                        </select>
+                        <input type="text" class="form-control" id="carYear" name="carYear" placeholder="سال تولید را وارد کنید">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="carFunction">عملکرد:</label>
-                        <select class="form-control" id="carFunction" name="carFunction">
-                            <option value="سالم">سالم</option>
-                            <option value="ناسالم">ناسالم</option>
-                        </select>
+                        <label for="carFunction">کارکرد:</label>
+                        <input type="text" class="form-control" id="carFunction" name="carFunction" placeholder="عملکرد خودرو را وارد کنید">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="carVinCode">کد VIN:</label>
-                        <select class="form-control" id="carVinCode" name="carVinCode">
-                            <option value="سالم">سالم</option>
-                            <option value="ناسالم">ناسالم</option>
-                        </select>
+                        <input type="text" class="form-control" id="carVinCode" name="carVinCode" placeholder="کد VIN را وارد کنید">
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="bachelorDate">تاریخ فارغ‌التحصیلی:</label>
-                        <select class="form-control" id="bachelorDate" name="bachelorDate">
-                            <option value="سالم">سالم</option>
-                            <option value="ناسالم">ناسالم</option>
-                        </select>
+                        <label for="bachelorDate">تاریخ ساخت:</label>
+                        <input type="text" class="form-control" id="year" name="bachelorDate" placeholder="تاریخ ساخت را وارد کنید">
                     </div>
                 </div>
 
@@ -449,7 +413,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                  <!-- Description -->
                 <h4 class="mt-4">توضیحات</h4>
                 <div class="form-group">

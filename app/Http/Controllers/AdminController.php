@@ -14,9 +14,7 @@ class AdminController extends Controller
         return view("admin.customers", compact("customers"));
     }
 
-    public function report(){
-        $user = Customer::all()->last();
-
-        return view('admin.car.report', compact("user"));
+    public function report($carId){
+        return view('admin.car.report', ['carId' => $carId]);
     }
 }

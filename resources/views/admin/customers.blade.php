@@ -18,7 +18,7 @@
                     <tr>
                         <td>{{$customer->name}}</td>
                         <td>{{$customer->number}}</td>
-                        <td><button class="btn btn-info">ثبت گزارش</button></td>
+                        <td><a class="btn btn-info" href="{{route("report.form" , ['carId' => $customer->car_id])}}">ثبت گزارش</a></td>
                     </tr>
                 @endforeach
             </table>

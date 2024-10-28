@@ -19,8 +19,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
 //admin
     Route::get('admin', [AdminController::class,'show'])->name('admin.show');
-    Route::get('report', [AdminController::class,'report'])->name('report.form');
-    Route::post('reportSend', [CarController::class, 'store'])->name("store.report");
+    Route::get('report/{carId}', [AdminController::class,'report'])->name('report.form');
+    Route::post('reportSend/{id}', [CarController::class, 'store'])->name("store.report");
 });
 
 Route::middleware('auth')->group(function () {

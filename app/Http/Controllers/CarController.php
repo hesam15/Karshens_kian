@@ -9,10 +9,9 @@ use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-    public function store(Request $request){
-
-        Cars::where('id', $request->id)->update([
-            'discreption' => $request->description,
+    public function store(Request $request, $id){
+        Cars::where('id', $id)->update([
+            'description' => $request->description,
 
             //اطلاعات اولیه خودرو
             'data' => [

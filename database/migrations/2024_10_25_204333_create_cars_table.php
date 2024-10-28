@@ -19,6 +19,8 @@ return new class extends Migration
             $table->json('data')->nullable();
             $table->json('body')->nullable();
             $table->json('technical_check')->nullable();
+            $table->json('options')->nullable();
+            $table->json('diag')->nullable();
             $table->json("wheels")->nullable();
             $table->json("vip_services")->nullable();
             $table->timestamps();
