@@ -14,8 +14,10 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('/', function () {return view('dashboard');})->name('home');
 
 //customers
-    Route::get('form', [CustomerController::class,'show'])->name('customer.form');
+    Route::get('form', [CustomerController::class,'form'])->name('customer.form');
     Route::post('storeCustomer' , [CustomerController::class,'store'])->name('storeCustomer.form');
+
+    Route::get("reportShow",[CustomerController::class, 'show'])->name('show.customer.report');
 
 //admin
     Route::get('admin', [AdminController::class,'show'])->name('admin.show');

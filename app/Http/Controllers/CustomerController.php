@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    
     public function show(){
+        return view("customer.report");
+    }
+    public function form(){
         return view("customer.form");
     }
     
