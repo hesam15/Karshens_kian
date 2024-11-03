@@ -23,6 +23,7 @@ return new class extends Migration
             $table->json('diag')->nullable();
             $table->json("wheels")->nullable();
             $table->json("vip_services")->nullable();
+            $table->boolean("report")->default(false);
             $table->timestamps();
         });
     }

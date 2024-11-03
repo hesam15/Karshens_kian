@@ -20,7 +20,6 @@
                     </div>
                 @endforeach
             @endif
-
             <form action="{{route('store.report' , ['id' => $carId])}}" method="POST">
                 @csrf
 
@@ -324,104 +323,488 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="airbag">ایربگ:</label>
-                        <select class="form-control" id="airbag" name="airbag">
+                        <select name="airbag" id="airbag" class="form-control">
                             <option value="سالم">سالم</option>
                             <option value="ناسالم">ناسالم</option>
                         </select>
                     </div>
+                    
                     <div class="form-group col-md-4">
-                        <label for="spareKey">کلید یدکی:</label>
-                        <select class="form-control" id="spareKey" name="spareKey">
+                        <label for="spare_key">سوئیچ یدک:</label>
+                        <select name="spare_key" id="spare_key" class="form-control">
                             <option value="سالم">سالم</option>
                             <option value="ناسالم">ناسالم</option>
                         </select>
                     </div>
+                    
                     <div class="form-group col-md-4">
-                        <label for="oilLight">چراغ روغن:</label>
-                        <select class="form-control" id="oilLight" name="oilLight">
+                        <label for="oil_light">چراغ روغن:</label>
+                        <select name="oil_light" id="oil_light" class="form-control">
                             <option value="سالم">سالم</option>
                             <option value="ناسالم">ناسالم</option>
                         </select>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="heatingSystem">سیستم گرمایش:</label>
-                        <select class="form-control" id="heatingSystem" name="heatingSystem">
+                        <label for="heating_system">سیستم گرمایش:</label>
+                        <select name="heating_system" id="heating_system" class="form-control">
                             <option value="سالم">سالم</option>
                             <option value="ناسالم">ناسالم</option>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="coolingSystem">سیستم خنک‌کننده:</label>
-                        <select class="form-control" id="coolingSystem" name="coolingSystem">
+                        <label for="cooling_system">سیستم سرمایش:</label>
+                        <select name="cooling_system" id="cooling_system" class="form-control">
                             <option value="سالم">سالم</option>
                             <option value="ناسالم">ناسالم</option>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="soundSystem">سیستم صوتی:</label>
-                        <select class="form-control" id="soundSystem" name="soundSystem">
+                        <label for="cruise_control">کروز کنترل:</label>
+                        <select name="cruise_control" id="cruise_control" class="form-control">
                             <option value="سالم">سالم</option>
                             <option value="ناسالم">ناسالم</option>
                         </select>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="navigationSystem">سیستم ناوبری:</label>
-                        <select class="form-control" id="navigationSystem" name="navigationSystem">
+                        <label for="airbag">ایربگ:</label>
+                        <select name="airbag" id="airbag" class="form-control">
                             <option value="سالم">سالم</option>
                             <option value="ناسالم">ناسالم</option>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="parkingSensors">حسگرهای پارک:</label>
-                        <select class="form-control" id="parkingSensors" name="parkingSensors">
+                        <label for="spare_key">سوئیچ یدک:</label>
+                        <select name="spare_key" id="spare_key" class="form-control">
                             <option value="سالم">سالم</option>
                             <option value="ناسالم">ناسالم</option>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="rearCamera">دوربین عقب:</label>
-                        <select class="form-control" id="rearCamera" name="rearCamera">
+                        <label for="oil_light">چراغ روغن:</label>
+                        <select name="oil_light" id="oil_light" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>            
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="driver_seat_mechanism">مکانیزم صندلی راننده:</label>
+                        <select name="driver_seat_mechanism" id="driver_seat_mechanism" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="passenger_seat_mechanism">مکانیزم صندلی شاگرد:</label>
+                        <select name="passenger_seat_mechanism" id="passenger_seat_mechanism" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="seat_cover">روکش صندلی:</label>
+                        <select name="seat_cover" id="seat_cover" class="form-control">
                             <option value="سالم">سالم</option>
                             <option value="ناسالم">ناسالم</option>
                         </select>
                     </div>
                 </div>
+                
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="seat_memory">حافظه صندلی:</label>
+                        <select name="seat_memory" id="seat_memory" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="cooler_heater">سیستم گرمایش و سرمایش:</label>
+                        <select name="cooler_heater" id="cooler_heater" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="stereo">ضبط:</label>
+                        <select name="stereo" id="stereo" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="speaker">باند:</label>
+                        <select name="speaker" id="speaker" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="central_locking">قفل مرکزی:</label>
+                        <select name="central_locking" id="central_locking" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="power_windows">پاور ویندوز:</label>
+                        <select name="power_windows" id="power_windows" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="trunk_opener">دکمه صندوق پران:</label>
+                        <select name="trunk_opener" id="trunk_opener" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="hood_opener">اهرم کاپوت:</label>
+                        <select name="hood_opener" id="hood_opener" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="front_left_door_panel">رودری جلو چپ:</label>
+                        <select name="front_left_door_panel" id="front_left_door_panel" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="front_right_door_panel">رودری جلو راست:</label>
+                        <select name="front_right_door_panel" id="front_right_door_panel" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="rear_left_door_panel">رودری عقب چپ:</label>
+                        <select name="rear_left_door_panel" id="rear_left_door_panel" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="rear_right_door_panel">رودری عقب راست:</label>
+                        <select name="rear_right_door_panel" id="rear_right_door_panel" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="handbrake_light">چراغ ترمز دستی:</label>
+                        <select name="handbrake_light" id="handbrake_light" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="ABS">ABS:</label>
+                        <select name="ABS" id="ABS" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="safety_belt">کمربند ایمنی:</label>
+                        <select name="safety_belt" id="safety_belt" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="safety_belt_light">چراغ کمربند:</label>
+                        <select name="safety_belt_light" id="safety_belt_light" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="floor_mats">کفپوش:</label>
+                        <select name="floor_mats" id="floor_mats" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="steering_wheel_shifter">دسته دنده پشت فرمان:</label>
+                        <select name="steering_wheel_shifter" id="steering_wheel_shifter" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="radar">رادار:</label>
+                        <select name="radar" id="radar" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="door_handle_opener">دستگیره درب:</label>
+                        <select name="door_handle_opener" id="door_handle_opener" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="rear_indicator">راهنمای عقب:</label>
+                        <select name="rear_indicator" id="rear_indicator" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="headlight">چراغ جلو:</label>
+                        <select name="headlight" id="headlight" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="rear_light">چراغ عقب:</label>
+                        <select name="rear_light" id="rear_light" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="ceiling_light">چراغ سقف:</label>
+                        <select name="ceiling_light" id="ceiling_light" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="reverse_light">چراغ دنده عقب:</label>
+                        <select name="reverse_light" id="reverse_light" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="reading_light">چراغ مطالعه:</label>
+                        <select name="reading_light" id="reading_light" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="trunk_light">چراغ صندوق:</label>
+                        <select name="trunk_light" id="trunk_light" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="front_left_window">شیشه جلو چپ:</label>
+                        <select name="front_left_window" id="front_left_window" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="front_right_window">شیشه جلو راست:</label>
+                        <select name="front_right_window" id="front_right_window" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="rear_glass">شیشه عقب:</label>
+                        <select name="rear_glass" id="rear_glass" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="front_wiper">برف پاک کن جلو:</label>
+                        <select name="front_wiper" id="front_wiper" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="rear_wiper">برف پاک کن عقب:</label>
+                        <select name="rear_wiper" id="rear_wiper" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="left_mirror_mechanism">مکانیزم آینه چپ:</label>
+                        <select name="left_mirror_mechanism" id="left_mirror_mechanism" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="right_mirror_mechanism">مکانیزم آینه راست:</label>
+                        <select name="right_mirror_mechanism" id="right_mirror_mechanism" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="center_mirror">آینه وسط:</label>
+                        <select name="center_mirror" id="center_mirror" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="mirror_indicator">راهنمای آینه:</label>
+                        <select name="mirror_indicator" id="mirror_indicator" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="sunroof">سانروف:</label>
-                        <select class="form-control" id="sunroof" name="sunroof">
+                        <select name="sunroof" id="sunroof" class="form-control">
                             <option value="سالم">سالم</option>
                             <option value="ناسالم">ناسالم</option>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="leatherSeats">صندلی‌های چرم:</label>
-                        <select class="form-control" id="leatherSeats" name="leatherSeats">
+                        <label for="dashboard_light">چراغ داشبورد:</label>
+                        <select name="dashboard_light" id="dashboard_light" class="form-control">
                             <option value="سالم">سالم</option>
                             <option value="ناسالم">ناسالم</option>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="heatedSeats">صندلی‌های گرمکن‌دار:</label>
-                        <select class="form-control" id="heatedSeats" name="heatedSeats">
+                        <label for="steering_wheel">فرمان:</label>
+                        <select name="steering_wheel" id="steering_wheel" class="form-control">
                             <option value="سالم">سالم</option>
                             <option value="ناسالم">ناسالم</option>
                         </select>
                     </div>
                 </div>
-
-                 <!-- Description -->
-                <h4 class="mt-4">توضیحات</h4>
-                <div class="form-group">
-                    <label for="carDescription">توضیحات خودرو:</label>
-                    <textarea class="form-control" id="carDescription" name="carDescription" rows="4" placeholder="لطفاً توضیحات اضافی درباره خودرو را وارد کنید..."></textarea>
-                </div>
-
-                <button type="submit" class="btn btn-primary mt-4">ثبت نوبت</button>
+                
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="horn">بوق:</label>
+                        <select name="horn" id="horn" class="form-control">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>   
+                
+                <!-- دیاگ -->
+                <h4 class="mt-4">دیاگ</h4>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="engine_control">کنترل موتور:</label>
+                                <select name="engine_control" id="engine_control" class="form-control">
+                                    <option value="سالم">سالم</option>
+                                    <option value="ناسالم">ناسالم</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="electronic_equipment">تجهیزات الکترونیکی:</label>
+                                <select name="electronic_equipment" id="electronic_equipment" class="form-control">
+                                    <option value="سالم">سالم</option>
+                                    <option value="ناسالم">ناسالم</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="electronic_stability_system">سیستم پایداری الکترونیکی:</label>
+                                <select name="electronic_stability_system" id="electronic_stability_system" class="form-control">
+                                    <option value="سالم">سالم</option>
+                                    <option value="ناسالم">ناسالم</option>
+                                </select>
+                            </div>
+                        </div>
+                
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="air_conditioning_system">سیستم تهویه مطبوع:</label>
+                                <select name="air_conditioning_system" id="air_conditioning_system" class="form-control">
+                                    <option value="سالم">سالم</option>
+                                    <option value="ناسالم">ناسالم</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="ABS_system">سیستم ABS:</label>
+                                <select name="ABS_system" id="ABS_system" class="form-control">
+                                    <option value="سالم">سالم</option>
+                                    <option value="ناسالم">ناسالم</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="smart_key_unit">واحد کلید هوشمند:</label>
+                                <select name="smart_key_unit" id="smart_key_unit" class="form-control">
+                                    <option value="سالم">سالم</option>
+                                    <option value="ناسالم">ناسالم</option>
+                                </select>
+                            </div>
+                        </div>
+                
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="odometer">کیلومتر شمار:</label>
+                                <select name="odometer" id="odometer" class="form-control">
+                                    <option value="سالم">سالم</option>
+                                    <option value="ناسالم">ناسالم</option>
+                                </select>
+                            </div>
+                        </div>
+                    <!-- Description -->
+                    <h4 class="mt-4">توضیحات</h4>
+                    <div class="form-group">
+                        <label for="carDescription">توضیحات خودرو:</label>
+                        <textarea class="form-control" id="carDescription" name="carDescription" rows="4" placeholder="لطفاً توضیحات اضافی درباره خودرو را وارد کنید..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-4">ثبت نوبت</button>
             </form>
         </div>
     </div>

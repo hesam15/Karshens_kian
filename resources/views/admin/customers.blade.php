@@ -15,10 +15,15 @@
                     <th>ثبت گزارش</th>
                 </tr>
                 @foreach($customers->all() as $customer)
+                <?php $carReport = $cars->find($customer->car_id) ?>
                     <tr>
                         <td>{{$customer->name}}</td>
                         <td>{{$customer->number}}</td>
-                        <td><a class="btn btn-info" href="{{route("report.form" , ['carId' => $customer->car_id])}}">ثبت گزارش</a></td>
+                        @if($carReport->report)
+                            <td><a class="btn btn-info" href="{{route("show.customer.report" , ['carId' => $customer->car_id])}}">مشاهده گزارش</a></td>
+                        @else
+                            <td><a class="btn btn-info" href="{{route("report.form" , ['carId' => $customer->car_id])}}">ثبت گزارش</a></td>
+                        @endif
                     </tr>
                 @endforeach
             </table>

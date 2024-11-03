@@ -21,6 +21,11 @@
    * Copyright 2011-2022 Twitter, Inc.
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    */
+   @font-face {
+    font-family: "Vazirmatn";
+    src: url('{{storage_path("fonts/Vazirmatn-Regular.ttf")}}') format('truetype');
+   }
+   
    :root {
     --bs-blue: #63B3ED;
     --bs-indigo: #596CFF;
@@ -68,10 +73,10 @@
     --bs-black-rgb: 0, 0, 0;
     --bs-body-color-rgb: , 128, 154;
     --bs-body-bg-rgb: 255, 255, 255;
-    --bs-font-sans-serif: "Roboto", Helvetica, Arial, sans-serif;
-    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --bs-font-sans-serif: "Vazirmatn", sans-serif;
+    --bs-font-monospace: "Vazirmatn", sans-serif;;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-    --bs-body-font-family: var(--bs-font-sans-serif);
+    --bs-body-font-family: "Vazirmatn";
     --bs-body-font-size: 1rem;
     --bs-body-font-weight: 400;
     --bs-body-line-height: 1.5;
@@ -106,6 +111,7 @@
   }
   
   body {
+    background-color: #000 !important;
     margin: 0;
     font-family: var(--bs-body-font-family);
     font-size: var(--bs-body-font-size);
@@ -3616,7 +3622,7 @@
   .btn {
     --bs-btn-padding-x: 1.5rem;
     --bs-btn-padding-y: 0.625rem;
-    --bs-btn-font-family: ;
+    --bs-btn-font-family: inherit
     --bs-btn-font-size: 0.75rem;
     --bs-btn-font-weight: 700;
     --bs-btn-line-height: 1.667;
@@ -21213,7 +21219,7 @@
   }
   
   .card .card-body {
-    font-family: "Roboto", Helvetica, Arial, sans-serif;
+    font-family: Vazirmatn, sans-serif;;
     padding: 1.5rem;
   }
   
@@ -26172,7 +26178,7 @@
   }
   
   .text-sans-serif {
-    font-family: "Roboto", Helvetica, Arial, sans-serif !important;
+    font-family: Vazirmatn, sans-serif !important;
   }
   
   .text-monospace {

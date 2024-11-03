@@ -17,7 +17,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('form', [CustomerController::class,'form'])->name('customer.form');
     Route::post('storeCustomer' , [CustomerController::class,'store'])->name('storeCustomer.form');
 
-    Route::get("reportShow",[CustomerController::class, 'show'])->name('show.customer.report');
+    Route::get("reportShow/{carId}",[CustomerController::class, 'show'])->name('show.customer.report');
+    Route::get('pdf', [CustomerController::class, 'pdf'])->name('download.pdf');
 
 //admin
     Route::get('admin', [AdminController::class,'show'])->name('admin.show');

@@ -22,6 +22,7 @@ class Cars extends Model
         'options',
         'diag',
         'vip_services',
+        'report',
         'created_at',
         'updated_at'
     ];
