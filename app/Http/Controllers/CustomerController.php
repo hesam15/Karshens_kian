@@ -17,8 +17,10 @@ class CustomerController extends Controller
         $technical_check = json_decode($car->technical_check);
         $options = json_decode($car->options);
         $pdfBody = json_decode($car->body, true);
+        $diag = json_decode($car->diag);
+        $vip_services = json_decode($car->vip_services);
 
-        return view("customer.report", compact('body', 'pdfBody', 'car', 'technical_check', 'options'));
+        return view("customer.report", compact('body', 'pdfBody', 'car', 'technical_check', 'options', 'diag', 'vip_services'));
     }
 
     public function pdf(){

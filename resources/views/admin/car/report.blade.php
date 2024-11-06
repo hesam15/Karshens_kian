@@ -798,6 +798,217 @@
                                 </select>
                             </div>
                         </div>
+
+                    
+                <!-- خدمات VIP -->
+                <h3 class="mt-4">خدمات VIP</h3>
+                <h4 class="mt-3">تست رانندگی</h4>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">استارت خودرو</label>
+                        <select name="car_start" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">پلوس‌ها</label>
+                        <select name="cv_joints" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">کمک‌فنرها</label>
+                        <select name="shocks" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">صدای کابین</label>
+                        <select name="cabin_noise" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">لرزش موتور</label>
+                        <select name="engine_vibration" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">سیستم فرمان</label>
+                        <select name="steering_system" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">دود اگزوز</label>
+                        <select name="exhaust_smoke" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">صدای گیربکس</label>
+                        <select name="transmission_sound" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">صفحه کلاچ</label>
+                        <select name="clutch_plate" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">جلوبندی</label>
+                        <select name="front_suspension" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">ترمزها</label>
+                        <select name="brakes" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">دمای آب</label>
+                        <select name="water_temperature" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">ترمز دستی</label>
+                        <select name="handbrake" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">عملکرد درجا</label>
+                        <select name="idle_performance" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">زاویه فرمان</label>
+                        <select name="steering_angle" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">صدای اگزوز</label>
+                        <select name="exhaust_sound" class="form-select">
+                            <option value="سالم">سالم</option>
+                            <option value="ناسالم">ناسالم</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- موارد حقوقی -->
+                <h4 class="mt-3">موارد حقوقی</h4>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">استعلام نظام وظیفه</label>
+                        <select name="military_legal_inquiry" class="form-select">
+                            <option value="انجام نشده">انجام نشده</option>
+                            <option value="انجام شده">انجام شده</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">استعلام خلافی</label>
+                        <select name="traffic_violation_inquiry" class="form-select">
+                            <option value="انجام نشده">انجام نشده</option>
+                            <option value="انجام شده">انجام شده</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">تنظیم قولنامه حقوقی</label>
+                        <select name="legal_contract_setup" class="form-select">
+                            <option value="انجام نشده">انجام نشده</option>
+                            <option value="انجام شده">انجام شده</option>
+                        </select>
+                    </div>
+                </div>                
+
+                <!-- ارتقاء ظاهری خودرو -->
+                <h4 class="mt-3">ارتقاء ظاهری خودرو</h4>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">نانو تکنولوژی تضمینی</label>
+                        <select name="guaranteed_nanotechnology" class="form-select">
+                            <option value="انجام نشده">انجام نشده</option>
+                            <option value="انجام شده">انجام شده</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">خط‌گیری</label>
+                        <select name="line_removal" class="form-select">
+                            <option value="انجام نشده">انجام نشده</option>
+                            <option value="انجام شده">انجام شده</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">پولیش</label>
+                        <select name="polishing" class="form-select">
+                            <option value="انجام نشده">انجام نشده</option>
+                            <option value="انجام شده">انجام شده</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">محافظ رنگ</label>
+                        <select name="paint_protection" class="form-select">
+                            <option value="انجام نشده">انجام نشده</option>
+                            <option value="انجام شده">انجام شده</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">صافکاری تایید شده</label>
+                        <select name="approved_bodywork" class="form-select">
+                            <option value="انجام نشده">انجام نشده</option>
+                            <option value="انجام شده">انجام شده</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">نقاشی تایید شده</label>
+                        <select name="approved_painting" class="form-select">
+                            <option value="انجام نشده">انجام نشده</option>
+                            <option value="انجام شده">انجام شده</option>
+                        </select>
+                    </div>
+                </div>                
+
                     <!-- Description -->
                     <h4 class="mt-4">توضیحات</h4>
                     <div class="form-group">

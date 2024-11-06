@@ -32,9 +32,9 @@
     <body class="@if(Route::currentRouteName() !== "register" || Route::currentRouteName() !== "login")
         g-sidenav-show
         @endif
-        bg-gray-200 rtl">
+        bg-gray-200 rtl row">
         @include('layouts.aside' , ['status'=>'compelete'])
-        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-10">
             @include('layouts.navigation')
             <div class="container-fluid py-4">
                 @yield("content")

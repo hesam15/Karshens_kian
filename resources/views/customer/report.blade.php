@@ -7,11 +7,11 @@
 <div class="accordion accordion-flush" id="accordionFlushExample">
     <div class="accordion-item">
         <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                 کارشناسی بدنه و رنگ خودرو            
             </button>
         </h2>
-        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
                 <div class="row col-9">
                     <p class="col"><strong>درب موتور:</strong> {{$body->engine_door}}</p>
@@ -47,11 +47,11 @@
     </div>
     <div class="accordion-item">
         <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                 کارشناسی فنی خودرو
             </button>
         </h2>
-        <div id="flush-collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
                 <div class="row col-9">
                     <p class="col"><strong>رادیاتور:</strong> {{$technical_check->radiator}}</p>
@@ -199,25 +199,115 @@
                 دیاگ
             </button>
         </h2>
-        <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body">
-                <div class="row col-9">
-                    <p class="col"><strong>کنترل موتور:</strong> {{$diag->engine_control}}</p>
-                    <p class="col"><strong>تجهیزات الکترونیکی:</strong> {{$diag->electronic_equipment}}</p>
-                    <p class="col"><strong>سیستم پایداری الکترونیکی:</strong> {{$diag->electronic_stability_system}}</p>
+                <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <div class="row col-9">
+                            <p class="col"><strong>کنترل موتور:</strong> {{$diag->engine_control}}</p>
+                            <p class="col"><strong>تجهیزات الکترونیکی:</strong> {{$diag->electronic_equipment}}</p>
+                            <p class="col"><strong>سیستم پایداری الکترونیکی:</strong> {{$diag->electronic_stability_system}}</p>
+                        </div>
+                        
+                        <div class="row col-9">
+                            <p class="col"><strong>سیستم تهویه مطبوع:</strong> {{$diag->air_conditioning_system}}</p>
+                            <p class="col"><strong>سیستم ABS:</strong> {{$diag->ABS_system}}</p>
+                            <p class="col"><strong>واحد کلید هوشمند:</strong> {{$diag->smart_key_unit}}</p>
+                        </div>
+                        
+                        <div class="row col-9">
+                            <p class="col"><strong>کیلومتر شمار:</strong> {{$diag->odometer}}</p>
+                        </div>                
+                    </div>
                 </div>
-                
-                <div class="row col-9">
-                    <p class="col"><strong>سیستم تهویه مطبوع:</strong> {{$diag->air_conditioning_system}}</p>
-                    <p class="col"><strong>سیستم ABS:</strong> {{$diag->ABS_system}}</p>
-                    <p class="col"><strong>واحد کلید هوشمند:</strong> {{$diag->smart_key_unit}}</p>
+    </div>
+    <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                            خدمات VIP
+                        </button>
+                    </h2>
+            <div id="flush-collapseFive" class="accordion-collapse collapse accordion accordion-flush" data-bs-parent="#accordionFlushExample">
+                <!-- Test Drive Section -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                            تست رانندگی
+                        </button>
+                    </h2>
+                    <div id="flush-collapseSix" class="accordion-collapse collapse" data-bs-parent="#flush-collapseFive">
+                        <div class="accordion-body">
+                            <div class="row col-9">
+                                <p class="col"><strong>استارت خودرو:</strong> {{$vip_services->driving_test->car_start}}</p>
+                                <p class="col"><strong>پلوس‌ها:</strong> {{$vip_services->driving_test->cv_joints}}</p>
+                                <p class="col"><strong>کمک‌فنرها:</strong> {{$vip_services->driving_test->shocks}}</p>
+                            </div>
+                            <div class="row col-9">
+                                <p class="col"><strong>صدای کابین:</strong> {{$vip_services->driving_test->cabin_noise}}</p>
+                                <p class="col"><strong>لرزش موتور:</strong> {{$vip_services->driving_test->engine_vibration}}</p>
+                                <p class="col"><strong>سیستم فرمان:</strong> {{$vip_services->driving_test->steering_system}}</p>
+                            </div>
+                            <div class="row col-9">
+                                <p class="col"><strong>دود اگزوز:</strong> {{$vip_services->driving_test->exhaust_smoke}}</p>
+                                <p class="col"><strong>صدای گیربکس:</strong> {{$vip_services->driving_test->transmission_sound}}</p>
+                                <p class="col"><strong>صفحه کلاچ:</strong> {{$vip_services->driving_test->clutch_plate}}</p>
+                            </div>
+                            <div class="row col-9">
+                                <p class="col"><strong>جلوبندی:</strong> {{$vip_services->driving_test->front_suspension}}</p>
+                                <p class="col"><strong>ترمزها:</strong> {{$vip_services->driving_test->brakes}}</p>
+                                <p class="col"><strong>دمای آب:</strong> {{$vip_services->driving_test->water_temperature}}</p>
+                            </div>
+                            <div class="row col-9">
+                                <p class="col"><strong>ترمز دستی:</strong> {{$vip_services->driving_test->handbrake}}</p>
+                                <p class="col"><strong>عملکرد درجا:</strong> {{$vip_services->driving_test->idle_performance}}</p>
+                                <p class="col"><strong>زاویه فرمان:</strong> {{$vip_services->driving_test->steering_angle}}</p>
+                            </div>
+                            <div class="row col-9">
+                                <p class="col"><strong>صدای اگزوز:</strong> {{$vip_services->driving_test->exhaust_sound}}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="row col-9">
-                    <p class="col"><strong>کیلومتر شمار:</strong> {{$diag->odometer}}</p>
-                </div>                
-            </div>
-        </div>
+            
+                <!-- Legal Section -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
+                            قولنامه و حقوقی
+                        </button>
+                    </h2>
+                    <div id="flush-collapseSeven" class="accordion-collapse collapse" data-bs-parent="#flush-collapseFive">
+                        <div class="accordion-body">
+                            <div class="row col-9">
+                                <p class="col"><strong>استعلام نظام وظیفه:</strong> {{$vip_services->legal->military_legal_inquiry}}</p>
+                                <p class="col"><strong>استعلام خلافی:</strong> {{$vip_services->legal->traffic_violation_inquiry}}</p>
+                                <p class="col"><strong>تنظیم قولنامه حقوقی:</strong> {{$vip_services->legal->legal_contract_setup}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Upgrade Section -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEight" aria-expanded="false" aria-controls="flush-collapseEight">
+                            ارتقاء ظاهری خودرو
+                        </button>
+                    </h2>
+                    <div id="flush-collapseEight" class="accordion-collapse collapse" data-bs-parent="#flush-collapseFive">
+                        <div class="accordion-body">
+                            <div class="row col-9">
+                                <p class="col"><strong>نانو تکنولوژی تضمینی:</strong> {{$vip_services->upgrade->guaranteed_nanotechnology}}</p>
+                                <p class="col"><strong>خط‌گیری:</strong> {{$vip_services->upgrade->line_removal}}</p>
+                                <p class="col"><strong>پولیش:</strong> {{$vip_services->upgrade->polishing}}</p>
+                            </div>
+                            <div class="row col-9">
+                                <p class="col"><strong>محافظ رنگ:</strong> {{$vip_services->upgrade->paint_protection}}</p>
+                                <p class="col"><strong>صافکاری تایید شده:</strong> {{$vip_services->upgrade->approved_bodywork}}</p>
+                                <p class="col"><strong>نقاشی تایید شده:</strong> {{$vip_services->upgrade->approved_painting}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+            </div>     
     </div>
 </div>
 
