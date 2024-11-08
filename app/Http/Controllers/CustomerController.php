@@ -6,6 +6,8 @@ use Dompdf\Dompdf;
 use App\Models\Cars;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Morilog\Jalali\Jalalian;
+use App\Helpers\PersianHelper;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class CustomerController extends Controller
@@ -43,6 +45,9 @@ class CustomerController extends Controller
         //     "car"=> 'required',
         //     "date"=> 'required',
         // ]);
+        $englishDate = PersianHelper::convertPersianToEnglish($request->date);
+        $gregorianDate = Jalalian::fromFormat('Y/m/d', $englishDate)->toCarbon()->format('Y-m-d');
+        dd($gregorianDate);
 
         $customer::create([
             "name"=> $request->name,

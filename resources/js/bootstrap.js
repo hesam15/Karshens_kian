@@ -1,3 +1,6 @@
+import $ from 'jquery';
+window.$ = $;
+
 import axios from 'axios';
 window.axios = axios;
 
