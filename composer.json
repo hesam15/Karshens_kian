@@ -9,6 +9,7 @@
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "misterspelik/laravel-pdf": "^2.1",
+        "morilog/jalali": "3.*",
         "nesbot/carbon": "^3.8"
     },
     "require-dev": {
@@ -26,7 +27,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/PersianHelper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
