@@ -30,8 +30,7 @@
                 <label for="number" class="mt-2">شماره تماس:</label>
                 <input type="text" name="number" id="number" class="form-control">
                 <label for="date" class="mt-2">تاریخ:</label>
-                <input type="text" id="date-picker" readonly name="date"/>
-                
+                <input type="text" id="date-picker" readonly name="date" class="form-control"/>                
                 
                 <button type="submit" class="btn btn-primary mt-4">ثبت نوبت</button>
             </form>

@@ -45,15 +45,13 @@ class CustomerController extends Controller
         //     "car"=> 'required',
         //     "date"=> 'required',
         // ]);
-        $englishDate = PersianHelper::convertPersianToEnglish($request->date);
-        $gregorianDate = Jalalian::fromFormat('Y/m/d', $englishDate)->toCarbon()->format('Y-m-d');
-        dd($gregorianDate);
+        $date = PersianHelper::convertPersianToEnglish($request->date);
 
         $customer::create([
             "name"=> $request->name,
             "number"=>$request->number,
             "car"=>$request->car,
-            "date"=>$request->date,
+            "date"=> $date,
         ]);
 
         $cars->store( $cars ,$request, $customer );
