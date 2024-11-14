@@ -3,7 +3,7 @@
 @section('title' , 'داشبورد')
 
 @section('content')
-    <div class="card" style="width:50%;margin:0 auto;">
+    <div class="card" style="width:75%;margin:0 auto;">
         <div class="card-body">
             <div class="card-title border-bottom">
                 <h5>فرم ثبت خودرو</h3>

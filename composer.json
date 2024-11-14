@@ -10,6 +10,7 @@
         "laravel/tinker": "^2.9",
         "misterspelik/laravel-pdf": "^2.1",
         "morilog/jalali": "3.*",
+        "mpdf/mpdf": "^8.2",
         "nesbot/carbon": "^3.8"
     },
     "require-dev": {

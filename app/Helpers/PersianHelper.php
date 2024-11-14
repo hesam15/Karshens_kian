@@ -2,16 +2,20 @@
 
 namespace App\Helpers;
 
+use Carbon\Carbon;
 use Morilog\Jalali\Jalalian;
 
 class PersianHelper
 {
+
+    private static $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+    private static $english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
     public static function convertPersianToEnglish($string) 
-    {
-        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        $english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-        
-        $toString = str_replace($persian, $english, $string);
+    {        
+        $toString = str_replace(self::$persian, self::$english, $string);
+        $date = Jalalian::fromFormat('Y/m/d H:i', $toString)->toCarbon()->format('Y-m-d H:i');
+
         $toString = explode(" " ,$toString);
 
         $time = explode(":", $toString[1]);
@@ -22,8 +26,34 @@ class PersianHelper
             $time[0] = 1;
         }
 
-        $date = Jalalian::fromFormat('Y/m/d H:i', $toString)->toCarbon()->format('Y-m-d H:i');
 
         return $date;
     }
+
+    public static function convertEnglishToPersian($string){
+        $parts = explode(" ", $string);
+        
+        $date = trim($parts[0]);
+        $time = trim($parts[1]);
+        
+        $dateTime = $date . ' ' . $time;
+        
+        // Make sure there's no trailing data by using trim()
+        $dateTime = trim($dateTime);
+        
+        $date = Jalalian::fromCarbon(Carbon::parse($dateTime))->format('Y/m/d H:i');
+
+        $toString = str_replace(self::$english, self::$persian, $date);
+
+        $date = explode(" ", $toString);
+
+        return $date;
+    }
+
+    public function persianDate($date){
+        if (!$date) {
+            return '';
+        }
+        return PersianHelper::convertEnglishToPersian($date);
+    }    
 }

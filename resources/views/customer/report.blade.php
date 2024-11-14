@@ -311,7 +311,7 @@
     </div>
 </div>
 
-<a href="{{route("download.pdf")}}">download PDF</a>
+<a href="{{ route('download.pdf') }}" class="btn btn-primary">دانلود گزارش PDF</a>
 
 {{-- {{
             dd($pdfBody);

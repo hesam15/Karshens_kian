@@ -8,7 +8,7 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
 use App\Helpers\PersianHelper;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Mpdf\Mpdf;
 
 class CustomerController extends Controller
 {
@@ -25,13 +25,73 @@ class CustomerController extends Controller
         return view("customer.report", compact('body', 'pdfBody', 'car', 'technical_check', 'options', 'diag', 'vip_services'));
     }
 
-    public function pdf(){
-        $car = Cars::all()->first();
+    public function pdf()
+    {
+        $car = Cars::first();
         $body = json_decode($car->body);
-        $pdfBody = json_decode($car->body, true);
-        $pdf = PDF::loadView('dashboard');
-        return $pdf->stream('document.pdf');
+        $technical_check = json_decode($car->technical_check);
+        $options = json_decode($car->options);
+        $diag = json_decode($car->diag);
+        $vip_services = json_decode($car->vip_services);
+
+        $customer = Customer::find($car->customer_id);
+        
+        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+    
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+        
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'default_font' => 'vazirmatn',
+            'margin_left' => 15,
+            'margin_right' => 15,
+            'fontDir' => array_merge([
+                public_path('fonts')
+            ]),
+            'fontdata' => [
+                'vazirmatn' => [
+                    'R' => 'Vazirmatn-Regular.ttf',
+                    'useOTL' => 0xFF,
+                    'useKashida' => 75,
+                ]
+            ],
+        ]);        
+
+        // اضافه کردن استایل‌های ضروری
+        $customCSS = file_get_contents(public_path('css/pdf.css'));
+        $mpdf->WriteHTML($customCSS, \Mpdf\HTMLParserMode::HEADER_CSS);
+    
+        $mpdf->SetDirectionality('rtl');
+
+        $date = PersianHelper::convertEnglishToPersian($customer->date);
+        
+        $html = view('pdf', compact('car', 'customer', 'technical_check', 'options', 'diag', 'vip_services', 'date', 'body'))->render();
+        $mpdf->WriteHTML($html);
+
+        
+        return $mpdf->Output('car-report.pdf', 'I');
     }
+    
+    public function showPdf(){
+        $car = Cars::first();
+
+        $body = json_decode($car->body);
+        $technical_check = json_decode($car->technical_check);
+        $options = json_decode($car->options);
+        $diag = json_decode($car->diag);
+        $vip_services = json_decode($car->vip_services);
+
+        $customer = Customer::find($car->customer_id);
+
+        $date = PersianHelper::convertEnglishToPersian($customer->date);
+
+
+        return view('pdf', compact('car', 'customer', 'technical_check', 'options', 'diag', 'vip_services', 'date', 'body'));
+    }
+    
 
     public function form(){
         return view("customer.form");
