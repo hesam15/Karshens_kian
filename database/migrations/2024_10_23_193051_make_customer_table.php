@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("car");
             $table->integer("car_id")->nullable();
-            $table->string("number");
+            $table->string("mobile");
             $table->timestamp("date");
             $table->timestamp("created_at");
             $table->timestamp("updated_at");

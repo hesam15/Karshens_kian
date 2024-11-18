@@ -14,7 +14,7 @@ class Customer extends Model
         "name",
         "car",
         'car_id',
-        "number",
+        "mobile",
         "date",
         "created_at",
         "updated_at"

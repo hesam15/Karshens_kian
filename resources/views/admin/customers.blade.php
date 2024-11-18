@@ -2,10 +2,10 @@
 @section('title' , 'داشبورد')
 @section('content')
     <div class="card" style="width:75%;margin:0 auto;">
+        <div class="card-header">
+            <h5>لیست مشتریان</h5>
+        </div>
         <div class="card-body">
-            <div class="card-title border-bottom">
-                <h5 style="font-weight: 600;">لیست مشتریان</h5>
-            </div>
             <table class="table mt-4">
                 <tr>
                     <th>نام</th>

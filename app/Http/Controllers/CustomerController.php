@@ -15,19 +15,27 @@ class CustomerController extends Controller
     
     public function show($carId){
         $car = Cars::find($carId);
-        $body = json_decode($car->body);
-        $technical_check = json_decode($car->technical_check);
-        $options = json_decode($car->options);
-        $pdfBody = json_decode($car->body, true);
-        $diag = json_decode($car->diag);
-        $vip_services = json_decode($car->vip_services);
+        $data = $car->attrs();
 
-        return view("customer.report", compact('body', 'pdfBody', 'car', 'technical_check', 'options', 'diag', 'vip_services'));
+        $customer = Customer::find($car->customer_id);
+
+        $date = PersianHelper::convertEnglishToPersian($customer->date);
+
+        return view("customer.report", [
+            'car' => $car,
+            'customer' => $customer,
+            'body' => $data['body'],
+            'technical_check' => $data['technical_check'],
+            'options' => $data['options'],
+            'diag' => $data['diag'],
+            'vip_services' => $data['vip_services'],
+            'date' => $date,
+        ]);
     }
 
-    public function pdf()
+    public function pdf($carId)
     {
-        $car = Cars::first();
+        $car = Cars::where('id', $carId)->first();
         $body = json_decode($car->body);
         $technical_check = json_decode($car->technical_check);
         $options = json_decode($car->options);
@@ -71,8 +79,10 @@ class CustomerController extends Controller
         $html = view('pdf', compact('car', 'customer', 'technical_check', 'options', 'diag', 'vip_services', 'date', 'body'))->render();
         $mpdf->WriteHTML($html);
 
-        
-        return $mpdf->Output('car-report.pdf', 'I');
+        return [
+            'pdf' => $mpdf->Output('car-report.pdf', 'D'),
+            'message' => back()->with('success', 'PDF generated successfully!'),
+        ];
     }
     
     public function showPdf(){
@@ -99,17 +109,17 @@ class CustomerController extends Controller
     
     public function store(Request $request, Customer $customer, Cars $cars){
         
-        // $request->validate( [
-        //     "name"=> 'required',
-        //     "number"=> 'required',
-        //     "car"=> 'required',
-        //     "date"=> 'required',
-        // ]);
+        $request->validate( [
+            "name"=> 'required',
+            "mobile"=> 'required|unique:customers',
+            "car"=> 'required',
+            "date"=> 'required',
+        ]);
         $date = PersianHelper::convertPersianToEnglish($request->date);
 
         $customer::create([
             "name"=> $request->name,
-            "number"=>$request->number,
+            "mobile"=>$request->mobile,
             "car"=>$request->car,
             "date"=> $date,
         ]);

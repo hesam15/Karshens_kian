@@ -46,7 +46,7 @@
         @include('layouts.aside' , ['status'=>'compelete'])
         <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-10 container-fluid px-4">
             @include('layouts.navigation')
-            <div class="container-fluid py-4">
+            <div class="py-4">
                 @yield("content")
             </div>
         </main>

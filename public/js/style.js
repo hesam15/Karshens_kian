@@ -52,27 +52,25 @@ $(document).ready(function() {
     });    
 });
 
-let fix = document.querySelector("#fixExpenses");
-let fixNav = document.querySelector("#fixNavItems");
+const accordionButtons = document.querySelectorAll('.accordion-button');
+console.log(accordionButtons);
 
-let incomes = document.querySelector("#incomes")
-let incomesNav = document.querySelector("#incomesShow");
+accordionButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        console.log("Hello")
+        const targetId = this.getAttribute('data-bs-target');
+        console.log(targetId);
+        const target = document.querySelector(targetId);
+                
+        if (target.classList.contains('show')) {
+            console.log(button);
 
-let debts = document.querySelector("#debts")
-let debtsNav = document.querySelector("#debtsShow");
-
-let expenses = document.querySelector("#expenses")
-let expensesNav = document.querySelector("#expensesNavItems");
-
-function menuShow(item){
-    if(item.classList.contains("show")){
-        item.classList.remove("show")
-    }
-    else{
-        item.classList.add("show");
-    }
-}
-
-fix.addEventListener("click" , () => menuShow(fixNav));
-incomes.addEventListener("click" , () => menuShow(incomesNav));
-debts.addEventListener("click" , () => menuShow(debtsNav));
+            // Handle content
+            target.classList.remove('show');
+            
+            // Handle button
+            this.classList.add('collapsed');
+            this.setAttribute('aria-expanded', 'false');
+        }
+    });
+});

@@ -27,7 +27,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
 //pdf
     Route::get('pdf', [CustomerController::class, 'showPdf'])->name('show.pdf');
-    Route::get('/Dpdf', [CustomerController::class, 'pdf'])->name('download.pdf');
+    Route::get('/Dpdf/{carId}', [CustomerController::class, 'pdf'])->name('download.pdf');
 });
 
 Route::middleware('auth')->group(function () {

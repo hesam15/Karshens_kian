@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{asset('css/pdf.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('css/pdf.css')}}"> --}}
 </head>
 <body class="border p-1">
     <h1 class="text-center">کارشناس کیان</h1>
@@ -15,13 +15,7 @@
         </tr>
     </table>
     <h3>کارشناسی بدنه و رنگ خودرو</h3>
-    <table>
-        <tr>
-            <td><strong>محافظ رنگ:</strong> {{ $vip_services->upgrade->paint_protection }}</td>
-            <td><strong>صافکاری:</strong> {{ $vip_services->upgrade->approved_bodywork }}</td>
-            <td><strong>نقاشی:</strong> {{ $vip_services->upgrade->approved_painting }}</td>
-            <td><strong>رکاب چپ:</strong> {{ $body->left_sirrup }}</td>
-        </tr>
+    <table class="table">
         <tr>
             <td><strong>درب موتور:</strong> {{ $body->engine_door }}</td>
             <td><strong>درب صندوق:</strong> {{ $body->box_door }}</td>
@@ -46,7 +40,45 @@
             <td><strong>سپر عقب:</strong> {{ $body->rear_bumper }}</td>
             <td><strong>رکاب راست:</strong> {{ $body->right_sirrup }}</td>
         </tr>
+        <tr>
+            <td><strong>رکاب چپ:</strong> {{ $body->left_sirrup }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
     </table>
+    <table class="table">
+        <tr>
+            <td><strong>درب موتور:</strong> {{ $body->engine_door }}</td>
+            <td><strong>درب صندوق:</strong> {{ $body->box_door }}</td>
+            <td><strong>گلگیر جلو راست:</strong> {{ $body->right_front_fender }}</td>
+            <td><strong>درب جلو راست:</strong> {{ $body->right_front_door }}</td>
+        </tr>
+        <tr>
+            <td><strong>درب عقب راست:</strong> {{ $body->right_rear_door }}</td>
+            <td><strong>گلگیر عقب راست:</strong> {{ $body->right_rear_fender }}</td>
+            <td><strong>گلگیر جلو چپ:</strong> {{ $body->left_front_fender }}</td>
+            <td><strong>درب جلو چپ:</strong> {{ $body->left_front_door }}</td>
+        </tr>
+        <tr>
+            <td><strong>درب عقب چپ:</strong> {{ $body->left_rear_door }}</td>
+            <td><strong>گلگیر عقب چپ:</strong> {{ $body->left_rear_fender }}</td>
+            <td><strong>ستون‌های جانبی:</strong> {{ $body->side_columns }}</td>
+            <td><strong>سقف:</strong> {{ $body->ceiling }}</td>
+        </tr>
+        <tr>
+            <td><strong>شاسی جلو:</strong> {{ $body->front_chassis }}</td>
+            <td><strong>سپر جلو:</strong> {{ $body->front_bumper }}</td>
+            <td><strong>سپر عقب:</strong> {{ $body->rear_bumper }}</td>
+            <td><strong>رکاب راست:</strong> {{ $body->right_sirrup }}</td>
+        </tr>
+        <tr>
+            <td><strong>رکاب چپ:</strong> {{ $body->left_sirrup }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>        
 
     <h3>کارشناسی فنی خودرو</h3>
     <table>
