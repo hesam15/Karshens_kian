@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sub_options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('option_id')->constrained();
+            $table->foreignId('option_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
             $table->string('value');
             $table->string("persian_name");

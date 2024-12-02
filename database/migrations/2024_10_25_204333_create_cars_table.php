@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->>onDelete('cascade')->onUpdate('cascade');
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->boolean("report")->default(false);

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->json("reports");
-            $table->foreignId("car_id")->constrained();
+            $table->foreignId("car_id")->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
