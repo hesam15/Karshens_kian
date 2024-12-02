@@ -1,4 +1,4 @@
-<?php
+composer global require laravel/installer<?php
 
 namespace App\Http\Requests;
 
