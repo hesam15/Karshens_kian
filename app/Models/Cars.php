@@ -14,17 +14,9 @@ class Cars extends Model
     protected $fillable = [
         'name',
         'customer_id',
-        'discreption',
-        'data',
-        'body',
-        'technical_check',
-        'wheels',
-        'options',
-        'diag',
-        'vip_services',
+        'report_id',
+        'image',
         'report',
-        'created_at',
-        'updated_at'
     ];
 
     public function store($cars,$request,$customer){
