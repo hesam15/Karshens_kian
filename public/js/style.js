@@ -74,3 +74,56 @@ accordionButtons.forEach(button => {
         }
     });
 });
+
+
+var option_add = document.getElementById('option_add');
+var option_remove = document.getElementById('option_remove');
+var container = document.getElementById('options_container');
+const MAX_FIELDS = 10;
+
+// Initial button states
+option_remove.style.display = 'none'; // Initially hide remove button
+option_remove.disabled = container.children.length <= 1;
+option_add.disabled = container.children.length >= MAX_FIELDS;
+
+option_add.addEventListener('click', function() {
+    if (container.children.length < MAX_FIELDS) {
+        var newField = document.createElement('div');
+        newField.className = 'option-field row';
+        newField.innerHTML = `
+                                    <div class="col">
+                            <label for="sub_option" class="mt-4">خدمات(برای مثال درب موتور)</label>
+                            <input type="text" name="sub_options[]" class="form-control" placeholder="نام آپشن">
+                        </div>
+                        <div class="col">
+                            <label for="sub_option" class="mt-4">مقادیر</label>
+                            <input type="text" name="sub_values[]" class="form-control" placeholder="مقادیر رو با ، جدا کنید">
+                        </div>`;
+        
+        container.appendChild(newField);
+        
+        // Update button states
+        option_remove.disabled = container.children.length <= 1;
+        option_add.disabled = container.children.length >= MAX_FIELDS;
+        
+        // Show remove button when more than one field
+        if (container.children.length > 1) {
+            option_remove.style.display = 'block';
+        }
+    }
+});
+
+option_remove.addEventListener('click', function() {
+    if (container.children.length > 1) {
+        container.removeChild(container.lastElementChild);
+        
+        // Update button states
+        option_remove.disabled = container.children.length <= 1;
+        option_add.disabled = container.children.length >= MAX_FIELDS;
+        
+        // Hide remove button when only one field remains
+        if (container.children.length <= 1) {
+            option_remove.style.display = 'none';
+        }
+    }
+});

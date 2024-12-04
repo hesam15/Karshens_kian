@@ -25,6 +25,10 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('report/{carId}', [AdminController::class,'report'])->name('report.form');
     Route::post('reportSend/{id}', [CarController::class, 'store'])->name("store.report");
 
+    //options
+    Route::get('createOptions', [AdminController::class, 'options'])->name('add.options.form');
+    Route::post('storeOptions', [AdminController::class, 'store'])->name('store.option');
+
 //pdf
     Route::get('pdf', [CustomerController::class, 'showPdf'])->name('show.pdf');
     Route::get('/Dpdf/{carId}', [CustomerController::class, 'pdf'])->name('download.pdf');

@@ -34,6 +34,14 @@
                   <span class="nav-link-text me-1">نوبت‌دهی</span>
               </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {{ Route::currentRouteName() == 'addOptions.form' ? 'active' : '' }}" href="{{route('add.options.form')}}">
+                <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">
+                    <i class="material-icons-round opacity-10">build</i>
+                </div>
+                <span class="nav-link-text me-1">ثبت خدمات</span>
+            </a>
+        </li>        
       </ul>
   </div>
 </aside>
