@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sub_options', function (Blueprint $table) {
+        Schema::create('cars', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('option_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
-            $table->string('value');
-            $table->string("persian_name");
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId("report_id")->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('image')->nullable();
+            $table->boolean("report")->default(false);
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sub_options');
+        Schema::dropIfExists('cars');
     }
 };
