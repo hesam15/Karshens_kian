@@ -9,6 +9,7 @@ use App\Http\Controllers\IncomesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ExpensesController;
+use App\Http\Controllers\OptionsController;
 
 Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('/', function () {return view('dashboard');})->name('home');
@@ -26,8 +27,10 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::post('reportSend/{id}', [CarController::class, 'store'])->name("store.report");
 
     //options
-    Route::get('createOptions', [AdminController::class, 'options'])->name('add.options.form');
-    Route::post('storeOptions', [AdminController::class, 'store'])->name('store.option');
+    Route::get('options', [OptionsController::class, 'index'])->name('show.options');
+    Route::get('createOptions', [OptionsController::class, 'create'])->name('add.options.form');
+    Route::post('storeOptions', [OptionsController::class, 'store'])->name('store.option');
+    Route::get("updateOption/{id}", [OptionsController::class, 'edit'])->name('edit.option');
 
 //pdf
     Route::get('pdf', [CustomerController::class, 'showPdf'])->name('show.pdf');

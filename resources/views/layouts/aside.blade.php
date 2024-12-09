@@ -35,13 +35,38 @@
               </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ Route::currentRouteName() == 'addOptions.form' ? 'active' : '' }}" href="{{route('add.options.form')}}">
+            <a class="nav-link main-nav-link {{ in_array(Route::currentRouteName(), ['add.options.form', 'show.options']) ? 'active' : '' }}" 
+               href="#servicesDropdown" 
+               data-bs-toggle="collapse" 
+               role="button" 
+               aria-expanded="{{ in_array(Route::currentRouteName(), ['add.options.form', 'show.options']) ? 'true' : 'false' }}"
+               aria-controls="servicesDropdown">
                 <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">
                     <i class="material-icons-round opacity-10">build</i>
                 </div>
                 <span class="nav-link-text me-1">ثبت خدمات</span>
             </a>
-        </li>        
+                    
+            <div class="collapse {{ in_array(Route::currentRouteName(), ['add.options.form', 'show.options']) ? 'show' : '' }}" 
+                 id="servicesDropdown">
+                <div class="navbar-nav">
+                    <a class="nav-link submenu-link {{ Route::currentRouteName() == 'add.options.form' ? 'active' : '' }}" 
+                       href="{{route('add.options.form')}}">
+                        <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons-round opacity-10">add</i>
+                        </div>
+                        <span class="nav-link-text me-1">ایجاد خدمات</span>
+                    </a>
+                    <a class="nav-link submenu-link {{ Route::currentRouteName() == 'show.options' ? 'active' : '' }}" 
+                       href="{{route('show.options')}}">
+                        <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons-round opacity-10">list</i>
+                        </div>
+                        <span class="nav-link-text me-1">نمایش خدمات</span>
+                    </a>
+                </div>
+            </div>
+        </li>                                     
       </ul>
   </div>
 </aside>
