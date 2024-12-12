@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'sms' => [
+        'uri' => env('SMS_URI', 'http://ippanel.com/class/sms/wsdlservice/server.php?wsdl'),
+        'auth' => [
+            'user' => env('SMS_USER'),
+            'pass' => env('SMS_PASS'),
+            'fromNum' => env('SMS_NUMBER'),
+        ]
+    ]
 ];

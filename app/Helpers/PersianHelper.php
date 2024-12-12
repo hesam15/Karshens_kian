@@ -12,7 +12,7 @@ class PersianHelper
     private static $english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
     public static function convertPersianToEnglish($string) 
-    {        
+    {      
         $toString = str_replace(self::$persian, self::$english, $string);
         $date = Jalalian::fromFormat('Y/m/d H:i', $toString)->toCarbon()->format('Y-m-d H:i');
 
@@ -31,6 +31,9 @@ class PersianHelper
     }
 
     public static function convertEnglishToPersian($string){
+        if(!$string){
+            return "";
+        }
         $parts = explode(" ", $string);
         
         $date = trim($parts[0]);

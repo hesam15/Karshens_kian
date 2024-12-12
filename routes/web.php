@@ -10,6 +10,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\OptionsController;
+use App\Models\User;
+use App\Services\Notification;
 
 Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('/', function () {return view('dashboard');})->name('home');
@@ -35,6 +37,14 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 //pdf
     Route::get('pdf', [CustomerController::class, 'showPdf'])->name('show.pdf');
     Route::get('/Dpdf/{carId}', [CustomerController::class, 'pdf'])->name('download.pdf');
+
+
+//notification
+    Route::get("sendSMS" , function(){
+        $notification = app(App\Services\Notification::class);
+        $user = App\Models\User::find(1);
+        $notification->sendSMS($user);        
+    });
 });
 
 Route::middleware('auth')->group(function () {
