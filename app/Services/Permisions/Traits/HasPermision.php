@@ -38,6 +38,13 @@ trait HasPermision{
     }
 
     public function hasPermision(Permisions $permisions){
-        return $this->permisions->contains($permisions);
+        return $this->hasPermisionThroughRole($permisions) || $this->hasPermision($permisions);
+    }
+
+    protected function hasPermisionThroughRole(Permisions $permisions){
+        foreach($permisions->roles as $role){
+            if($this->roles->contains($role)) return true;
+        }
+        return false;
     }
 }

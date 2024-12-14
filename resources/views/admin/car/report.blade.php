@@ -8,18 +8,7 @@
             <div class="card-title border-bottom">
                 <h5>فرم ثبت خودرو</h3>
             </div>
-            @if(Session("success"))
-                <div class="alert alert-success" style="color:white;">
-                    با موفقیت ثبت شد.
-                </div>
-            @endif
-            @if($errors->any())
-                @foreach($errors->all() as $error)
-                    <div class="alert alert-danger">
-                        {{$error}}
-                    </div>
-                @endforeach
-            @endif
+            @extends('layouts.label')
             <form action="{{route('store.report' , ['id' => $carId])}}" method="POST">
                 @csrf
 

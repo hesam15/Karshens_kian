@@ -15,7 +15,7 @@
                     <th>ساعت</th>
                     <th>ثبت گزارش</th>
                 </tr>
-                @foreach($customers as $customer)
+                @forelse($customers as $customer)
                 <?php
                     $carReport = $cars->find($customer->car_id);
                     $date = $persianDate($customer->date);
@@ -34,7 +34,11 @@
                             <td><a class="btn btn-info" href="{{route("report.form" , ['carId' => $customer->car_id])}}">ثبت گزارش</a></td>
                         @endif
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="5">هیچ مشتریی یافت نشد</td>
+                    </tr>
+                @endforelse
             </table>
             <!-- Pagination Links -->
             <div class="mt-4">
