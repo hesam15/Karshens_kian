@@ -16,18 +16,31 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
-    public function edit(User $user){
-        $permisions = Permisions::all();
+//Create
+    public function create(){
         $roles = Role::all();
-        $user->load('roles', 'permisions');
+        return view('admin.users.create', compact('roles'));
+    }
 
-        return view('admin.users.edit', compact('user', 'roles', 'permisions'));
+//Update
+    public function edit(User $user){
+        $roles = Role::all();
+        $user->load('roles');
+
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, User $user){
-        $user->roles()->sync($request->roles);
-        $user->permisions()->sync($request->permisions);
+        $user->refreshRoles($request->role);
+        $user->name = $request->name;
 
         return redirect()->route('users.index');
+    }
+
+//Asign Role
+    public function assignRole(Request $request, User $user){
+        $user->assignRole($request->role);
+
+        return back()->with('success', true);
     }
 }

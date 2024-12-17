@@ -9,6 +9,10 @@ trait HasRoles{
         return $this->belongsToMany(Role::class);
     }
 
+    protected function getAllRoles(array $roles){
+        return role::whereIn('name', $roles)->get();
+    }
+
     public function assignRole(...$roles){
         $roles = $this->getAllRoles($roles);
 
@@ -29,16 +33,10 @@ trait HasRoles{
         return $this;
     }
 
-    public function refreshRoles(...$roles){
-        $roles = $this->getAllRoles($roles);
-
-        $this->roles()->sync($roles);
+    public function refreshRoles($role){
+        $this->roles()->sync($role);
 
         return $this;
-    }
-
-    protected function getAllRoles(array $roles){
-        return Rules::whereIn('name', $roles)->get();
     }
 
     public function hasRole(...$roles){

@@ -4,6 +4,10 @@
     <div class="card">
         <div class="card-header">
             <h4>لیست کاربران</h4>
+            <a href="{{ route('users.create') }}" class="btn btn-primary">
+                <i class="material-icons opacity-10">add</i>
+                افزودن کاربر جدید
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">

@@ -38,6 +38,7 @@
 	        font-family: 'Vazirmatn';
         }
     </style>
+    @vite('resources/css/app.css')
 </head>
     <body class="@if(Route::currentRouteName() !== "register" || Route::currentRouteName() !== "login")
         g-sidenav-show

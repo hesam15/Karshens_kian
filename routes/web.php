@@ -7,14 +7,11 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\BoxesController;
-use App\Http\Controllers\DebtsController;
-use App\Http\Controllers\IncomesController;
 use App\Http\Controllers\OptionsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\PermissionController;
+use Illuminate\Notifications\Notification as NotificationsNotification;
 
 Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('/', function () {return view('dashboard');})->name('home');
@@ -25,7 +22,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::get("reportShow/{carId}",[CustomerController::class, 'show'])->name('show.customer.report');
     // Route::get('pdf', action: [CustomerController::class, 'pdf'])->name('download.pdf');
-    Route::group(['prefix' => 'dashboard', 'middleware' => 'role:admin'], function () {
+    Route::group(['prefix' => 'dashboard'], function () {
         Route::get('admin', [AdminController::class,'show'])->name('admin.show');
         Route::get('report/{carId}', [AdminController::class,'report'])->name('report.form');
         Route::post('reportSend/{id}', [CarController::class, 'store'])->name("store.report");
@@ -38,6 +35,10 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
         //users
         Route::get('users', [UserController::class, 'index'])->name('users.index');
+        Route::get('users/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('users/create', [UserController::class, 'store'])->name('users.store');
+        //asign role to user
+        Route::post('users/{user}/asignRole', [UserController::class, 'assignRole'])->name('users.asignRole');
 
         //permissions
         Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
@@ -54,7 +55,6 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
         Route::get('permissions/create', [PermissionController::class, 'storePage'])->name('permissions.create');
         Route::post('permissions/create', [PermissionController::class, 'store'])->name('permissions.store');
-        Route::get('permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
     });
 
 //pdf
@@ -64,7 +64,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
 //notification
     Route::get("sendSMS" , function(){
-        $notification = app(App\Services\Notification::class);
+        $notification = app(Notification::class);
         $user = App\Models\User::find(1);
         $notification->sendSMS($user);        
     });

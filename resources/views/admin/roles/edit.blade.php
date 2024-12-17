@@ -11,9 +11,7 @@
 
                 <div class="card-body">
                     <form action="{{ route('roles.update', $role->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        
+                        @csrf                        
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <label class="form-label">نام انگلیسی</label>
@@ -47,11 +45,11 @@
                                         <div class="col-md-3 mb-2">
                                             <div class="form-check">
                                                 <input type="checkbox" 
-                                                       name="permissions[]" 
-                                                       value="{{ $permission->id }}" 
-                                                       class="form-check-input"
-                                                       id="perm_{{ $permission->id }}"
-                                                       {{ in_array($permission->id, old('permissions', $role->permissions->pluck('id')->toArray())) ? 'checked' : '' }}>
+                                                name="permissions[]" 
+                                                value="{{ $permission->id }}" 
+                                                class="form-check-input" 
+                                                id="perm_{{ $permission->id }}"
+                                                {{ in_array($permission->id, old('permissions', $role->permissions ? $role->permissions->pluck('id')->toArray() : [])) ? 'checked' : '' }}>                                            
                                                 <label class="form-check-label" for="perm_{{ $permission->id }}">
                                                     {{ $permission->persian_name }}
                                                 </label>

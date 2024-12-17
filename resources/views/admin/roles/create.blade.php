@@ -37,7 +37,9 @@
                                     <label class="form-label mb-0">دسترسی‌ها</label>
                                     <a href="{{ route('permissions.create') }}" class="btn btn-sm btn-primary">ایجاد دسترسی جدید</a>
                                 </div>
-                                
+                                <div class="col-12 mb-3">
+                                    <button type="button" id="selectAll" class="btn btn-secondary btn-sm">انتخاب همه</button>
+                                </div>                                
                                 @if($permissions->count() > 0)
                                     <div class="row">
                                         @foreach($permissions as $permission)

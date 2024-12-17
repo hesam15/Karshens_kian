@@ -22,18 +22,22 @@ class RoleController extends Controller
     public function store(Request $request){
         $this->validateForm($request);
 
-        Role::create($request->only(['name', 'persian_name']));
+        $role = Role::create($request->only(['name', 'persian_name']));
+
+        if($request->permissions){
+           $role->givePermisionsToRole($role ,$request->permissions);
+        }
 
         return redirect()->route('roles.index')->with('success', true);
     }
 
     public function edit(Role $role){
         $permissions = Permisions::all();
+        
         return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
     public function update(Request $request, Role $role){
-        $this->validateForm($request);
 
         $role->update($request->only(['name', 'persian_name']));
 
