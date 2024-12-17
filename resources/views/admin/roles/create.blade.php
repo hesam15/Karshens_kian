@@ -1,79 +1,88 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">ایجاد نقش جدید</h5>
-                    <a href="{{ route('roles.index') }}" class="btn btn-secondary">بازگشت</a>
+<div class="max-w-7xl mx-auto">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-100">
+            <h5 class="text-xl font-semibold text-gray-800">ایجاد نقش جدید</h5>
+            <a href="{{ route('roles.index') }}" 
+               class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+                بازگشت
+            </a>
+        </div>
+
+        <div class="p-6">
+            <form action="{{ route('roles.store') }}" method="POST">
+                @csrf
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">نام انگلیسی</label>
+                        <input type="text" name="name" 
+                               class="w-full px-4 py-2.5 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-colors duration-200 @error('name') border-red-500 @enderror"
+                               value="{{ old('name') }}" required>
+                        @error('name')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">نام فارسی</label>
+                        <input type="text" name="persian_name" 
+                               class="w-full px-4 py-2.5 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-colors duration-200 @error('persian_name') border-red-500 @enderror"
+                               value="{{ old('persian_name') }}" required>
+                        @error('persian_name')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
-                <div class="card-body">
-                    <form action="{{ route('roles.store') }}" method="POST">
-                        @csrf
-                        
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <label class="form-label">نام انگلیسی</label>
-                                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required>
-                                @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label class="form-label">نام فارسی</label>
-                                <input type="text" name="persian_name" class="form-control @error('persian_name') is-invalid @enderror" value="{{ old('persian_name') }}" required>
-                                @error('persian_name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <label class="text-sm font-medium text-gray-700">دسترسی‌ها</label>
+                        <a href="{{ route('permissions.create') }}" 
+                           class="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-lg hover:bg-blue-200 transition-colors duration-200">
+                            ایجاد دسترسی جدید
+                        </a>
+                    </div>
 
-                        <div class="row mb-4">
-                            <div class="col-12">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <label class="form-label mb-0">دسترسی‌ها</label>
-                                    <a href="{{ route('permissions.create') }}" class="btn btn-sm btn-primary">ایجاد دسترسی جدید</a>
+                    <div class="mb-4">
+                        <button type="button" id="selectAll" 
+                                class="px-4 py-2 bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+                            انتخاب همه
+                        </button>
+                    </div>
+
+                    @if($permissions->count() > 0)
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            @foreach($permissions as $permission)
+                                <div class="flex items-center">
+                                    <input type="checkbox"
+                                           name="permissions[]"
+                                           value="{{ $permission->id }}"
+                                           id="perm_{{ $permission->id }}"
+                                           class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                           {{ in_array($permission->id, old('permissions', [])) ? 'checked' : '' }}>
+                                    <label class="mr-2 text-sm text-gray-700" for="perm_{{ $permission->id }}">
+                                        {{ $permission->persian_name }}
+                                    </label>
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <button type="button" id="selectAll" class="btn btn-secondary btn-sm">انتخاب همه</button>
-                                </div>                                
-                                @if($permissions->count() > 0)
-                                    <div class="row">
-                                        @foreach($permissions as $permission)
-                                        <div class="col-md-3 mb-2">
-                                            <div class="form-check">
-                                                <input type="checkbox" 
-                                                       name="permissions[]" 
-                                                       value="{{ $permission->id }}" 
-                                                       class="form-check-input"
-                                                       id="perm_{{ $permission->id }}"
-                                                       {{ in_array($permission->id, old('permissions', [])) ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="perm_{{ $permission->id }}">
-                                                    {{ $permission->persian_name }}
-                                                </label>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </div>
-                                @else
-                                    <div class="text-center py-3">
-                                        <p class="text-muted mb-0">هیچ دسترسی در سیستم تعریف نشده است</p>
-                                    </div>
-                                @endif
-                            </div>
+                            @endforeach
                         </div>
-
-                        <div class="row">
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">ذخیره</button>
-                            </div>
+                    @else
+                        <div class="text-center py-6">
+                            <p class="text-gray-500">هیچ دسترسی در سیستم تعریف نشده است</p>
                         </div>
-                    </form>
+                    @endif
                 </div>
-            </div>
+
+                <div>
+                    <button type="submit" 
+                            class="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                        ذخیره
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 @endsection
