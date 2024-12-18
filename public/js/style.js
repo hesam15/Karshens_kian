@@ -1,146 +1,151 @@
-//choose all checkboxes
-document.getElementById('selectAll').addEventListener('click', function() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    const allChecked = [...checkboxes].every(checkbox => checkbox.checked);
-    
-    checkboxes.forEach(checkbox => checkbox.checked = !allChecked);
-    this.textContent = allChecked ? 'انتخاب همه' : 'لغو انتخاب همه';
-});
-
-
-$(document).ready(function() {
-    let currentDate = new persianDate();
-    let currentMinute = currentDate.minute();
-    
-    if (currentMinute > 0 && currentMinute < 30) {
-        currentDate.minute(30);
-    } else if (currentMinute >= 30) {
-        currentDate.minute(0);
-        currentDate.add('hour', 1);
+// Select All Checkboxes
+document.addEventListener('DOMContentLoaded', () => {
+    const selectAllBtn = document.getElementById('selectAll');
+    if (selectAllBtn) {
+        selectAllBtn.addEventListener('click', function() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:not([data-exclude-select-all])');
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = !allChecked;
+            });
+            
+            this.textContent = !allChecked ? 'لغو انتخاب همه' : 'انتخاب همه';
+        });
     }
-    $("#date-picker").persianDatepicker({
-        format: 'YYYY/MM/DD HH:mm',
-        initialValue: currentDate.format('YYYY/MM/DD HH:mm'),
-        readonly: true,
-        onSelect: function(unixDate) {
-            let today = new persianDate().startOf('day').valueOf();
-            let selected = new persianDate(unixDate).startOf('day').valueOf();
-            let endOfNextTwoMonths = new persianDate().add('M', 3).startOf('month').subtract('d', 1).valueOf();
+
+    // Accordion functionality
+    const accordionButtons = document.querySelectorAll('.accordion-button');
+    accordionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-bs-target');
+            const target = document.querySelector(targetId);
             
-            if (selected < today) {
-                alert('تاریخ انتخابی نمی‌تواند قبل از امروز باشد');
-                this.setDate(new persianDate().valueOf());
-                return false;
+            if (target) {
+                const isExpanded = target.classList.contains('show');
+                target.classList.toggle('show');
+                this.classList.toggle('collapsed');
+                this.setAttribute('aria-expanded', !isExpanded);
             }
-            if (selected > endOfNextTwoMonths) {
-                alert('تاریخ انتخابی نمی‌تواند بیشتر از دو ماه آینده باشد');
-                this.setDate(new persianDate().valueOf());
-                return false;            
-            }
-        },
-        minDate: new persianDate().startOf('day').valueOf(),
-        maxDate: new persianDate().add('M', 3).startOf('month').subtract('d', 1).valueOf(),
-        timePicker: {
-            enabled: true,
-            meridian: false,
-            showSeconds: false,
-            second: {
-                enabled: false
-            },
-            minute: {
-                enabled: true,
-                step: 30,
-                stepSize: 30,
-            },
-        },
-        autoClose: true,
-        toolbox: {
-            calendarSwitch: {
-                enabled: false
-            }
-        },
-    });    
-});
+        });
+    });
 
-const accordionButtons = document.querySelectorAll('.accordion-button');
-console.log(accordionButtons);
+    // Options Container Management
+    const option_add = document.getElementById('option_add');
+    const option_remove = document.getElementById('option_remove');
+    const container = document.getElementById('options_container');
 
-accordionButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        console.log("Hello")
-        const targetId = this.getAttribute('data-bs-target');
-        console.log(targetId);
-        const target = document.querySelector(targetId);
+    if (option_add && option_remove && container) {
+        const MAX_FIELDS = 10;
+
+        // Initial states
+        option_remove.classList.add('hidden'); // Using Tailwind's hidden
+        option_remove.disabled = container.children.length <= 1;
+        option_add.disabled = container.children.length >= MAX_FIELDS;
+
+        option_add.addEventListener('click', function() {
+            if (container.children.length < MAX_FIELDS) {
+                const newField = document.createElement('div');
+                newField.className = 'grid grid-cols-2 gap-4 mb-4'; // Tailwind grid
+                newField.innerHTML = `
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">خدمات(برای مثال درب موتور)</label>
+                        <input type="text" name="sub_options[]" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                               placeholder="نام آپشن">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">مقادیر</label>
+                        <input type="text" name="sub_values[]" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                               placeholder="مقادیر رو با ، جدا کنید">
+                    </div>`;
                 
-        if (target.classList.contains('show')) {
-            console.log(button);
+                container.appendChild(newField);
+                
+                option_remove.disabled = container.children.length <= 1;
+                option_add.disabled = container.children.length >= MAX_FIELDS;
+                
+                if (container.children.length > 1) {
+                    option_remove.classList.remove('hidden');
+                }
+            }
+        });
 
-            // Handle content
-            target.classList.remove('show');
-            
-            // Handle button
-            this.classList.add('collapsed');
-            this.setAttribute('aria-expanded', 'false');
+        option_remove.addEventListener('click', function() {
+            if (container.children.length > 1) {
+                container.removeChild(container.lastElementChild);
+                option_remove.disabled = container.children.length <= 1;
+                option_add.disabled = container.children.length >= MAX_FIELDS;
+                
+                if (container.children.length <= 1) {
+                    option_remove.classList.add('hidden');
+                }
+            }
+        });
+    }
+
+    // Submenu Toggle
+    const dropdowns = [
+        {button: 'servicesButton', menu: 'servicesMenu', icon: 'servicesIcon'},
+        {button: 'rolesButton', menu: 'rolesMenu', icon: 'rolesIcon'},
+        {button: 'usersButton', menu: 'usersMenu', icon: 'usersIcon'}
+    ];
+
+    dropdowns.forEach(({button, menu, icon}) => {
+        const buttonEl = document.getElementById(button);
+        const menuEl = document.getElementById(menu);
+        const iconEl = document.getElementById(icon);
+
+        if (buttonEl && menuEl && iconEl) {
+            // Set initial rotation based on menu state
+            if (menuEl.style.maxHeight !== '0px') {
+                iconEl.style.transform = 'rotate(180deg)';
+            }
+
+            buttonEl.addEventListener('click', () => {
+                const isExpanded = menuEl.style.maxHeight !== '0px';
+                menuEl.style.maxHeight = isExpanded ? '0px' : '160px';
+                iconEl.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+            });
+        }
+    });
+
+    const deleteModal = document.getElementById('deleteModal');
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    const closeModal = document.getElementById('closeModal');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const deleteForm = document.getElementById('deleteForm');
+
+
+    function showModal(route) {
+        deleteForm.action = route;
+        deleteModal.classList.remove('hidden');
+    }
+
+    function hideModal() {
+        deleteModal.classList.add('hidden');
+    }
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const route = this.dataset.route;
+            showModal(route);
+        });
+    });
+
+    closeModal.addEventListener('click', hideModal);
+    cancelBtn.addEventListener('click', hideModal);
+
+    deleteModal.addEventListener('click', function(e) {
+        if (e.target === deleteModal) {
+            hideModal();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !deleteModal.classList.contains('hidden')) {
+            hideModal();
         }
     });
 });
-
-
-var option_add = document.getElementById('option_add');
-var option_remove = document.getElementById('option_remove');
-var container = document.getElementById('options_container');
-const MAX_FIELDS = 10;
-
-// Initial button states
-option_remove.style.display = 'none'; // Initially hide remove button
-option_remove.disabled = container.children.length <= 1;
-option_add.disabled = container.children.length >= MAX_FIELDS;
-
-option_add.addEventListener('click', function() {
-    if (container.children.length < MAX_FIELDS) {
-        var newField = document.createElement('div');
-        newField.className = 'option-field row';
-        newField.innerHTML = `
-                                    <div class="col">
-                            <label for="sub_option" class="mt-4">خدمات(برای مثال درب موتور)</label>
-                            <input type="text" name="sub_options[]" class="form-control" placeholder="نام آپشن">
-                        </div>
-                        <div class="col">
-                            <label for="sub_option" class="mt-4">مقادیر</label>
-                            <input type="text" name="sub_values[]" class="form-control" placeholder="مقادیر رو با ، جدا کنید">
-                        </div>`;
-        
-        container.appendChild(newField);
-        
-        // Update button states
-        option_remove.disabled = container.children.length <= 1;
-        option_add.disabled = container.children.length >= MAX_FIELDS;
-        
-        // Show remove button when more than one field
-        if (container.children.length > 1) {
-            option_remove.style.display = 'block';
-        }
-    }
-});
-
-option_remove.addEventListener('click', function() {
-    if (container.children.length > 1) {
-        container.removeChild(container.lastElementChild);
-        
-        // Update button states
-        option_remove.disabled = container.children.length <= 1;
-        option_add.disabled = container.children.length >= MAX_FIELDS;
-        
-        // Hide remove button when only one field remains
-        if (container.children.length <= 1) {
-            option_remove.style.display = 'none';
-        }
-    }
-});
-function toggleSubmenu(id) {
-    const submenu = document.getElementById(id);
-    const isExpanded = submenu.style.maxHeight !== '0px';
-    submenu.style.maxHeight = isExpanded ? '0px' : '160px';
-    const icon = submenu.previousElementSibling.querySelector('.material-icons-round');
-    icon.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
-}

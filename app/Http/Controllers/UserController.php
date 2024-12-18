@@ -21,6 +21,14 @@ class UserController extends Controller
         $roles = Role::all();
         return view('admin.users.create', compact('roles'));
     }
+    public function store(Request $request){
+        // dd(        $this->addRole($request, $user  )      );
+        $user = User::create($request->only('name', 'email', 'password'));
+
+        $user->assignRole($request->role);
+
+        return redirect()->route('users.index')->with("success", "کاربر جدید با موفقیت ایجاد شد.");
+    }
 
 //Update
     public function edit(User $user){
@@ -34,13 +42,19 @@ class UserController extends Controller
         $user->refreshRoles($request->role);
         $user->name = $request->name;
 
+        return redirect()->route('users.index')->with("success", "کاربر با موفقیت ویرایش شد.");
+    }
+//Delete
+    public function destroy(User $user){
+        $user->delete();
         return redirect()->route('users.index');
     }
 
-//Asign Role
-    public function assignRole(Request $request, User $user){
-        $user->assignRole($request->role);
 
-        return back()->with('success', true);
-    }
+//Asign Role
+    // public function addRole(Request $request, User $user){
+    //     $user->assignRole($request->role);
+
+    //     return back()->with('success', true);
+    // }
 }

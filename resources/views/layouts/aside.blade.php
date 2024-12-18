@@ -34,35 +34,81 @@
                         <i class="material-icons-round text-gray-400 text-sm transform transition-transform duration-200" id="servicesIcon">expand_more</i>
                     </button>
 
-                    <div id="servicesMenu" class="overflow-hidden transition-all duration-200 max-h-0">
+                    <div id="servicesMenu" class="overflow-hidden transition-all duration-200" style="max-height: {{ in_array(Route::currentRouteName(), ['show.options', 'add.options.form']) ? '160px' : '0px' }}">
                         <div class="pr-7 mr-2 border-r border-gray-200 mt-1 space-y-1">
-                            <a href="{{route('add.options.form')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'add.options.form' ? 'bg-gray-100' : '' }}">
-                                <i class="material-icons-round text-gray-500 text-lg ml-2">add</i>
-                                <span class="text-gray-700">ایجاد خدمات</span>
-                            </a>
                             <a href="{{route('show.options')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'show.options' ? 'bg-gray-100' : '' }}">
                                 <i class="material-icons-round text-gray-500 text-lg ml-2">list</i>
                                 <span class="text-gray-700">نمایش خدمات</span>
                             </a>
+                            <a href="{{route('add.options.form')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'add.options.form' ? 'bg-gray-100' : '' }}">
+                                <i class="material-icons-round text-gray-500 text-lg ml-2">add</i>
+                                <span class="text-gray-700">ایجاد خدمات</span>
+                            </a>
                         </div>
                     </div>
                 </div>
+
+                @role('admin')
+                <!-- Roles Dropdown -->
+                <div class="relative">
+                    <button id="rolesButton" class="w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg hover:bg-gray-100 group">
+                        <div class="flex items-center">
+                            <i class="material-icons-round text-gray-500 text-lg ml-2">admin_panel_settings</i>
+                            <span class="text-gray-700">مدیریت نقش‌ها</span>
+                        </div>
+                        <i class="material-icons-round text-gray-400 text-sm transform transition-transform duration-200" id="rolesIcon">expand_more</i>
+                    </button>
+
+                    <div id="rolesMenu" class="overflow-hidden transition-all duration-200" style="max-height: {{ in_array(Route::currentRouteName(), ['roles.index', 'roles.create']) ? '160px' : '0px' }}">
+                        <div class="pr-7 mr-2 border-r border-gray-200 mt-1 space-y-1">
+                            <a href="{{route('roles.index')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'roles.index' ? 'bg-gray-100' : '' }}">
+                                <i class="material-icons-round text-gray-500 text-lg ml-2">list</i>
+                                <span class="text-gray-700">نمایش نقش‌ها</span>
+                            </a>
+                            <a href="{{route('roles.create')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'roles.create' ? 'bg-gray-100' : '' }}">
+                                <i class="material-icons-round text-gray-500 text-lg ml-2">add</i>
+                                <span class="text-gray-700">ایجاد نقش</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users Dropdown -->
+                <div class="relative">
+                    <button id="usersButton" class="w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg hover:bg-gray-100 group">
+                        <div class="flex items-center">
+                            <i class="material-icons-round text-gray-500 text-lg ml-2">manage_accounts</i>
+                            <span class="text-gray-700">مدیریت کاربران</span>
+                        </div>
+                        <i class="material-icons-round text-gray-400 text-sm transform transition-transform duration-200" id="usersIcon">expand_more</i>
+                    </button>
+
+                    <div id="usersMenu" class="overflow-hidden transition-all duration-200" style="max-height: {{ in_array(Route::currentRouteName(), ['users.index', 'users.create']) ? '160px' : '0px' }}">
+                        <div class="pr-7 mr-2 border-r border-gray-200 mt-1 space-y-1">
+                            <a href="{{route('users.index')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'users.index' ? 'bg-gray-100' : '' }}">
+                                <i class="material-icons-round text-gray-500 text-lg ml-2">list</i>
+                                <span class="text-gray-700">نمایش کاربران</span>
+                            </a>
+                            <a href="{{route('users.create')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'users.create' ? 'bg-gray-100' : '' }}">
+                                <i class="material-icons-round text-gray-500 text-lg ml-2">add</i>
+                                <span class="text-gray-700">ایجاد کاربر</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endrole
             </div>
 
-            @role('admin')
-            <!-- Admin Section -->
+            <!-- Logout Button -->
             <div class="border-t border-gray-200 pt-4 mt-4">
-                <div class="px-3 py-2 text-xs font-medium text-gray-500 uppercase">پنل مدیریت</div>
-                <a href="{{route('roles.index')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'roles.index' ? 'bg-gray-100' : '' }}">
-                    <i class="material-icons-round text-gray-500 text-lg ml-2">admin_panel_settings</i>
-                    <span class="text-gray-700">مدیریت نقش‌ها</span>
-                </a>
-                <a href="{{route('users.index')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'users.index' ? 'bg-gray-100' : '' }}">
-                    <i class="material-icons-round text-gray-500 text-lg ml-2">manage_accounts</i>
-                    <span class="text-gray-700">مدیریت کاربران</span>
-                </a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="w-full flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 text-red-600">
+                        <i class="material-icons-round text-red-500 text-lg ml-2">logout</i>
+                        <span>خروج از حساب</span>
+                    </button>
+                </form>
             </div>
-            @endrole
         </div>
     </nav>
 </div>

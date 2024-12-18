@@ -37,12 +37,11 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         Route::get('users', [UserController::class, 'index'])->name('users.index');
         Route::get('users/create', [UserController::class, 'create'])->name('users.create');
         Route::post('users/create', [UserController::class, 'store'])->name('users.store');
-        //asign role to user
-        Route::post('users/{user}/asignRole', [UserController::class, 'assignRole'])->name('users.asignRole');
-
-        //permissions
+        Route::post('users/{user}/delete', [UserController::class, 'destroy'])->name('users.destroy');
         Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
         Route::post('users/{user}/edit', [UserController::class, 'update'])->name('users.update');
+        //asign role to user
+        Route::post('users/{user}/asignRole', [UserController::class, 'assignRole'])->name('users.asignRole');
 
         //roles
         Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
@@ -50,6 +49,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         Route::post('roles/create', [RoleController::class, 'store'])->name('roles.store');
         Route::get("roles/{role}/edit", [RoleController::class, 'edit'])->name('roles.edit');
         Route::post("roles/{role}/edit", [RoleController::class, 'update'])->name('roles.update');
+        Route::post("roles/{role}/delete", [RoleController::class, 'destroy'])->name('roles.destroy');
 
         //permissions
         Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');

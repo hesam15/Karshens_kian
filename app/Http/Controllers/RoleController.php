@@ -52,4 +52,9 @@ class RoleController extends Controller
             'persian_name' => 'required|unique:roles,persian_name'
         ]);
     }
+
+    public function destroy(Role $role){
+        $role->delete();
+        return redirect()->route('roles.index');
+    }
 }

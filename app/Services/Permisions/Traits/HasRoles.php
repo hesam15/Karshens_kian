@@ -9,15 +9,11 @@ trait HasRoles{
         return $this->belongsToMany(Role::class);
     }
 
-    protected function getAllRoles(array $roles){
-        return role::whereIn('name', $roles)->get();
+    protected function getAllRoles($roles){
+        return role::where('name', $roles)->get();
     }
 
-    public function assignRole(...$roles){
-        $roles = $this->getAllRoles($roles);
-
-        if($roles->isEmpty()) return $this;
-
+    public function assignRole($roles){
         $this->roles()->syncWithoutDetaching($roles);
 
         return $this;

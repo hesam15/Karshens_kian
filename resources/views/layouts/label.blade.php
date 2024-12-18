@@ -1,12 +1,13 @@
 @if(Session("success"))
-<div class="alert alert-success" style="color:white;">
-    با موفقیت ثبت شد.
-</div>
-@endif
-@if($errors->any())
-@foreach($errors->all() as $error)
-    <div class="alert alert-danger">
-        {{$error}}
+    <div class="p-4 mb-4 bg-green-500 text-white rounded-lg shadow">
+        {{ Session("success") }}
     </div>
-@endforeach
+@endif
+
+@if($errors->any())
+    @foreach($errors->all() as $error)
+        <div class="p-4 mb-4 bg-red-500 text-white rounded-lg shadow">
+            {{ $error }}
+        </div>
+    @endforeach
 @endif
