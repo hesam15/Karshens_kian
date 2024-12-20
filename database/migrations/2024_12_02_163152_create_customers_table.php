@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permision_user', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('permision_id')->constrained()->cascadeOnDelete();
-            $table->primary(['user_id', 'permision_id']);
+        Schema::create('customers', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('phone');
+            $table->date('date');
+            $table->timestamps();
         });
     }
 
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permision_user');
+        Schema::dropIfExists('customers');
     }
 };

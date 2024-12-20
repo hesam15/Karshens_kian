@@ -23,15 +23,15 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get("reportShow/{carId}",[CustomerController::class, 'show'])->name('show.customer.report');
     // Route::get('pdf', action: [CustomerController::class, 'pdf'])->name('download.pdf');
     Route::group(['prefix' => 'dashboard'], function () {
-        Route::get('admin', [AdminController::class,'show'])->name('admin.show');
+        // Route::get('admin', [AdminController::class,'show'])->name('admin.show');
         Route::get('report/{carId}', [AdminController::class,'report'])->name('report.form');
         Route::post('reportSend/{id}', [CarController::class, 'store'])->name("store.report");
 
         //options
         Route::get('options', [OptionsController::class, 'index'])->name('show.options');
-        Route::get('createOptions', [OptionsController::class, 'create'])->name('add.options.form');
-        Route::post('storeOptions', [OptionsController::class, 'store'])->name('store.option');
-        Route::get("updateOption/{id}", [OptionsController::class, 'edit'])->name('edit.option');
+        Route::get('options/create', [OptionsController::class, 'create'])->name('create.option');
+        Route::post('options/create', [OptionsController::class, 'store'])->name('store.option');
+        Route::get("options/{id}/update", [OptionsController::class, 'edit'])->name('edit.option');
 
         //users
         Route::get('users', [UserController::class, 'index'])->name('users.index');
@@ -55,6 +55,12 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
         Route::get('permissions/create', [PermissionController::class, 'storePage'])->name('permissions.create');
         Route::post('permissions/create', [PermissionController::class, 'store'])->name('permissions.store');
+
+        //customers
+        Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
+        Route::get('customers/create', [CustomerController::class, 'create'])->name('customers.create');
+        Route::post('customers/create', [CustomerController::class, 'store'])->name('customers.store');
+
     });
 
 //pdf

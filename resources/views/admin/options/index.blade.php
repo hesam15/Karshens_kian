@@ -5,8 +5,13 @@
 @section('content')
 <div class="max-w-6xl mx-auto">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200 bg-gray-100">
+        <div class="px-6 py-4 border-b border-gray-200 bg-gray-100 flex justify-between items-center">
             <h5 class="text-xl font-semibold text-gray-800">لیست آپشن ها</h5>
+            <a href="{{ route('create.option') }}" 
+               class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                <i class="material-icons-round text-lg ml-2">add</i>
+                افزودن خدمت جدید
+            </a>
         </div>
 
         <div class="p-6">

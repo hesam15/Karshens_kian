@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Permisions extends Model
+class Permissions extends Model
 {
-    
 
     protected $fillable = ['name', 'persian_name'];
 }

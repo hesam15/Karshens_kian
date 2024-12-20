@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\Permisions\Traits;
+namespace App\Services\Permissions\Traits;
 
 use App\Models\Role;
 use Doctrine\Inflector\Rules\English\Rules;

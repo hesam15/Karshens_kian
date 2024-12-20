@@ -14,7 +14,7 @@
                     <span class="text-gray-700">داشبورد</span>
                 </a>
 
-                <a href="{{route('admin.show')}}" class="flex items-center px-3 py-2 text-sm rounded-lg transition-colors duration-150 hover:bg-gray-100 {{ Route::currentRouteName() == 'admin.show' ? 'bg-gray-100' : '' }}">
+                <a href="{{route('customers.index')}}" class="flex items-center px-3 py-2 text-sm rounded-lg transition-colors duration-150 hover:bg-gray-100 {{ Route::currentRouteName() == 'admin.show' ? 'bg-gray-100' : '' }}">
                     <i class="material-icons-round text-gray-500 text-lg ml-2">people</i>
                     <span class="text-gray-700">مشتریان</span>
                 </a>
@@ -40,7 +40,7 @@
                                 <i class="material-icons-round text-gray-500 text-lg ml-2">list</i>
                                 <span class="text-gray-700">نمایش خدمات</span>
                             </a>
-                            <a href="{{route('add.options.form')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'add.options.form' ? 'bg-gray-100' : '' }}">
+                            <a href="{{route('create.option')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'add.options.form' ? 'bg-gray-100' : '' }}">
                                 <i class="material-icons-round text-gray-500 text-lg ml-2">add</i>
                                 <span class="text-gray-700">ایجاد خدمات</span>
                             </a>

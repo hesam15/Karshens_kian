@@ -12,6 +12,10 @@ use Mpdf\Mpdf;
 
 class CustomerController extends Controller
 {
+    public function index(Customer $customers){
+        $customers = $customers::all();
+        dd($customers);
+    }
     
     public function show($carId){
         $car = Cars::find($carId);

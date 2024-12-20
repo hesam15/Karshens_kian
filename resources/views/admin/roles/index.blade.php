@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-@include('layouts.label')
 
 <div class="max-w-7xl mx-auto">
+    @include('layouts.label')
+
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-100">
             <h5 class="text-xl font-semibold text-gray-800">لیست نقش‌ها</h5>

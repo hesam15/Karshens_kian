@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
-use App\Models\Permisions;
+use App\Models\Permissions;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -15,7 +15,7 @@ class RoleController extends Controller
     }
 
     public function storePage(){
-        $permissions = Permisions::all();
+        $permissions = Permissions::all();
         return view('admin.roles.create', compact('permissions'));
     }
 
@@ -25,14 +25,14 @@ class RoleController extends Controller
         $role = Role::create($request->only(['name', 'persian_name']));
 
         if($request->permissions){
-           $role->givePermisionsToRole($role ,$request->permissions);
+           $role->givePermissionsToRole($role ,$request->permissions);
         }
 
-        return redirect()->route('roles.index')->with('success', true);
+        return redirect()->route('roles.index')->with('success', "نقش جدید با موفقیت ثبت شد");
     }
 
     public function edit(Role $role){
-        $permissions = Permisions::all();
+        $permissions = Permissions::all();
         
         return view('admin.roles.edit', compact('role', 'permissions'));
     }
@@ -41,9 +41,9 @@ class RoleController extends Controller
 
         $role->update($request->only(['name', 'persian_name']));
 
-        $role->refreshPermisions($request->permissions);
+        $role->refreshPermissions($request->permissions);
 
-        return redirect()->route('roles.index')->with('success', true);
+        return redirect()->route('roles.index')->with('success', "نقش با موفقیت ویرایش شد");
     }
 
     public function validateForm(Request $request){

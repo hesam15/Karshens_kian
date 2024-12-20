@@ -16,6 +16,17 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="{{asset("js/style.js")}}"></script>
+
+    <!-- jQuery -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="https://unpkg.com/persian-datepicker@latest/dist/css/persian-datepicker.css">
+    <script src="https://unpkg.com/persian-date@latest/dist/persian-date.js"></script>
+    <script src="https://unpkg.com/persian-datepicker@latest/dist/js/persian-datepicker.js"></script>
 </head>
 <body class="font-sans antialiased">
     <div class="flex min-h-screen bg-gray">
@@ -30,46 +41,14 @@
             <nav class="sticky top-0 z-40 bg-white shadow-sm">
                 @include('layouts.navigation')
             </nav>
-
             <!-- Page Content -->
-            <main class="p-8">
+            <main>
                 @yield('content')
             </main>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="{{asset("js/style.js")}}"></script>
+    <script src="{{asset("js/datepicker.js")}}"></script>
 
-    <!-- Dropdown Toggle Script -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const servicesButton = document.getElementById('servicesButton');
-        const servicesMenu = document.getElementById('servicesMenu');
-        const servicesIcon = document.getElementById('servicesIcon');
-        
-        // Check if we're on a services page
-        const isServicesPage = ['add.options.form', 'show.options'].includes('{{ Route::currentRouteName() }}');
-        
-        // Set initial state if on services page
-        if (isServicesPage) {
-            servicesMenu.classList.remove('max-h-0');
-            servicesMenu.classList.add('max-h-48');
-            servicesIcon.style.transform = 'rotate(180deg)';
-        }
-        
-        servicesButton.addEventListener('click', function() {
-            if (servicesMenu.classList.contains('max-h-0')) {
-                servicesMenu.classList.remove('max-h-0');
-                servicesMenu.classList.add('max-h-48');
-                servicesIcon.style.transform = 'rotate(180deg)';
-            } else {
-                servicesMenu.classList.remove('max-h-48');
-                servicesMenu.classList.add('max-h-0');
-                servicesIcon.style.transform = 'rotate(0deg)';
-            }
-        });
-    });
-  </script>
 </body>
 </html>
