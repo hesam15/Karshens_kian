@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Mpdf\Mpdf;
+use Carbon\Carbon;
 use Dompdf\Dompdf;
 use App\Models\Cars;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
 use App\Helpers\PersianHelper;
-use Mpdf\Mpdf;
 
 class CustomerController extends Controller
 {
@@ -106,9 +107,33 @@ class CustomerController extends Controller
         return view('pdf', compact('car', 'customer', 'technical_check', 'options', 'diag', 'vip_services', 'date', 'body'));
     }
     
+    private function time(){
+        $currentTime = Carbon::now('Asia/Tehran');
+        $time = $currentTime->format("H:i");
+        return $time;
+    }
+
+    private function checkTime($time){
+        $time = explode(":" , $time);
+        $hour = $time[0];
+        $minute = $time[1];
+
+        if($minute>"0" && $minute<"30"){
+            $minute = "30";
+        }
+        elseif($minute>"30" && $minute<"6"){
+            $minute = "0";
+        }
+
+        $time = "$hour:$minute";
+
+        return $time;
+    }
 
     public function form(){
-        return view("customer.form");
+        $time = $this->checkTime($this->time());    
+
+        return view("customer.form", compact("time"));
     }
     
     public function store(Request $request, Customer $customer, Cars $cars){

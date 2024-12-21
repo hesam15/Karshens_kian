@@ -47,8 +47,7 @@
             </main>
         </div>
     </div>
-
+    
     <script src="{{asset("js/datepicker.js")}}"></script>
-
 </body>
 </html>
