@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->json("reports");
+            $table->json("reports")->nullable();
             $table->text('description')->nullable();
+            $table->foreignId('car_id')->constrained()->cascadeOnDelete();
+            $table->
             $table->timestamps();
         });
     }

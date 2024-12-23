@@ -22,7 +22,6 @@ class UserController extends Controller
         return view('admin.users.create', compact('roles'));
     }
     public function store(Request $request){
-        // dd(        $this->addRole($request, $user  )      );
         $user = User::create($request->only('name', 'email', 'password'));
 
         $user->assignRole($request->role);

@@ -12,7 +12,8 @@
         "misterspelik/laravel-pdf": "^2.1",
         "morilog/jalali": "3.*",
         "mpdf/mpdf": "^8.2",
-        "nesbot/carbon": "^3.8"
+        "nesbot/carbon": "^3.8",
+        "shayanys/lara-reserve": "^2.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

@@ -6,6 +6,7 @@ use Mpdf\Mpdf;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use App\Models\Cars;
+use App\Models\Booking;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
@@ -90,23 +91,6 @@ class CustomerController extends Controller
         ];
     }
     
-    public function showPdf(){
-        $car = Cars::first();
-
-        $body = json_decode($car->body);
-        $technical_check = json_decode($car->technical_check);
-        $options = json_decode($car->options);
-        $diag = json_decode($car->diag);
-        $vip_services = json_decode($car->vip_services);
-
-        $customer = Customer::find($car->customer_id);
-
-        $date = PersianHelper::convertEnglishToPersian($customer->date);
-
-
-        return view('pdf', compact('car', 'customer', 'technical_check', 'options', 'diag', 'vip_services', 'date', 'body'));
-    }
-    
     private function time(){
         $currentTime = Carbon::now('Asia/Tehran');
         $time = $currentTime->format("H:i");
@@ -121,8 +105,8 @@ class CustomerController extends Controller
         if($minute>"0" && $minute<"30"){
             $minute = "30";
         }
-        elseif($minute>"30" && $minute<"6"){
-            $minute = "0";
+        elseif($minute>"30" && $minute<"60"){
+            $minute = "00";
         }
 
         $time = "$hour:$minute";
@@ -133,17 +117,10 @@ class CustomerController extends Controller
     public function form(){
         $time = $this->checkTime($this->time());    
 
-        return view("customer.form", compact("time"));
+        return view("customer.form");
     }
     
     public function store(Request $request, Customer $customer, Cars $cars){
-        
-        $request->validate( [
-            "name"=> 'required',
-            "mobile"=> 'required|unique:customers',
-            "car"=> 'required',
-            "date"=> 'required',
-        ]);
         $date = PersianHelper::convertPersianToEnglish($request->date);
 
         $customer::create([
@@ -162,5 +139,58 @@ class CustomerController extends Controller
         ]);
 
         return back()->with("success",true);
+    }
+
+    public function validate(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required | unique:customers',
+            'car' => 'required',
+            'date' => 'required | unique:customers',
+        ]);
+    }
+
+    public function getAvailableTimes(Request $request)
+    {
+        $date = $request->date;
+
+        $allTimes = [
+            '09:00', '10:00', '11:00', '12:00',
+            '14:00', '15:00', '16:00', '17:00'
+        ];
+
+        $bookedTimes = Booking::where('date', $date)
+                            ->pluck('time_slot')
+                            ->toArray();
+
+        if(empty($bookedTimes)){
+            $availableTimes = $allTimes;
+        }
+        else{
+            $availableTimes = array_diff($allTimes, $bookedTimes);
+        }
+                
+        return response()->json([
+            'available' => array_values($availableTimes),
+            ...(count($bookedTimes) > 0 ? ['booked' => array_values($bookedTimes)] : [])
+        ]);        
+    }
+
+
+    public function showPdf(){
+        $car = Cars::first();
+
+        $body = json_decode($car->body);
+        $technical_check = json_decode($car->technical_check);
+        $options = json_decode($car->options);
+        $diag = json_decode($car->diag);
+        $vip_services = json_decode($car->vip_services);
+
+        $customer = Customer::find($car->customer_id);
+
+        $date = PersianHelper::convertEnglishToPersian($customer->date);
+
+
+        return view('pdf', compact('car', 'customer', 'technical_check', 'options', 'diag', 'vip_services', 'date', 'body'));
     }
 }

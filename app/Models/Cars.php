@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use SebastianBergmann\CodeCoverage\Report\Xml\Report;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cars extends Model
 {
@@ -40,5 +41,9 @@ class Cars extends Model
             'diag' => $diag,
             'vip_services' => $vip_services,
         ];
+    }
+
+    public function reports(){
+        return $this->hasMany(Report::class);
     }
 }

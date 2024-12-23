@@ -26,7 +26,7 @@
     <!-- Date Picker -->
     <link rel="stylesheet" href="https://unpkg.com/persian-datepicker@latest/dist/css/persian-datepicker.css">
     <script src="https://unpkg.com/persian-date@latest/dist/persian-date.js"></script>
-    <script src="https://unpkg.com/persian-datepicker@latest/dist/js/persian-datepicker.js"></script>
+    <script src="https://unpkg.com/persian-datepicker@latest/dist/js/persian-datepicker.js"></script> 
 </head>
 <body class="font-sans antialiased">
     <div class="flex min-h-screen bg-gray">

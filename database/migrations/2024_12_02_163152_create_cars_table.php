@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('customer_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('image')->nullable();
-            $table->boolean("report")->default(false);
             $table->timestamps();
         });
     }

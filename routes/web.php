@@ -60,6 +60,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
         Route::get('customers/create', [CustomerController::class, 'create'])->name('customers.create');
         Route::post('customers/create', [CustomerController::class, 'store'])->name('customers.store');
+        Route::get('/available-times', [CustomerController::class, 'getAvailableTimes']);
 
     });
 
