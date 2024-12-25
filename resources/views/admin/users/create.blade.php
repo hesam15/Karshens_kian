@@ -3,7 +3,7 @@
 @section('title', 'افزودن کاربر جدید')
 
 @section('content')
-<div class="max-w-7xl mx-auto">
+<div class="max-w-7xl mx-auto py-4 md:py-6">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h5 class="text-xl font-semibold text-gray-800">افزودن کاربر جدید</h5>
@@ -59,7 +59,7 @@
                         <select name="role" 
                                 class="w-full px-4 py-2.5 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-colors duration-200">
                             @foreach($roles as $role)
-                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                <option value="{{ $role->id }}">{{ $role->persian_name }}</option>
                             @endforeach
                         </select>
                         @error('role')

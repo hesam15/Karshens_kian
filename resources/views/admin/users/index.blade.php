@@ -3,7 +3,7 @@
 @section('title', 'داشبورد')
 
 @section('content')
-<div class="max-w-7xl mx-auto">
+<div class="max-w-7xl mx-auto py-4 md:py-6">
     @include('layouts.label')
     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="flex justify-between items-center px-6 py-4 border-b border-gray-200 bg-gray-100">
@@ -31,7 +31,7 @@
                             <td class="px-4 py-2">
                                 @foreach($user->roles as $role)
                                 <span class="inline-flex items-center px-2 py-1 rounded-lg text-sm font-medium bg-blue-100 text-blue-800">
-                                    {{ $role->name }}
+                                    {{ $role->persian_name }}
                                 </span>
                                 @endforeach
                             </td>

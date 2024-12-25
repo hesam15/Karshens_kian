@@ -10,8 +10,9 @@ class OptionsController extends Controller
 {
     public function index(){
         $options = Options::all();
-        $values = Options::pluck('values')->toArray();
-        return view('admin.options.index', ['options' => $options]);
+        $suboptions = Options::pluck('values')->toArray();
+
+        return view('admin.options.index', compact('options', 'suboptions'));
     }
 
     public function create(){
@@ -43,5 +44,11 @@ class OptionsController extends Controller
         $option->save();
     
         return redirect()->back()->with('success', true);
+    }
+
+    public function edit($id){
+        $option = Options::where('id', $id)->first();
+        $values = json_decode($option->values, true);
+        return view('admin.options.editOption', compact('option', 'values'));
     }
 }

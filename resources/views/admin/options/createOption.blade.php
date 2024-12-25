@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'داشبورد')
+@section('title', 'ثبت خدمت')
 
 @section('content')
-<div class="max-w-4xl mx-auto mt-6">
+<div class="max-w-4xl mx-auto py-4 md:py-6">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 bg-gray-100">
             <h5 class="text-xl font-semibold text-gray-800">ثبت خدمت</h5>

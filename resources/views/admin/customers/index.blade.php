@@ -3,7 +3,7 @@
 @section('title', 'داشبورد')
 
 @section('content')
-<div class="max-w-7xl mx-auto">
+<div class="max-w-7xl mx-auto py-4 md:py-6">
     @include('layouts.label')
     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="flex justify-between items-center px-6 py-4 border-b border-gray-200 bg-gray-100">

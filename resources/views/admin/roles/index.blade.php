@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="max-w-7xl mx-auto">
+<div class="max-w-7xl mx-auto py-4 md:py-6">
     @include('layouts.label')
 
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">

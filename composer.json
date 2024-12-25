@@ -7,6 +7,8 @@
     "require": {
         "php": "^8.2",
         "codedredd/laravel-soap": "^3.0",
+        "diglactic/laravel-breadcrumbs": "^9.0",
+        "jenssegers/agent": "^2.6",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "misterspelik/laravel-pdf": "^2.1",

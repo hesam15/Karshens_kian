@@ -31,7 +31,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         Route::get('options', [OptionsController::class, 'index'])->name('show.options');
         Route::get('options/create', [OptionsController::class, 'create'])->name('create.option');
         Route::post('options/create', [OptionsController::class, 'store'])->name('store.option');
-        Route::get("options/{id}/update", [OptionsController::class, 'edit'])->name('edit.option');
+        Route::get("options/{id}", [OptionsController::class, 'edit'])->name('edit.option');
+        Route::post("options/{id}/update", [OptionsController::class, 'update'])->name('update.option');
 
         //users
         Route::get('users', [UserController::class, 'index'])->name('users.index');
