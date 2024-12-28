@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reports', function (Blueprint $table) {
-            $table->id();
-            $table->json("reports")->nullable();
-            $table->text('description')->nullable();
-            $table->foreignId('car_id')->constrained()->cascadeOnDelete();
+        Schema::create('tokens', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('code', 4);
+            $table->string('user_phone');
+            $table->boolean('used')->default(false);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('tokens');
     }
 };

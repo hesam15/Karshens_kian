@@ -43,6 +43,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         Route::post('users/{user}/edit', [UserController::class, 'update'])->name('users.update');
         //asign role to user
         Route::post('users/{user}/asignRole', [UserController::class, 'assignRole'])->name('users.asignRole');
+        //verify phone
 
         //roles
         Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
@@ -83,6 +84,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 
 require __DIR__.'/auth.php';

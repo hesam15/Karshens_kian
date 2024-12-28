@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>ثبت نام</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +17,7 @@
 </head>
 <body class="bg-gray-50">
     <div class="flex flex-col lg:flex-row min-h-screen">
+        @include("layouts.label")
         <!-- Form Section -->
         <div class="w-full lg:w-1/2 lg:fixed lg:top-0 lg:right-0 min-h-screen bg-white">
             <div class="flex items-center justify-center min-h-screen px-4 lg:px-6 py-8 lg:py-0">
@@ -27,7 +29,7 @@
 
                     <hr class="my-6 border-gray-200">
 
-                    <form method="POST" action="{{ route('register') }}" class="space-y-6">
+                    <form method="POST" action="{{ route("registerUser") }}" class="space-y-6">
                         @csrf
                         <div class="space-y-6">
                             <div>
@@ -49,6 +51,17 @@
                                 </div>
                                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
                             </div>
+                            
+                            <div class="relative">
+                                <input type="phone" id="phone" name="phone" value="{{ old('phone') }}"
+                                    placeholder="شماره تلفن خود را وارد کنید"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400">
+                                <button type="button" 
+                                    class="absolute left-2 top-1/2 -translate-y-1/2 px-4 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 text-sm" id="verify-phone">
+                                    ارسال کد تایید
+                                </button>
+                            </div>                            
+
 
                             <div>
                                 <label for="password" class="block text-sm font-medium text-gray-700 mb-1">رمز عبور</label>
@@ -91,5 +104,7 @@
                 class="w-full h-screen object-cover">
         </div>
     </div>
+    
+    @vite('resources/js/verify-code.js')
 </body>
 </html>

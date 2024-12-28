@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Permisions;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Token;
+use App\Models\Permisions;
 use Illuminate\Http\Request;
+use App\Services\Notification;
+use Illuminate\Contracts\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
 
 class UserController extends Controller
 {
@@ -48,7 +52,6 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index');
     }
-
 
 //Asign Role
     // public function addRole(Request $request, User $user){

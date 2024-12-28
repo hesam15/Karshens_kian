@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Token;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
 
 class RegisteredUserController extends Controller
 {
@@ -29,24 +30,87 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $token = Token::where("user_phone", $request->phone)->first();
+        $token = $token->used;
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'phone' => ['required', 'max:11' ,'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+        if($token){
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'password' => Hash::make($request->password),
+            ]);
+    
+            $user->assignRole('1');
+    
+            event(new Registered($user));
+    
+            Auth::login($user);
+    
+            return redirect(route('home', absolute: false));
+        }
+
+        return redirect()->back()->with('error', 'کد احراز هویت تایید نشده است.');
+    }
+
+    //Verify Phone
+    public function sendVerify(Request $request)
+    {
+        $request->validate([
+            'phone' => ['required', 'max:11' ,'unique:'.User::class],
         ]);
 
-        $user->assignRole('1');
+        $data = $request->only('phone');
 
-        event(new Registered($user));
+        $token = Token::where("user_phone", $data['phone'])->first();
 
-        Auth::login($user);
+        if($token){
+            $token->delete();
+        }
 
-        return redirect(route('home', absolute: false));
+        $token = Token::create([
+            'user_phone' => $data['phone'],
+        ]);
+
+        if ($token->sendCode($data['phone'], $token->code)) {
+            session()->put("code_id", $token->id);
+            session()->put("user_phone", $data['phone']);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'کد تایید ارسال شد'
+            ]);
+        }
+
+        $token->delete();
+        
+        return response()->json([
+            'success' => false,
+            'message' => 'خطا در ارسال کد تایید'
+        ], 422);
+    }
+
+    public function verifyCode(Request $request) {
+        if (!session()->has('code_id') || !session()->has('user_phone'))
+            redirect()->route('loginPhone');
+        $token = Token::where('user_phone', session()->get('user_phone'))->find(session()->get('code_id'));
+        if (!$token || empty($token->id))
+            redirect()->route('loginPhone');
+        if (!$token->isValid())
+            redirect()->back()->withErrors('The code is either expired or used.');
+        if ($token->code !== $request->input('code'))
+            redirect()->back()->withErrors('The code is wrong.');
+        $token->update([
+            'used' => true
+        ]);
+        
+        return true;
     }
 }

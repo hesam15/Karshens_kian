@@ -14,7 +14,7 @@ trait HasRoles{
     }
 
     public function assignRole($roles){
-        $this->roles()->syncWithoutDetaching($roles);
+        $this->roles()->sync($roles);
 
         return $this;
     }
