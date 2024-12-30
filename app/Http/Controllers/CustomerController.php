@@ -11,6 +11,7 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
 use App\Helpers\PersianHelper;
+use Illuminate\Support\Facades\Validator;
 
 use function Psl\Dict\flatten;
 
@@ -58,25 +59,37 @@ class CustomerController extends Controller
         return view("customer.form");
     }
     
-    public function store(Request $request, Customer $customer, Cars $cars){
+    public function store(Request $request){
         $date = PersianHelper::convertPersianToEnglish($request->date);
 
-        $customer::create([
-            "name"=> $request->name,
-            "mobile"=>$request->mobile,
+        Validator::make(['date' => $date], [
+            'date' => 'required|unique:'.Customer::class,
+        ]);
+
+        $request->validate([
+            'fullname' =>  ['required', 'string', 'max:255'],
+            'phone' => ['required', 'unique:customers'],
+            'car' => ['required'],
+            'time_slot' => ['required'],
+        ]);
+
+        if (Customer::where('date', '=', "$date $request->time_slot")->exists()) {
+            return redirect()->back()->withErrors("این تاریخ قبلا رزرو شده است.");
+        }
+
+        $customer = Customer::create([
+            "fullname"=>$request->fullname,
+            "phone"=>$request->phone,
             "car"=>$request->car,
-            "date"=> $date,
+            "date"=>"$date $request->time_slot",
         ]);
 
-        $cars->store( $cars ,$request, $customer );
-
-        $lastCar = $cars->all()->last();
-
-        $customer::latest()->first()->update([
-            'car_id'=>$lastCar->id,
+        Cars::create([
+            'name' => $request->car,
+            'customer_id' => $customer->id,
         ]);
 
-        return back()->with("success",true);
+        return back()->with("success","رزرو با موفقیت انجام شد.");
     }
 
     public function validate(Request $request){

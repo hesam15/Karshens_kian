@@ -1,3 +1,18 @@
+window.addEventListener('beforeunload', function(e) {
+    if (!window.location.pathname.includes('register')) {
+        resetVerificationForm();
+    }
+});
+
+document.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A') {
+        const href = e.target.getAttribute('href');
+        if (href && (href.includes('login') || !href.includes('register'))) {
+            resetVerificationForm();
+        }
+    }
+});
+
 document.getElementById('verify-phone').addEventListener('click', function() {
     const phoneNumber = document.getElementById('phone').value;
     const formData = new FormData();
@@ -12,7 +27,7 @@ document.getElementById('verify-phone').addEventListener('click', function() {
         if (response.ok) {
             saveStartTime();
             showVerificationForm();
-            startTimer(300);
+            startTimer();
         }
     })
     .catch(error => console.error('Error:', error));
@@ -39,21 +54,31 @@ function showVerificationForm() {
     document.getElementById('verify-phone').setAttribute('disabled', true);
 }
 
-function startTimer(duration) {
-    let timer = duration;
+function saveStartTime() {
+    const startTime = Date.now();
+    const endTime = startTime + (300 * 1000);
+    localStorage.setItem('verificationEndTime', endTime);
+    localStorage.setItem('phoneNumber', document.getElementById('phone').value);
+}
+
+function startTimer() {
     const timerDisplay = document.getElementById('timer');
+    const endTime = parseInt(localStorage.getItem('verificationEndTime'));
     
     const countdown = setInterval(() => {
-        const minutes = Math.floor(timer / 60);
-        const seconds = timer % 60;
-
-        timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
-        if (--timer < 0) {
+        const now = Date.now();
+        const remainingTime = Math.max(0, Math.floor((endTime - now) / 1000));
+        
+        if (remainingTime <= 0) {
             clearInterval(countdown);
             timerDisplay.textContent = 'زمان به پایان رسید';
             resetVerificationForm();
+            return;
         }
+
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+        timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     }, 1000);
 }
 
@@ -61,29 +86,24 @@ function resetVerificationForm() {
     document.getElementById('verification-form')?.remove();
     document.getElementById('phone').removeAttribute('readonly');
     document.getElementById('verify-phone').removeAttribute('disabled');
-    localStorage.removeItem('verificationStartTime');
+    localStorage.removeItem('verificationEndTime');
     localStorage.removeItem('phoneNumber');
 }
 
-function saveStartTime() {
-    localStorage.setItem('verificationStartTime', Date.now());
-    localStorage.setItem('phoneNumber', document.getElementById('phone').value);
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-    const startTime = localStorage.getItem('verificationStartTime');
+    const endTime = parseInt(localStorage.getItem('verificationEndTime'));
     const savedPhone = localStorage.getItem('phoneNumber');
     
-    if (startTime && savedPhone) {
-        const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-        const remainingTime = 300 - elapsedTime;
+    if (endTime && savedPhone) {
+        const now = Date.now();
+        const remainingTime = Math.max(0, Math.floor((endTime - now) / 1000));
         
         if (remainingTime > 0) {
             document.getElementById('phone').value = savedPhone;
             showVerificationForm();
-            startTimer(remainingTime);
+            startTimer();
         } else {
-            localStorage.removeItem('verificationStartTime');
+            localStorage.removeItem('verificationEndTime');
             localStorage.removeItem('phoneNumber');
         }
     }
@@ -105,6 +125,7 @@ document.addEventListener('click', function(e) {
         .then(response => {
             if (response.ok) {
                 alert('کد با موفقیت تایید شد');
+                resetVerificationForm();
             } else {
                 alert('کد وارد شده صحیح نمی‌باشد');
             }
@@ -113,5 +134,16 @@ document.addEventListener('click', function(e) {
             alert('خطا در ارسال درخواست');
             console.error('Error:', error);
         });
+    }
+});
+
+document.querySelector('form').addEventListener('submit', function(e) {
+    const verificationForm = document.getElementById('verification-form');
+    const verificationCode = document.querySelector('input[name="verification_code"]');
+    
+    if (verificationForm && !verificationCode.value) {
+        e.preventDefault();
+        alert('لطفا کد تایید را وارد کنید');
+        return false;
     }
 });

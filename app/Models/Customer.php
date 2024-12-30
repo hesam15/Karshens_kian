@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    protected $fillable = ['name', 'phone', 'date'];
+    protected $fillable = ['fullname', 'phone', 'date'];
 
     public function cars(){
         return $this->hasMany(Cars::class);

@@ -13,8 +13,10 @@ trait HasRoles{
         return role::where('name', $roles)->get();
     }
 
-    public function assignRole($roles){
-        $this->roles()->sync($roles);
+    public function assignRole($role){
+        $role = Role::where('name', $role)->first();
+
+        $this->roles()->sync($role->id);
 
         return $this;
     }

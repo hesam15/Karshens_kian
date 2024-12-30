@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 
+use function Laravel\Prompts\error;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -48,7 +50,7 @@ class RegisteredUserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
     
-            $user->assignRole('1');
+            $user->assignRole('admin');
     
             event(new Registered($user));
     
@@ -56,8 +58,9 @@ class RegisteredUserController extends Controller
     
             return redirect(route('home', absolute: false));
         }
+        
+        return redirect()->back()->with('error', 'کد احراز هویت تایید نشده است.')->withInput();
 
-        return redirect()->back()->with('error', 'کد احراز هویت تایید نشده است.');
     }
 
     //Verify Phone
@@ -104,9 +107,9 @@ class RegisteredUserController extends Controller
         if (!$token || empty($token->id))
             redirect()->route('loginPhone');
         if (!$token->isValid())
-            redirect()->back()->withErrors('The code is either expired or used.');
+            redirect()->back()->with('error' ,'کد منقضی شده است.');
         if ($token->code !== $request->input('code'))
-            redirect()->back()->withErrors('The code is wrong.');
+            redirect()->back()->with("error" ,'کد اشتباه است');
         $token->update([
             'used' => true
         ]);

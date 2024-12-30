@@ -15,19 +15,14 @@ class VerifyPhoneController extends Controller
         if (!session()->has('code_id') || !session()->has('user_phone'))
             redirect()->route('loginPhone');
         $token = Token::where('user_phone', session()->get('user_phone'))->find(session()->get('code_id'));
-        if (!$token || empty($token->id))
-            redirect()->route('loginPhone');
+        
         if (!$token->isValid())
-            redirect()->back()->withErrors('The code is either expired or used.');
+            redirect()->back()->withErrors('کد منقضی شده است یا استفاده شده است.');
         if ($token->code !== $request->input('code'))
-            redirect()->back()->withErrors('The code is wrong.');
+            redirect()->back()->withErrors('کد نادرست است.');
         $token->update([
             'used' => true
         ]);
-        $user = User::find(session()->get('user_phone'));
-        $rememberMe = session()->get('remember');
-        auth()->login($user, $rememberMe);
-        return redirect()->route('index');
     }
 
 }

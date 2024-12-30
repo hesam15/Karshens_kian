@@ -4,10 +4,8 @@
     </div>
 @endif
 
-@if($errors->any())
-    @foreach($errors->all() as $error)
+@if(Session("error"))
         <div class="p-4 mb-4 bg-red-500 text-white rounded-lg shadow">
-            {{ $error }}
+            {{ Session("error") }}
         </div>
-    @endforeach
 @endif

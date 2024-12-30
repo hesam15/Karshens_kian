@@ -11,7 +11,10 @@
             </div>
 
             <div class="p-4 md:p-6">
-                <form action="" method="POST" class="space-y-4">
+
+                @include('layouts.label')
+
+                <form action="{{route("customers.store")}}" method="POST" class="space-y-4">
                     @csrf
                     
                     <div class="grid md:grid-cols-2 gap-4 md:gap-6">
@@ -33,8 +36,8 @@
 
                         <!-- نوع خودرو -->
                         <div>
-                            <label for="car_type" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">نوع خودرو</label>
-                            <select name="car_type" id="car_type"
+                            <label for="car" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">نوع خودرو</label>
+                            <select name="car" id="car_type"
                                     class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                     required>
                                 <option value="">انتخاب کنید</option>

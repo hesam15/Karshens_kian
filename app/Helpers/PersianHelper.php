@@ -13,19 +13,7 @@ class PersianHelper
 
     public static function convertPersianToEnglish($string) 
     {      
-        $toString = str_replace(self::$persian, self::$english, $string);
-        $date = Jalalian::fromFormat('Y/m/d H:i', $toString)->toCarbon()->format('Y-m-d H:i');
-
-        $toString = explode(" " ,$toString);
-
-        $time = explode(":", $toString[1]);
-        if ($time[1] > 0 && $time[1] < 30) {
-            $time[1] = 0;
-        }
-        elseif ($time[1] > 30){
-            $time[0] = 1;
-        }
-
+        $date = str_replace(self::$persian, self::$english, $string);
 
         return $date;
     }

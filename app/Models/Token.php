@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Services\Notification;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Token extends Model
@@ -74,6 +75,10 @@ class Token extends Model
     }
     public function sendCode($phone, $code)
     {
+        Validator::make(['phone' => $phone], [
+            'phone' => 'required|unique:'.User::class,
+        ]);
+
         if (! $this->code) {
             $this->code = $this->generateCode();
         }
