@@ -17,115 +17,43 @@ use function Psl\Dict\flatten;
 
 class CustomerController extends Controller
 {
-    public function index(Customer $customers){
-        $customers = $customers::all();
-        $fromToTime = [8, 22];
-        dd($this->totalTimes($fromToTime));
+    public function index(){
+        $customers = Customer::all();
+
+        return view('admin.customers.index', compact('customers'));
     }
 
-    public function totalTimes(...$time){
-        $time = flatten($time);
-        $times = [$time[0].":00"];
-        $total = $time[1] - $time[0];
-        for($i = 1; $i < $total; $i++){
-            array_push($times, $time[0] + $i.":00");
-        }
-
-        return $times;
+    public function create(){
+        return view("admin.customers.create");
     }
-    
-    public function show($carId){
-        $car = Cars::find($carId);
-        $data = $car->attrs();
 
-        $customer = Customer::find($car->customer_id);
-
-        $date = PersianHelper::convertEnglishToPersian($customer->date);
-
-        return view("customer.report", [
-            'car' => $car,
-            'customer' => $customer,
-            'body' => $data['body'],
-            'technical_check' => $data['technical_check'],
-            'options' => $data['options'],
-            'diag' => $data['diag'],
-            'vip_services' => $data['vip_services'],
-            'date' => $date,
-        ]);
-    }
-    
-
-    public function form(){
-        return view("customer.form");
-    }
-    
     public function store(Request $request){
         $date = PersianHelper::convertPersianToEnglish($request->date);
 
-        Validator::make(['date' => $date], [
-            'date' => 'required|unique:'.Customer::class,
-        ]);
-
-        $request->validate([
-            'fullname' =>  ['required', 'string', 'max:255'],
-            'phone' => ['required', 'unique:customers'],
-            'car' => ['required'],
-            'time_slot' => ['required'],
-        ]);
-
-        if (Customer::where('date', '=', "$date $request->time_slot")->exists()) {
-            return redirect()->back()->withErrors("این تاریخ قبلا رزرو شده است.");
-        }
+        $this->validate($request);
 
         $customer = Customer::create([
             "fullname"=>$request->fullname,
             "phone"=>$request->phone,
-            "car"=>$request->car,
-            "date"=>"$date $request->time_slot",
         ]);
 
-        Cars::create([
-            'name' => $request->car,
-            'customer_id' => $customer->id,
-        ]);
-
-        return back()->with("success","رزرو با موفقیت انجام شد.");
+        return redirect(route("customers.index"))->with("success","مشتری با موفقیت اضافه شد.");
     }
 
-    public function validate(Request $request){
-        $request->validate([
-            'name' => 'required',
-            'phone' => 'required | unique:customers',
-            'car' => 'required',
-            'date' => 'required | unique:customers',
-        ]);
+    public function destroy($id){
+        $customer = Customer::find($id);
+        $customer->delete();
+
+        return back()->with("success","حذف با موفقیت انجام شد.");
     }
 
-    public function getAvailableTimes(Request $request)
-    {
-        $date = $request->date;
 
 
-        $allTimes = [
-            '09:00', '10:00', '11:00', '12:00',
-            '14:00', '15:00', '16:00', '17:00'
-        ];
-
-        $bookedTimes = Booking::where('date', $date)
-                            ->pluck('time_slot')
-                            ->toArray();
-
-        if(empty($bookedTimes)){
-            $availableTimes = $allTimes;
-        }
-        else{
-            $availableTimes = array_diff($allTimes, $bookedTimes);
-        }
-                
-        return response()->json([
-            'available' => array_values($availableTimes),
-            ...(count($bookedTimes) > 0 ? ['booked' => array_values($bookedTimes)] : [])
-        ]);        
+    public function validate($data){
+        $data->validate([
+            'fullname' =>  ['required', 'string', 'max:255'],
+            'phone' => ['required', 'unique:customers'],
+        ]);
     }
 
 

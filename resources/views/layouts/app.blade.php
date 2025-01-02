@@ -53,7 +53,7 @@
             </main>
         </div>
     </div>
-    @if(Route::current()->getName() == "customer.form")
+    @if(Route::current()->getName() == "booking.create")
         <script src="{{asset("js/datepicker.js")}}"></script>
     @endif
 </body>

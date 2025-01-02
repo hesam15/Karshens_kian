@@ -14,38 +14,39 @@
 
                 @include('layouts.label')
 
-                <form action="{{route("customers.store")}}" method="POST" class="space-y-4">
+                <form action="{{route("booking.store", $customer->id)}}" method="POST" class="space-y-4">
                     @csrf
                     
                     <div class="grid md:grid-cols-2 gap-4 md:gap-6">
                         <!-- نام و نام خانوادگی -->
                         <div>
-                            <label for="fullname" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">نام و نام خانوادگی</label>
-                            <input type="text" name="fullname" id="fullname"
-                                   class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                   required>
-                        </div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                نام و نام خانوادگی
+                            </label>
+                            <div class="text-base text-gray-900">
+                                {{ $customer->fullname }}
+                            </div>
+                        </div>                        
 
                         <!-- شماره تماس -->
                         <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">شماره تماس</label>
-                            <input type="tel" name="phone" id="phone"
-                                   class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                   required>
-                        </div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                شماره تلفن
+                            </label>
+                            <div class="text-base text-gray-900">
+                                {{ $customer->phone }}
+                            </div>
+                        </div>  
 
                         <!-- نوع خودرو -->
                         <div>
                             <label for="car" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">نوع خودرو</label>
-                            <select name="car" id="car_type"
-                                    class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    required>
-                                <option value="">انتخاب کنید</option>
-                                <option value="pride">پراید</option>
-                                <option value="samand">سمند</option>
-                                <option value="peugeot">پژو</option>
-                                <option value="dena">دنا</option>
-                            </select>
+                            <input type="text" 
+                            name="car_type" 
+                            id="car_type" 
+                            placeholder="نوع خودرو را وارد کنید"
+                            class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            required>                     
                         </div>
 
                         <!-- تاریخ -->
@@ -59,12 +60,11 @@
                     <!-- ساعت مراجعه -->
                     <div id="time-slots-container" class="hidden">
                         <label for="time_slot" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">ساعت مراجعه</label>
-                        <select name="time_slot" id="time_slot"
-                                class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                required>
-                            <option value="">در حال بارگذاری...</option>
-                        </select>
-                    </div>
+                        <div class="grid grid-cols-6 gap-2">
+                            <!-- Time slot buttons will be dynamically added here -->
+                        </div>
+                        <input type="hidden" name="time_slot" id="time_slot" required>
+                    </div>                                      
 
                     <!-- دکمه ثبت -->
                     <div class="pt-2">

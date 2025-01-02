@@ -87,22 +87,46 @@ Breadcrumbs::for('reports.edit', function (BreadcrumbTrail $trail, $report) {
     $trail->push("ویرایش گزارش", route('reports.edit', $report));
 });
 
-// Roles List
-Breadcrumbs::for('roles.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('home');
-    $trail->push('نقش‌ها', route('roles.index'));
-});
 
-// Create Role
-Breadcrumbs::for('roles.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('roles.index');
-    $trail->push('ایجاد نقش', route('roles.create')); 
-});
+//Roles
+    // Roles List
+    Breadcrumbs::for('roles.index', function (BreadcrumbTrail $trail) {
+        $trail->parent('home');
+        $trail->push('نقش‌ها', route('roles.index'));
+    });
 
-// Edit Role
-Breadcrumbs::for('roles.edit', function (BreadcrumbTrail $trail) {
-    $role = Role::where('id', request()->route('role')->id)->first();
+    // Create Role
+    Breadcrumbs::for('roles.create', function (BreadcrumbTrail $trail) {
+        $trail->parent('roles.index');
+        $trail->push('ایجاد نقش', route('roles.create')); 
+    });
 
-    $trail->parent('roles.index');
-    $trail->push("{$role->persian_name}", route('roles.edit', $role));
-});
+    // Edit Role
+    Breadcrumbs::for('roles.edit', function (BreadcrumbTrail $trail) {
+        $role = Role::where('id', request()->route('role')->id)->first();
+
+        $trail->parent('roles.index');
+        $trail->push("{$role->persian_name}", route('roles.edit', $role));
+    });
+
+//Customers
+    //Customer Index
+    Breadcrumbs::for('customers.index', function (BreadcrumbTrail $trail) {
+        $trail->parent('home');
+        $trail->push('مشتریان', route('customers.index'));
+    });
+
+    // Customer create
+    Breadcrumbs::for('customers.create', function (BreadcrumbTrail $trail) {
+        $trail->parent('customers.index');
+        $trail->push('ایجاد مشتری', route('customers.create'));
+    });
+
+    //Booking
+    //Bookings Index
+    Breadcrumbs::for('booking.create', function (BreadcrumbTrail $trail) {
+        $id = request()->route('id');
+
+        $trail->parent('customers.index');
+        $trail->push('رزرو', route('booking.create', $id));
+    });

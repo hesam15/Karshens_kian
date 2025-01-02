@@ -17,29 +17,15 @@ class Booking extends Model
         'status'
     ];
 
-    protected $casts = [
-        'date' => 'date',
-    ];
-
     // ارتباط با مشتری
     public function customer()
     {
         return $this->belongsTo(Customer::class);
     }
 
-    public function scopeActive($query)
-    {
-        return $query->where('status', 'active');
-    }
-
-    public function scopeForDate($query, $date)
-    {
-        return $query->whereDate('date', $date);
-    }
-
     public static function isTimeSlotAvailable($date, $timeSlot)
     {
-        return !self::where('date', $date)
+        return self::where('date', $date)
             ->where('time_slot', $timeSlot)
             ->where('status', 'active')
             ->exists();

@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->string('car_type');
-            $table->date('date');
+            $table->string('date');
             $table->string('time_slot');
             $table->enum('status', ['active', 'completed', 'cancelled'])->default('active');
             $table->timestamps();
