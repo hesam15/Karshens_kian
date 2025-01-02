@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use App\Models\Booking;
+use App\Services\DatePicker;
 use App\Services\Notification;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
@@ -11,13 +13,12 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\OptionsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
-use App\Models\Booking;
-use App\Services\DatePicker;
 use Illuminate\Notifications\Notification as NotificationsNotification;
 
 Route::middleware(['auth' , 'verified'])->group(function () {
-    Route::get('/', function () {return view('dashboard');})->name('home');
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
 
 
     Route::get("reportShow/{carId}",[CustomerController::class, 'show'])->name('show.customer.report');

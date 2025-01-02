@@ -22,21 +22,7 @@ class PersianHelper
         if(!$string){
             return "";
         }
-        $parts = explode(" ", $string);
-        
-        $date = trim($parts[0]);
-        $time = trim($parts[1]);
-        
-        $dateTime = $date . ' ' . $time;
-        
-        // Make sure there's no trailing data by using trim()
-        $dateTime = trim($dateTime);
-        
-        $date = Jalalian::fromCarbon(Carbon::parse($dateTime))->format('Y/m/d H:i');
-
-        $toString = str_replace(self::$english, self::$persian, $date);
-
-        $date = explode(" ", $toString);
+        $date = str_replace(self::$english, self::$persian, $string);
 
         return $date;
     }
