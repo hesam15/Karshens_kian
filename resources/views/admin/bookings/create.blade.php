@@ -11,12 +11,10 @@
             </div>
 
             <div class="p-4 md:p-6">
-
                 @include('layouts.label')
 
-                <form action="{{route("booking.store", $customer->id)}}" method="POST" class="space-y-4">
+                <form action="{{route("bookings.store", $customer->id)}}" method="POST" class="space-y-4">
                     @csrf
-                    
                     <div class="grid md:grid-cols-2 gap-4 md:gap-6">
                         <!-- نام و نام خانوادگی -->
                         <div>
@@ -26,7 +24,7 @@
                             <div class="text-base text-gray-900">
                                 {{ $customer->fullname }}
                             </div>
-                        </div>                        
+                        </div>
 
                         <!-- شماره تماس -->
                         <div>
@@ -36,24 +34,50 @@
                             <div class="text-base text-gray-900">
                                 {{ $customer->phone }}
                             </div>
-                        </div>  
+                        </div>
 
                         <!-- نوع خودرو -->
                         <div>
                             <label for="car" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">نوع خودرو</label>
-                            <input type="text" 
-                            name="car_type" 
-                            id="car_type" 
-                            placeholder="نوع خودرو را وارد کنید"
-                            class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            required>                     
+                            <input type="text"
+                                name="car_type"
+                                id="car_type"
+                                placeholder="نوع خودرو را وارد کنید"
+                                class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                        </div>
+
+                        <!-- رنگ خودرو -->
+                        <div>
+                            <label for="color" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">رنگ خودرو</label>
+                            <input type="text"
+                                name="color"
+                                id="color"
+                                placeholder="رنگ خودرو را وارد کنید"
+                                class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                        </div>
+
+                        <!-- پلاک خودرو -->
+                        <div>
+                            <label for="plate" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">پلاک خودرو</label>
+                            <div class="flex items-center gap-1 ltr w-[37rem]">
+                                <input type="text" maxlength="2" placeholder="ایران" name="plate_iran"
+                                    class="w-32 px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <input type="text" maxlength="3" placeholder="سه رقم" name="plate_three"
+                                    class="w-72 px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <input type="text" maxlength="1" placeholder="حرف" name="plate_letter"
+                                    class="w-28 px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <input type="text" maxlength="2" placeholder="دو رقم" name="plate_two"
+                                    class="w-32 px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>                                                                                                                                                                                         
                         </div>
 
                         <!-- تاریخ -->
                         <div>
                             <label for="datepicker" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">تاریخ مراجعه</label>
                             <input type="text" id="datepicker" name="date"
-                                   class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
+                                class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
                         </div>
                     </div>
 
@@ -64,12 +88,12 @@
                             <!-- Time slot buttons will be dynamically added here -->
                         </div>
                         <input type="hidden" name="time_slot" id="time_slot" required>
-                    </div>                                      
+                    </div>
 
                     <!-- دکمه ثبت -->
                     <div class="pt-2">
                         <button type="submit"
-                                class="w-full md:w-auto md:px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
+                            class="w-full md:w-auto md:px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
                             ثبت اطلاعات
                         </button>
                     </div>

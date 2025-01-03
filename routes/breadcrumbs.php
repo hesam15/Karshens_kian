@@ -9,6 +9,7 @@ use App\Models\User;
 // This import is also not required, and you could replace `BreadcrumbTrail $trail`
 //  with `$trail`. This is nice for IDE type checking and completion.
 use App\Models\Options;
+use App\Models\Customer;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
@@ -110,10 +111,17 @@ Breadcrumbs::for('reports.edit', function (BreadcrumbTrail $trail, $report) {
     });
 
 //Customers
-    //Customer Index
+    //Customer list
     Breadcrumbs::for('customers.index', function (BreadcrumbTrail $trail) {
         $trail->parent('home');
-        $trail->push('مشتریان', route('customers.index'));
+        $trail->push('لیست مشتریان', route('customers.index'));
+    });
+    // Customer show
+    Breadcrumbs::for('customers.show', function (BreadcrumbTrail $trail) {
+        $customer = Customer::where('fullname', request()->route('name'))->first();
+
+        $trail->parent('customers.index');
+        $trail->push("{$customer->fullname}", route('customers.show', ['name' => $customer->fullname]));
     });
 
     // Customer create
@@ -124,9 +132,9 @@ Breadcrumbs::for('reports.edit', function (BreadcrumbTrail $trail, $report) {
 
     //Booking
     //Bookings Index
-    Breadcrumbs::for('booking.create', function (BreadcrumbTrail $trail) {
+    Breadcrumbs::for('bookings.create', function (BreadcrumbTrail $trail) {
         $id = request()->route('id');
 
         $trail->parent('customers.index');
-        $trail->push('رزرو', route('booking.create', $id));
+        $trail->push('رزرو', route('bookings.create', $id));
     });

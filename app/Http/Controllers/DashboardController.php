@@ -7,6 +7,7 @@ use App\Models\Cars;
 use App\Models\Booking;
 use App\Models\Reports;
 use App\Models\Customer;
+use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
 use SebastianBergmann\CodeCoverage\Report\Xml\Report;
@@ -15,9 +16,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $today = Booking::todayBookings();
         // Get counts for stats cards
         $customersCount = Customer::count();
-        $todayBookings = Booking::whereDate('date', today())->count();
+        $todayBookings = Booking::whereDate('date', $today)->count();
         $reportsCount = Reports::count();
 
         // Get recent bookings

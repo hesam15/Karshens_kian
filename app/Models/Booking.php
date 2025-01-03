@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Hekmatinasser\Verta\Verta;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Booking extends Model
 {
@@ -29,5 +30,10 @@ class Booking extends Model
             ->where('time_slot', $timeSlot)
             ->where('status', 'active')
             ->exists();
+    }
+
+    public static function todayBookings(){
+        $today = Verta::now()->format('Y/m/d');
+        return $today;
     }
 }

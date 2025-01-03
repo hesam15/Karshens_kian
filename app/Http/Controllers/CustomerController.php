@@ -16,12 +16,24 @@ use Illuminate\Support\Facades\Validator;
 use function Psl\Dict\flatten;
 
 class CustomerController extends Controller
-{
-    public function index(){
+{  
+    public function list(){
         $customers = Customer::all();
 
-        return view('admin.customers.index', compact('customers'));
+        return view('admin.customers.list', compact('customers'));
     }
+
+    public function show(string $name)
+    {
+        $customer = Customer::where('fullname', $name)->first();
+    
+        $cars = Cars::where('customer_id', $customer->id)->get();
+        $bookings = Booking::where('customer_id', $customer->id)->get();
+
+        $registrationTime = Jalalian::fromCarbon(Carbon::parse($customer->created_at))->format('Y/m/d');
+    
+        return view("admin.customers.show", compact('customer', 'cars', 'bookings', 'registrationTime'));
+    }  
 
     public function create(){
         return view("admin.customers.create");
@@ -47,7 +59,18 @@ class CustomerController extends Controller
         return back()->with("success","حذف با موفقیت انجام شد.");
     }
 
+    public function update(Request $request,$id){
+        $customer = Customer::find($id);
 
+        $this->validate($request);
+
+        $customer->update([
+            "fullname"=>$request->fullname,
+            "phone"=>$request->phone,
+        ]);
+
+        return redirect(route("customers.index"))->with("success","ویرایش با موفقیت انجام شد.");
+    }
 
     public function validate($data){
         $data->validate([

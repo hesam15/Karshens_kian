@@ -7,7 +7,7 @@
     <div class="max-w-md md:max-w-7xl mx-auto">
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="px-4 py-3 md:px-6 md:py-4 border-b border-gray-200 bg-gray-100">
-                <h5 class="text-base md:text-xl font-semibold text-gray-800">فرم ثبت خودرو</h5>
+                <h5 class="text-base md:text-xl font-semibold text-gray-800">فرم ثبت نام مشتری</h5>
             </div>
 
             <div class="p-4 md:p-6">

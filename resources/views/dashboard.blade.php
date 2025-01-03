@@ -56,6 +56,7 @@
                                 <th class="px-4 py-2 text-right text-sm font-medium text-gray-500">تاریخ</th>
                                 <th class="px-4 py-2 text-right text-sm font-medium text-gray-500">ساعت</th>
                                 <th class="px-4 py-2 text-right text-sm font-medium text-gray-500">وضعیت</th>
+                                <th class="px-4 py-2 text-right text-sm font-medium text-gray-500">عملیات</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
@@ -63,16 +64,23 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-3 text-sm text-gray-900">{{ $booking->customer->fullname }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-900">{{ $booking->date }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-900">{{ $booking->time }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">{{ $booking->time_slot }}</td>
                                 <td class="px-4 py-3">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $booking->status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                                         {{ $booking->status === 'completed' ? 'تکمیل شده' : 'در انتظار' }}
                                     </span>
                                 </td>
+                                <td class="px-4 py-3">
+                                    <a href="" 
+                                       class="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                                        <span class="material-icons-round text-sm ml-1">assignment</span>
+                                        کارشناسی
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
-                    </table>
+                    </table>                    
                 </div>
             </div>
         </div>
@@ -87,16 +95,23 @@
                     <i class="material-icons-round text-blue-600 text-xl ml-3">person_add</i>
                     <span class="text-gray-700">ثبت مشتری جدید</span>
                 </a>
-                <a href="{{ route('booking.create', $booking->customer->id) }}" class="flex items-center px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
-                    <i class="material-icons-round text-green-600 text-xl ml-3">event_available</i>
-                    <span class="text-gray-700">ثبت نوبت جدید</span>
+                
+                <a href="{{ route('users.create') }}" class="flex items-center px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                    <i class="material-icons-round text-orange-600 text-xl ml-3">manage_accounts</i>
+                    <span class="text-gray-700">ثبت کاربر جدید</span>
                 </a>
-                {{-- <a href="{{ route('reports.create') }}" class="flex items-center px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
-                    <i class="material-icons-round text-purple-600 text-xl ml-3">note_add</i>
-                    <span class="text-gray-700">ثبت گزارش جدید</span>
-                </a> --}}
+        
+                <a href="{{ route('roles.create') }}" class="flex items-center px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                    <i class="material-icons-round text-purple-600 text-xl ml-3">admin_panel_settings</i>
+                    <span class="text-gray-700">ثبت نقش جدید</span>
+                </a>
+        
+                <a href="{{ route('option.create') }}" class="flex items-center px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                    <i class="material-icons-round text-green-600 text-xl ml-3">add_circle</i>
+                    <span class="text-gray-700">ثبت خدمت جدید</span>
+                </a>
             </div>
-        </div>
+        </div>               
     </div>
 </div>
 @endsection

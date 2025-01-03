@@ -17,7 +17,8 @@ class Cars extends Model
         'customer_id',
         'report_id',
         'image',
-        'report',
+        'color',
+        'license_plate',
     ];
 
     public function store($cars,$request,$customer){

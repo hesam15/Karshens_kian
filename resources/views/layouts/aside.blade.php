@@ -34,7 +34,7 @@
                             </a>
                             <a href="{{route('customers.create')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'customers.create' ? 'bg-gray-100' : '' }}">
                                 <i class="material-icons-round text-gray-500 text-lg ml-2">event</i>
-                                <span class="text-gray-700">ثبت مشتری</span>
+                                <span class="text-gray-700">ثبت نام مشتری</span>
                             </a>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                                 <i class="material-icons-round text-gray-500 text-lg ml-2">list</i>
                                 <span class="text-gray-700">نمایش خدمات</span>
                             </a>
-                            <a href="{{route('create.option')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'create.option' ? 'bg-gray-100' : '' }}">
+                            <a href="{{route('option.create')}}" class="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 {{ Route::currentRouteName() == 'create.option' ? 'bg-gray-100' : '' }}">
                                 <i class="material-icons-round text-gray-500 text-lg ml-2">add</i>
                                 <span class="text-gray-700">ایجاد خدمات</span>
                             </a>
