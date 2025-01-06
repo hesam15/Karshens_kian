@@ -4,6 +4,8 @@
 
 @section('content') 
 <div class="max-w-7xl mx-auto py-6 px-4">  
+    @include('layouts.label')
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Customer Info Card -->
         <div class="bg-white rounded-xl shadow-lg p-6">
@@ -129,7 +131,7 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-3 text-gray-900">{{ $booking->date }}</td>
                                 <td class="px-4 py-3 text-gray-900">{{ $booking->time_slot }}</td>
-                                <td class="px-4 py-3 text-gray-900">{{ $booking->car_type }}</td>
+                                <td class="px-4 py-3 text-gray-900">{{ $booking->car->name }}</td>
                                 <td class="px-4 py-3">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $booking->status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                                         {{ $booking->status === 'completed' ? 'تکمیل شده' : 'در انتظار' }}

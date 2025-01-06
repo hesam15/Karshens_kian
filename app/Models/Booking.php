@@ -12,16 +12,18 @@ class Booking extends Model
 
     protected $fillable = [
         'customer_id',
-        'car_type',
+        'car_id',
         'date',
         'time_slot',
         'status'
     ];
 
-    // ارتباط با مشتری
-    public function customer()
-    {
+    public function customer(){
         return $this->belongsTo(Customer::class);
+    }
+
+    public function car(){
+        return $this->belongsTo(Cars::class);
     }
 
     public static function isTimeSlotAvailable($date, $timeSlot)

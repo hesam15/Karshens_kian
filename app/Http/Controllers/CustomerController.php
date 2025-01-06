@@ -17,8 +17,13 @@ use function Psl\Dict\flatten;
 
 class CustomerController extends Controller
 {  
-    public function list(){
-        $customers = Customer::all();
+    public function list(Request $request, Customer $customers){
+        $customers = $customers->all();
+
+        if(request()->has('search')){
+            $search = $request->search;
+            $customers = $this->search($search);
+        }
 
         return view('admin.customers.list', compact('customers'));
     }
@@ -28,7 +33,8 @@ class CustomerController extends Controller
         $customer = Customer::where('fullname', $name)->first();
     
         $cars = Cars::where('customer_id', $customer->id)->get();
-        $bookings = Booking::where('customer_id', $customer->id)->get();
+        
+        $bookings = Booking::with('car')->where('customer_id', $customer->id)->get();
 
         $registrationTime = Jalalian::fromCarbon(Carbon::parse($customer->created_at))->format('Y/m/d');
     
@@ -79,6 +85,13 @@ class CustomerController extends Controller
         ]);
     }
 
+    public function search($search){
+        $customers = Customer::where('fullname', 'like', '%' . $search . '%')
+            ->orwhere('phone', 'like', '%' . $search . '%')
+            ->get();
+        
+        return $customers;
+    }
 
     public function showPdf(){
         $car = Cars::first();

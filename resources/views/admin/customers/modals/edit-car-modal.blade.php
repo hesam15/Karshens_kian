@@ -11,7 +11,6 @@
             <div class="p-4">
                 <form action="{{ route('cars.update', $car->id) }}" method="POST">
                     @csrf
-                    @method('PATCH')
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-4">
                             <label for="name{{ $car->id }}" class="block text-sm font-medium text-gray-700 mb-1">نوع خودرو</label>
@@ -20,16 +19,19 @@
                         </div>
                         <div class="col-span-4">
                             <label for="plate{{ $car->id }}" class="block text-sm font-medium text-gray-700 mb-1">پلاک</label>
+                            @php
+                                $license_plate = explode('-', $car->license_plate);
+                            @endphp
                             <div class="flex items-center gap-1 ltr">
-                                <input type="text" maxlength="2" placeholder="ایران" name="plate_iran" value="{{ substr($car->plate_number, 0, 2) }}"
+                                <input type="text" maxlength="2" placeholder="ایران" name="plate_iran" value="{{ $license_plate[3] }}"
                                     class="w-16 px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <input type="text" maxlength="3" placeholder="سه رقم" name="plate_three" value="{{ substr($car->plate_number, 3, 3) }}"
+                                <input type="text" maxlength="3" placeholder="سه رقم" name="plate_three" value="{{ $license_plate[2] }}"
                                     class="w-20 px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <input type="text" maxlength="1" placeholder="حرف" name="plate_letter" value="{{ substr($car->plate_number, 2, 1) }}"
+                                <input type="text" maxlength="1" placeholder="حرف" name="plate_letter" value="{{ $license_plate[1] }}"
                                     class="w-12 px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <input type="text" maxlength="2" placeholder="دو رقم" name="plate_two" value="{{ substr($car->plate_number, 6, 2) }}"
+                                <input type="text" maxlength="2" placeholder="دو رقم" name="plate_two" value="{{ $license_plate[0] }}"
                                     class="w-16 px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            </div>
+                            </div>                            
                         </div>                        
                         <div class="col-span-2">
                             <label for="color{{ $car->id }}" class="block text-sm font-medium text-gray-700 mb-1">رنگ</label>

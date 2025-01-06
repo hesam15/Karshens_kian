@@ -47,4 +47,12 @@ class Cars extends Model
     public function reports(){
         return $this->hasMany(Report::class);
     }
+
+    public function bookings(){
+        return $this->hasMany(Booking::class);
+    }
+
+    public function customer(){
+        return $this->belongsTo(Customer::class);
+    }
 }

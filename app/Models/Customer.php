@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Cars;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
@@ -15,5 +16,5 @@ class Customer extends Model
 
     public function bookings(){
         return $this->hasMany(Booking::class);
-    }
+    }  
 }

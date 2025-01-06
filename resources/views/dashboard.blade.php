@@ -62,7 +62,7 @@
                         <tbody class="divide-y divide-gray-200">
                             @foreach($recentBookings as $booking)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-3 text-sm text-gray-900">{{ $booking->customer->fullname }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-900"><a href="{{route("customers.show" , $booking->customer->fullname)}}">{{ $booking->customer->fullname }}</a></td>
                                 <td class="px-4 py-3 text-sm text-gray-900">{{ $booking->date }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-900">{{ $booking->time_slot }}</td>
                                 <td class="px-4 py-3">

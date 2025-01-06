@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
-            $table->string('car_type');
+            $table->foreignId('customer_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('car_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('date');
             $table->string('time_slot');
             $table->enum('status', ['active', 'completed', 'cancelled'])->default('active');
