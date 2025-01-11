@@ -4,8 +4,7 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto py-4 md:py-6">
-    @include('layouts.label')
-    @include('layouts.confirmDeleteModal')
+    <x-errors-success-label />
 
     <!-- Customers List -->
     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
@@ -51,11 +50,11 @@
                             <td class="px-4 py-2 text-base text-gray-900 w-1/5">{{ $customer->phone }}</td>
                             <td class="px-4 py-2 text-base text-gray-900 w-1/5">
                                 <div class="flex items-center gap-2">
-                                    <a href="{{ route('customers.create', $customer->id) }}" class="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors duration-200">
+                                    <a href="{{ route('customers.bookings', $customer->fullname) }}" class="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors duration-200">
                                         <i class="material-icons-round text-sm">list_alt</i>
                                         <span class="text-xs mr-0.5">تمام نوبت ها</span>
                                     </a>
-                                    <a href="{{ route('bookings.create', $customer->id) }}" class="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors duration-200">
+                                    <a href="{{ route('bookings.create', $customer->fullname) }}" class="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors duration-200">
                                         <i class="material-icons-round text-sm">event_available</i>
                                         <span class="text-xs mr-0.5">نوبت جدید</span>
                                     </a>
@@ -71,10 +70,10 @@
                                         <i class="material-icons-round text-sm">edit</i>
                                         <span class="text-xs mr-0.5">ویرایش</span>
                                     </button>
-                                    <button class="inline-flex items-center px-2 py-1 bg-rose-100 text-rose-800 rounded hover:bg-rose-200 transition-colors duration-200 delete-btn" data-route="{{ route('customers.destroy', $customer->id) }}">
+                                    <button class="delete-btn inline-flex items-center px-2 py-1 bg-rose-100 text-rose-800 rounded hover:bg-rose-200 transition-colors duration-200" data-route="{{route("customers.destroy", $customer->id)}}" data-type="customer">
                                         <i class="material-icons-round text-sm">delete</i>
                                         <span class="text-xs mr-0.5">حذف</span>
-                                    </button>
+                                    </button>                                                    
                                 </div>
                             </td>
                         </tr>
@@ -152,4 +151,6 @@
         </div>
     </div>
 </div>
+
+<x-delete-modal />
 @endsection

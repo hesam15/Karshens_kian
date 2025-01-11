@@ -2,6 +2,8 @@
 namespace App\Services;
 
 use App\Models\Booking;
+use Morilog\Jalali\Jalalian;
+use App\Helpers\PersianHelper;
 
     use Psl\Dict\flatten;
     use Illuminate\Http\Request;
@@ -9,18 +11,17 @@ use App\Models\Booking;
     class DatePicker {
         public function getAvailableTimes(Request $request)
         {
-            $date = $request->date;
-            
+            $date = PersianHelper::convertPersianToEnglish($request->date);
+            $date = Jalalian::fromFormat('Y/m/d', $date)->toCarbon()->format('Y-m-d');
+                        
             $times = [8 , 17];
-            // $allTimes = allTimes($times);
 
-    
             $allTimes = $this->allTimes($times);
     
             $bookedTimes = Booking::where('date', $date)
                                 ->pluck('time_slot')
                                 ->toArray();
-    
+                
             if(empty($bookedTimes)){
                 $availableTimes = $allTimes;
             }

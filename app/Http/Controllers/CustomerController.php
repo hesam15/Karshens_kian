@@ -30,15 +30,19 @@ class CustomerController extends Controller
 
     public function show(string $name)
     {
-        $customer = Customer::where('fullname', $name)->first();
-    
-        $cars = Cars::where('customer_id', $customer->id)->get();
+        $customer = Customer::where('fullname', $name)->with('cars', 'bookings')->first();
         
-        $bookings = Booking::with('car')->where('customer_id', $customer->id)->get();
-
         $registrationTime = Jalalian::fromCarbon(Carbon::parse($customer->created_at))->format('Y/m/d');
-    
-        return view("admin.customers.show", compact('customer', 'cars', 'bookings', 'registrationTime'));
+        
+        foreach ($customer->bookings as $booking) {
+            $booking->date = Jalalian::fromCarbon(Carbon::parse($booking->date))->format('Y/m/d');
+        }
+
+        foreach ($customer->cars as $car) {
+            $car->license_plate = explode('-', $car->license_plate);
+        }
+        
+        return view("admin.customers.show", compact('customer', 'registrationTime'));
     }  
 
     public function create(){
@@ -62,7 +66,7 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         $customer->delete();
 
-        return back()->with("success","حذف با موفقیت انجام شد.");
+        return redirect(route('customers.index'))->with("success","حذف مشتری با موفقیت انجام شد.");
     }
 
     public function update(Request $request,$id){
@@ -93,72 +97,72 @@ class CustomerController extends Controller
         return $customers;
     }
 
-    public function showPdf(){
-        $car = Cars::first();
+    // public function showPdf(){
+    //     $car = Cars::first();
 
-        $body = json_decode($car->body);
-        $technical_check = json_decode($car->technical_check);
-        $options = json_decode($car->options);
-        $diag = json_decode($car->diag);
-        $vip_services = json_decode($car->vip_services);
+    //     $body = json_decode($car->body);
+    //     $technical_check = json_decode($car->technical_check);
+    //     $options = json_decode($car->options);
+    //     $diag = json_decode($car->diag);
+    //     $vip_services = json_decode($car->vip_services);
 
-        $customer = Customer::find($car->customer_id);
+    //     $customer = Customer::find($car->customer_id);
 
-        $date = PersianHelper::convertEnglishToPersian($customer->date);
+    //     $date = PersianHelper::convertEnglishToPersian($customer->date);
 
 
-        return view('pdf', compact('car', 'customer', 'technical_check', 'options', 'diag', 'vip_services', 'date', 'body'));
-    }
+    //     return view('pdf', compact('car', 'customer', 'technical_check', 'options', 'diag', 'vip_services', 'date', 'body'));
+    // }
 
-    public function pdf($carId)
-    {
-        $car = Cars::where('id', $carId)->first();
-        $body = json_decode($car->body);
-        $technical_check = json_decode($car->technical_check);
-        $options = json_decode($car->options);
-        $diag = json_decode($car->diag);
-        $vip_services = json_decode($car->vip_services);
+    // public function pdf($carId)
+    // {
+    //     $car = Cars::where('id', $carId)->first();
+    //     $body = json_decode($car->body);
+    //     $technical_check = json_decode($car->technical_check);
+    //     $options = json_decode($car->options);
+    //     $diag = json_decode($car->diag);
+    //     $vip_services = json_decode($car->vip_services);
 
-        $customer = Customer::find($car->customer_id);
+    //     $customer = Customer::find($car->customer_id);
         
-        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
-        $fontDirs = $defaultConfig['fontDir'];
+    //     $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+    //     $fontDirs = $defaultConfig['fontDir'];
     
-        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
-        $fontData = $defaultFontConfig['fontdata'];
+    //     $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+    //     $fontData = $defaultFontConfig['fontdata'];
         
-        $mpdf = new Mpdf([
-            'mode' => 'utf-8',
-            'format' => 'A4',
-            'default_font' => 'vazirmatn',
-            'margin_left' => 15,
-            'margin_right' => 15,
-            'fontDir' => array_merge([
-                public_path('fonts')
-            ]),
-            'fontdata' => [
-                'vazirmatn' => [
-                    'R' => 'Vazirmatn-Regular.ttf',
-                    'useOTL' => 0xFF,
-                    'useKashida' => 75,
-                ]
-            ],
-        ]);        
+    //     $mpdf = new Mpdf([
+    //         'mode' => 'utf-8',
+    //         'format' => 'A4',
+    //         'default_font' => 'vazirmatn',
+    //         'margin_left' => 15,
+    //         'margin_right' => 15,
+    //         'fontDir' => array_merge([
+    //             public_path('fonts')
+    //         ]),
+    //         'fontdata' => [
+    //             'vazirmatn' => [
+    //                 'R' => 'Vazirmatn-Regular.ttf',
+    //                 'useOTL' => 0xFF,
+    //                 'useKashida' => 75,
+    //             ]
+    //         ],
+    //     ]);        
 
-        // اضافه کردن استایل‌های ضروری
-        $customCSS = file_get_contents(public_path('css/pdf.css'));
-        $mpdf->WriteHTML($customCSS, \Mpdf\HTMLParserMode::HEADER_CSS);
+    //     // اضافه کردن استایل‌های ضروری
+    //     $customCSS = file_get_contents(public_path('css/pdf.css'));
+    //     $mpdf->WriteHTML($customCSS, \Mpdf\HTMLParserMode::HEADER_CSS);
     
-        $mpdf->SetDirectionality('rtl');
+    //     $mpdf->SetDirectionality('rtl');
 
-        $date = PersianHelper::convertEnglishToPersian($customer->date);
+    //     $date = PersianHelper::convertEnglishToPersian($customer->date);
         
-        $html = view('pdf', compact('car', 'customer', 'technical_check', 'options', 'diag', 'vip_services', 'date', 'body'))->render();
-        $mpdf->WriteHTML($html);
+    //     $html = view('pdf', compact('car', 'customer', 'technical_check', 'options', 'diag', 'vip_services', 'date', 'body'))->render();
+    //     $mpdf->WriteHTML($html);
 
-        return [
-            'pdf' => $mpdf->Output('car-report.pdf', 'D'),
-            'message' => back()->with('success', 'PDF generated successfully!'),
-        ];
-    }
+    //     return [
+    //         'pdf' => $mpdf->Output('car-report.pdf', 'D'),
+    //         'message' => back()->with('success', 'PDF generated successfully!'),
+    //     ];
+    // }
 }

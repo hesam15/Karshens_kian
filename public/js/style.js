@@ -65,42 +65,91 @@ function initializeSidebar() {
     }
 }
 
+function initializeModals() {
+    window.openModal = function(modalId) {
+        const modal = document.getElementById(modalId);
+        if (!modal) {
+            console.log('Modal not found:', modalId);
+            return;
+        }
+        
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+        
+        const handleOutsideClick = (e) => {
+            if (e.target === modal) {
+                closeModal(modalId);
+            }
+        };
+        
+        modal.addEventListener('click', handleOutsideClick);
+    };
+
+    window.closeModal = function(modalId) {
+        const modal = document.getElementById(modalId);
+        if (!modal) return;
+        
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    };
+
+    // Handle edit buttons
+    const editButtons = document.querySelectorAll('button[onclick*="editCarModal"]');
+    editButtons.forEach(button => {
+        button.onclick = (e) => {
+            e.preventDefault();
+            const modalId = button.getAttribute('onclick').match(/['"]([^'"]+)['"]/)[1];
+            openModal(modalId);
+        };
+    });
+
+    // Handle close buttons
+    const closeButtons = document.querySelectorAll('[onclick*="closeModal"]');
+    closeButtons.forEach(button => {
+        button.onclick = (e) => {
+            e.preventDefault();
+            const modalId = button.getAttribute('onclick').match(/['"]([^'"]+)['"]/)[1];
+            closeModal(modalId);
+        };
+    });
+
+    initializeDeleteFunctionality();
+}
+
 function initializeDeleteFunctionality() {
     const deleteButtons = document.querySelectorAll('.delete-btn');
     const deleteModal = document.getElementById('deleteModal');
+    
     if (!deleteButtons.length || !deleteModal) return;
     
     deleteButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.onclick = function(e) {
             e.preventDefault();
             const route = this.dataset.route;
+            const type = this.dataset.type;
+            
             if (route) {
-                const form = document.getElementById('deleteForm');
+                const form = deleteModal.querySelector('#deleteForm');
+                const title = deleteModal.querySelector('h3');
+                const message = deleteModal.querySelector('p');
+                
                 form.action = route;
-                deleteModal.classList.remove('hidden');
+                
+                const types = {
+                    customer: 'مشتری',
+                    car: 'خودرو',
+                    booking: 'رزرو',
+                    report: 'گزارش',
+                    option: 'آپشن'
+                };
+                
+                const itemType = types[type] || 'آیتم';
+                title.textContent = `تایید حذف ${itemType}`;
+                message.textContent = `آیا از حذف این ${itemType} اطمینان دارید؟`;
+                
+                openModal('deleteModal');
             }
-        });
-    });
-
-    const closeModalBtn = document.getElementById('closeModal');
-    const cancelBtn = document.getElementById('cancelBtn');
-
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', () => {
-            deleteModal.classList.add('hidden');
-        });
-    }
-
-    if (cancelBtn) {
-        cancelBtn.addEventListener('click', () => {
-            deleteModal.classList.add('hidden');
-        });
-    }
-
-    deleteModal.addEventListener('click', (e) => {
-        if (e.target === deleteModal) {
-            deleteModal.classList.add('hidden');
-        }
+        };
     });
 }
 
@@ -194,32 +243,4 @@ function updateButtonStates() {
     addButton.classList.toggle('opacity-50', fields.length >= 10);
     removeButton.disabled = fields.length <= 1;
     removeButton.classList.toggle('opacity-50', fields.length <= 1);
-}
-
-function initializeModals() {
-    window.openModal = function(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
-    }
-
-    window.closeModal = function(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
-    }
-
-    document.addEventListener('click', function(event) {
-        const modals = document.querySelectorAll('[id^="modal"]');
-        modals.forEach(modal => {
-            const modalContent = modal.querySelector('.bg-white');
-            if (modal.contains(event.target) && !modalContent.contains(event.target)) {
-                closeModal(modal.id);
-            }
-        });
-    });
 }

@@ -4,6 +4,8 @@
 
 @section('content')
 <div class="min-h-screen p-4 md:p-6">
+    <x-errors-success-label />
+
     <div class="max-w-md md:max-w-7xl mx-auto">
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="px-4 py-3 md:px-6 md:py-4 border-b border-gray-200 bg-gray-100">
@@ -11,7 +13,6 @@
             </div>
 
             <div class="p-4 md:p-6">
-                @include('layouts.label')
                 <form action="{{route('customers.store')}}" method="POST">
                     @csrf
                     <div class="grid grid-cols-12 gap-4 md:gap-6 items-end">

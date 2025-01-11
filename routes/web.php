@@ -61,9 +61,13 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         //Customers
         Route::prefix('customers')->group(function () {
             Route::get('/list', [CustomerController::class, 'list'])->name('customers.index');
+
             Route::get('/create', [CustomerController::class, 'create'])->name('customers.create');
             Route::post('/store', [CustomerController::class, 'store'])->name('customers.store');
+
             Route::get('/{name}', [CustomerController::class, 'show'])->name('customers.show');
+            Route::get('/{name}/bookings', [BookingController::class, 'list'])->name('customers.bookings');
+
             Route::post('/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
             Route::post('/{id}/update', [CustomerController::class, 'update'])->name('customers.update');
         }); 
@@ -73,23 +77,22 @@ Route::middleware(['auth' , 'verified'])->group(function () {
             Route::get('/list', [BookingController::class, 'index'])->name('bookings.index');
             // Route::get('/{id}', [BookingController::class, 'show'])->name('bookings.show');
 
-            Route::get('/{id}/create', [BookingController::class, 'create'])->name('bookings.create');
-            Route::post('/{id}/store', [BookingController::class, 'store'])->name('bookings.store');
+            Route::get('/{name}/create', [BookingController::class, 'create'])->name('bookings.create');
+            Route::post('/{name}/store', [BookingController::class, 'store'])->name('bookings.store');
 
             Route::post('/{id}/update', [BookingController::class, 'update'])->name('bookings.update');
-
             Route::post('/{id}/delete', [BookingController::class, 'destroy'])->name('bookings.destroy');
 
-            Route::post('/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
             Route::post('/{id}/updateStatus', [BookingController::class, 'updateStatus'])->name('bookings.updateStatus');
         });
 
         //Cars
         Route::prefix('cars')->group(function () {
             Route::get('/list', [CarController::class, 'index'])->name('cars.index');
-            Route::get('/create', [CarController::class, 'create'])->name('cars.create');
+
+            Route::get('{name}/create', [CarController::class, 'create'])->name('cars.create');
             Route::post('/store', [CarController::class, 'store'])->name('cars.store');
-            Route::get('/{id}', [CarController::class, 'show'])->name('cars.show');
+
             Route::post('/{id}/update', [CarController::class, 'update'])->name('cars.update');
             Route::post('/{id}/delete', [CarController::class, 'destroy'])->name('cars.destroy');
         });

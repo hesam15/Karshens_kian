@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\PersianHelper;
+use Carbon\Carbon;
 use App\Models\Cars;
 use App\Models\Booking;
 use App\Models\Reports;
 use App\Models\Customer;
-use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
+use App\Helpers\PersianHelper;
+use Hekmatinasser\Verta\Facades\Verta;
 use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 class DashboardController extends Controller
@@ -29,7 +30,7 @@ class DashboardController extends Controller
             ->take(5)
             ->get()
             ->map(function($booking) {
-                PersianHelper::convertEnglishToPersian($booking->date);
+                $booking->date = Jalalian::fromCarbon(Carbon::parse($booking->date))->format('Y/m/d');
                 return $booking;
             });
 

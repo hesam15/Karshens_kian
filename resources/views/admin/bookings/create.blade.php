@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
-@section('title', 'فرم ثبت خودرو')
+@section('title', 'فرم رزرواسیون')
 
 @section('content')
 <div class="min-h-screen p-4 md:p-6">
     <div class="max-w-md md:max-w-7xl mx-auto">
+        <x-errors-success-label />
+
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="px-4 py-3 md:px-6 md:py-4 border-b border-gray-200 bg-gray-100">
-                <h5 class="text-base md:text-xl font-semibold text-gray-800">فرم ثبت خودرو</h5>
+                <h5 class="text-base md:text-xl font-semibold text-gray-800">فرم رزرواسیون</h5>
             </div>
 
             <div class="p-4 md:p-6">
-                @include('layouts.label')
-
-                <form action="{{route("bookings.store", $customer->id)}}" method="POST" class="space-y-4">
+                <form action="{{route("bookings.store", $customer->fullname)}}" method="POST" class="space-y-4">
                     @csrf
                     <div class="grid md:grid-cols-2 gap-4 md:gap-6">
                         <!-- نام و نام خانوادگی -->
@@ -38,46 +38,37 @@
 
                         <!-- نوع خودرو -->
                         <div>
-                            <label for="car" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">نوع خودرو</label>
-                            <input type="text"
-                                name="car_type"
-                                id="car_type"
-                                placeholder="نوع خودرو را وارد کنید"
-                                class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                required>
-                        </div>
-
-                        <!-- رنگ خودرو -->
-                        <div>
-                            <label for="color" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">رنگ خودرو</label>
-                            <input type="text"
-                                name="color"
-                                id="color"
-                                placeholder="رنگ خودرو را وارد کنید"
-                                class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                required>
-                        </div>
-
-                        <!-- پلاک خودرو -->
-                        <div>
-                            <label for="plate" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">پلاک خودرو</label>
-                            <div class="flex items-center gap-1 ltr w-[37rem]">
-                                <input type="text" maxlength="2" placeholder="ایران" name="plate_iran"
-                                    class="w-32 px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <input type="text" maxlength="3" placeholder="سه رقم" name="plate_three"
-                                    class="w-72 px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <input type="text" maxlength="1" placeholder="حرف" name="plate_letter"
-                                    class="w-28 px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <input type="text" maxlength="2" placeholder="دو رقم" name="plate_two"
-                                    class="w-32 px-3 py-2 text-sm text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            </div>                                                                                                                                                                                         
-                        </div>
+                            <label for="car" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">انتخاب خودرو</label>
+                            @if($customer->cars->count() > 0)
+                                <select name="car" id="car" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">انتخاب کنید</option>
+                                    @foreach ($customer->cars as $car)
+                                    @php
+                                        $license_plate = explode('-', $car->license_plate);
+                                    @endphp
+                                        <option value="{{ $car->id }}" {{old("car") == $car->id ? "selected" : ""}}>
+                                            {{ $car->name }} - ایران {{ $license_plate[3] }} | {{ $license_plate[2] }} {{ $license_plate[1] }} {{ $license_plate[0] }}
+                                        </option>                                     
+                                    @endforeach
+                                </select>
+                                <x-input-error :messages="$errors->get('car')" class="mt-2" />
+                            @else
+                                <div class="w-full flex items-center justify-between px-4 py-2.5 md:py-2 bg-red-600 text-white text-sm rounded-lg">
+                                    <span>هنوز خودرویی برای این مشتری ثبت نشده است.</span>
+                                    <a href="{{ route('cars.create', $customer->fullname) }}" class="inline-flex items-center px-3 py-1.5 bg-white text-red-600 rounded hover:bg-red-50 transition-colors duration-200">
+                                        <span class="material-icons-round text-base ml-1">add</span>
+                                        افزودن خودرو
+                                    </a>
+                                </div>                                                        
+                            @endif
+                        </div>                        
 
                         <!-- تاریخ -->
                         <div>
                             <label for="datepicker" class="block text-sm font-medium text-gray-700 mb-1 md:mb-2">تاریخ مراجعه</label>
-                            <input type="text" id="datepicker" name="date"
+                            <input type="text" id="datepicker" name="date" value="{{ old('date') }}"
                                 class="w-full px-3 md:px-4 py-2.5 md:py-2 text-sm border border-gray-300 rounded-lg md:rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
+                            <x-input-error :messages="$errors->get('date')" class="mt-2" />
                         </div>
                     </div>
 
@@ -87,7 +78,8 @@
                         <div class="grid grid-cols-6 gap-2">
                             <!-- Time slot buttons will be dynamically added here -->
                         </div>
-                        <input type="hidden" name="time_slot" id="time_slot" required>
+                        <input type="hidden" name="time_slot" id="time_slot" value="{{old('time_slot')}}" required>
+                        <x-input-error :messages="$errors->get('time_slot')" class="mt-2" />
                     </div>
 
                     <!-- دکمه ثبت -->
