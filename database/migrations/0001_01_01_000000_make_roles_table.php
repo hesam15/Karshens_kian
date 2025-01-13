@@ -16,13 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("persian_name");
-            $table->timestamps();
         });
-
-        Role::firstOrCreate([
-            'name' => 'admin',
-            'persian_name' => 'ادمین'
-        ]);
     }
 
     /**

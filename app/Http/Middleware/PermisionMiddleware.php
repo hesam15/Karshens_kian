@@ -6,19 +6,18 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RoleMiddleware
+class PermisionMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, $permision): Response
     {
-        if (!$request->user() || !$request->user()->hasRole($role)) {
-            abort(403);
+        if(!auth()->user()->role->permissions->contains('name', $permision)){
+            return abort(404);
         }
-    
         return $next($request);
     }
 }

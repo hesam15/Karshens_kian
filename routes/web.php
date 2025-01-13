@@ -16,11 +16,15 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Notifications\Notification as NotificationsNotification;
+
+    //verify phone
+    Route::post('sendVerify', [RegisteredUserController::class, 'sendVerify'])->name('sendVerify');
+    Route::post('verifyCode', [RegisteredUserController::class, 'verifyCode'])->name('verifyCode');
 
 Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('home');
-
 
     Route::get("reportShow/{carId}",[CustomerController::class, 'show'])->name('show.customer.report');
     // Route::get('pdf', action: [CustomerController::class, 'pdf'])->name('download.pdf');
@@ -29,13 +33,20 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         //Users
         Route::prefix('users')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('users.index');
-            Route::get('/create', [UserController::class, 'create'])->name('users.create');
-            Route::post('/create', [UserController::class, 'store'])->name('users.store');
-            Route::post('/{user}/delete', [UserController::class, 'destroy'])->name('users.destroy');
-            Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-            Route::post('/{user}/edit', [UserController::class, 'update'])->name('users.update');
-            //asign role to user
-            Route::post('/{user}/asignRole', [UserController::class, 'assignRole'])->name('users.asignRole');
+            Route::get('/profile/{name}', [UserController::class, 'profile'])->name('user.profile');
+
+            Route::middleware('permision:create_user')->group(function () {
+                Route::get('/create', [UserController::class, 'create'])->name('users.create');
+                Route::post('/create', [UserController::class, 'store'])->name('users.store');
+            });
+            Route::post('/{user}/delete', [UserController::class, 'destroy'])->name('users.destroy')->middleware('permision:delete_user');
+            Route::middleware('permision:edit_customer')->group(function () {
+                Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+                Route::post('/{user}/edit', [UserController::class, 'update'])->name('users.update');
+                Route::post('/{user}/updatePhone', [UserController::class, 'updatePhone'])->name('users.update.phone');
+                //asign role to user
+                Route::post('/{user}/asignRole', [UserController::class, 'assignRole'])->name('users.asignRole');
+            });
         });
 
         //Roles
@@ -45,18 +56,13 @@ Route::middleware(['auth' , 'verified'])->group(function () {
             Route::get('/create', [RoleController::class, 'storePage'])->name('roles.create');
             Route::post('/create', [RoleController::class, 'store'])->name('roles.store');
 
-            Route::get("/{role}/edit", [RoleController::class, 'edit'])->name('roles.edit');
-            Route::post("/{role}/edit", [RoleController::class, 'update'])->name('roles.update');
+            Route::middleware('permision:edit_role')->group(function () {
+                Route::get("/{role}/edit", [RoleController::class, 'edit'])->name('roles.edit');
+                Route::post("/{role}/edit", [RoleController::class, 'update'])->name('roles.update');
+            });
 
-            Route::post("/{role}/delete", [RoleController::class, 'destroy'])->name('roles.destroy');
-        });
-
-        //Permissions
-        Route::prefix('permissions')->group(function () {
-            Route::get('/', [PermissionController::class, 'index'])->name('permissions.index');
-            Route::get('/create', [PermissionController::class, 'storePage'])->name('permissions.create');
-            Route::post('/create', [PermissionController::class, 'store'])->name('permissions.store');
-        });
+            Route::post("/{role}/delete", [RoleController::class, 'destroy'])->name('roles.destroy')->middleware('permision:delete_role');
+        })->middleware('permision:create_role');
 
         //Customers
         Route::prefix('customers')->group(function () {
@@ -68,9 +74,11 @@ Route::middleware(['auth' , 'verified'])->group(function () {
             Route::get('/{name}', [CustomerController::class, 'show'])->name('customers.show');
             Route::get('/{name}/bookings', [BookingController::class, 'list'])->name('customers.bookings');
 
-            Route::post('/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
-            Route::post('/{id}/update', [CustomerController::class, 'update'])->name('customers.update');
-        }); 
+            Route::middleware('permision:edit_customer')->group(function () {
+                Route::post('/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+                Route::post('/{id}/update', [CustomerController::class, 'update'])->name('customers.update');
+            });
+        })->middleware('permision:create_customer'); 
 
         //Bookings
         Route::prefix("bookings")->group(function () {
@@ -84,7 +92,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
             Route::post('/{id}/delete', [BookingController::class, 'destroy'])->name('bookings.destroy');
 
             Route::post('/{id}/updateStatus', [BookingController::class, 'updateStatus'])->name('bookings.updateStatus');
-        });
+        })->middleware('permision:create_customer');
 
         //Cars
         Route::prefix('cars')->group(function () {
@@ -95,7 +103,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
             Route::post('/{id}/update', [CarController::class, 'update'])->name('cars.update');
             Route::post('/{id}/delete', [CarController::class, 'destroy'])->name('cars.destroy');
-        });
+        })->middleware('permision:create_customer');
 
         //Reports
         Route::prefix('reports')->group(function () {
@@ -112,11 +120,18 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         //Options
         Route::prefix('options')->group(function () {
             Route::get('/', [OptionsController::class, 'index'])->name('show.options');
-            Route::get('/create', [OptionsController::class, 'create'])->name('option.create');
-            Route::post('/create', [OptionsController::class, 'store'])->name('store.option');
-            Route::get("/{id}", [OptionsController::class, 'edit'])->name('edit.option');
-            Route::post("/{id}/update", [OptionsController::class, 'update'])->name('update.option');
-        });
+
+            Route::middleware('permision:create_option')->group(function () {
+                Route::get('/create', [OptionsController::class, 'create'])->name('option.create');
+                Route::post('/create', [OptionsController::class, 'store'])->name('store.option');
+            });
+
+            Route::middleware('permision:edit_option')->group(function () {
+                Route::get("/{id}", [OptionsController::class, 'edit'])->name('edit.option');
+                Route::post("/{id}/update", [OptionsController::class, 'update'])->name('update.option');
+                Route::post("/{id}/delete", [OptionsController::class, 'destroy'])->name('delete.option');
+            });
+        })->middleware('permision:create_option');
 
         Route::get('/available-times', [DatePicker::class, 'getAvailableTimes']);
 
@@ -127,18 +142,12 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('/Dpdf/{carId}', [CustomerController::class, 'pdf'])->name('download.pdf');
 
 
-//notification
-    Route::get("sendSMS" , function(){
-        $notification = app(Notification::class);
-        $user = App\Models\User::find(1);
-        $notification->sendSMS($user);        
-    });
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// //notification
+//     Route::get("sendSMS" , function(){
+//         $notification = app(Notification::class);
+//         $user = App\Models\User::find(1);
+//         $notification->sendSMS($user);        
+//     });
 });
 
 require __DIR__.'/auth.php';

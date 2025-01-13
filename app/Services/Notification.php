@@ -26,7 +26,7 @@ class Notification {
     //     $user = config("services.sms.auth.user");
     //     $pass = config("services.sms.auth.pass");
     //     $fromNum = config("services.sms.auth.fromNum");
-    //     $toNum = $phone;
+    //     $toNum = "09059202884";
     //     $pattern_code = "6nvuf9krddxh8cj";
     //     $input_data = array(
     //         'name' => "حسام الدین زراعتکار",

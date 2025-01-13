@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeDataHandlers();
     initializeInteractions();
     initializeTimeSlots();
+    initializeSelectAll();
 });
 
 function initializeTimeSlots() {
@@ -68,30 +69,41 @@ function initializeSidebar() {
 function initializeModals() {
     window.openModal = function(modalId) {
         const modal = document.getElementById(modalId);
-        if (!modal) {
-            console.log('Modal not found:', modalId);
-            return;
-        }
-        
+        if (!modal) return;
         modal.classList.remove('hidden');
         document.body.classList.add('overflow-hidden');
-        
-        const handleOutsideClick = (e) => {
-            if (e.target === modal) {
-                closeModal(modalId);
-            }
-        };
-        
-        modal.addEventListener('click', handleOutsideClick);
     };
 
     window.closeModal = function(modalId) {
         const modal = document.getElementById(modalId);
         if (!modal) return;
-        
         modal.classList.add('hidden');
         document.body.classList.remove('overflow-hidden');
     };
+
+    // Close modal when clicking close buttons
+    const closeButtons = document.querySelectorAll('.modal-close');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = document.getElementById('deleteModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        });
+    });
+
+    // Close modal when clicking outside
+    const modal = document.getElementById('deleteModal');
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            const modalContent = modal.querySelector('.bg-white');
+            if (!modalContent.contains(e.target)) {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        });
+    }    
 
     // Handle edit buttons
     const editButtons = document.querySelectorAll('button[onclick*="editCarModal"]');
@@ -100,16 +112,6 @@ function initializeModals() {
             e.preventDefault();
             const modalId = button.getAttribute('onclick').match(/['"]([^'"]+)['"]/)[1];
             openModal(modalId);
-        };
-    });
-
-    // Handle close buttons
-    const closeButtons = document.querySelectorAll('[onclick*="closeModal"]');
-    closeButtons.forEach(button => {
-        button.onclick = (e) => {
-            e.preventDefault();
-            const modalId = button.getAttribute('onclick').match(/['"]([^'"]+)['"]/)[1];
-            closeModal(modalId);
         };
     });
 
@@ -140,7 +142,8 @@ function initializeDeleteFunctionality() {
                     car: 'خودرو',
                     booking: 'رزرو',
                     report: 'گزارش',
-                    option: 'آپشن'
+                    option: 'آپشن',
+                    role: "نقش",
                 };
                 
                 const itemType = types[type] || 'آیتم';
@@ -154,10 +157,12 @@ function initializeDeleteFunctionality() {
 }
 
 function initializeDropdowns() {
+    // Initialize sidebar menus
     ['services', 'roles', 'users', 'customers'].forEach(menu => {
         const button = document.getElementById(`${menu}Button`);
         const menuElement = document.getElementById(`${menu}Menu`);
         const icon = document.getElementById(`${menu}Icon`);
+        
         if (button && menuElement && icon) {
             button.addEventListener('click', () => {
                 const isExpanded = menuElement.style.maxHeight !== '0px';
@@ -166,6 +171,31 @@ function initializeDropdowns() {
             });
         }
     });
+
+    // Initialize user dropdown
+    const userButton = document.getElementById('userDropdown');
+    const userMenu = document.getElementById('userMenu');
+    const userIcon = userButton?.querySelector('.material-icons-round:last-child');
+    
+    if (userButton && userMenu) {
+        userButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isExpanded = !userMenu.classList.contains('hidden');
+            userMenu.classList.toggle('hidden');
+            if (userIcon) {
+                userIcon.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!userButton.contains(e.target)) {
+                userMenu.classList.add('hidden');
+                if (userIcon) {
+                    userIcon.style.transform = 'rotate(0deg)';
+                }
+            }
+        });
+    }
 }
 
 function initializeAlerts() {
@@ -243,4 +273,39 @@ function updateButtonStates() {
     addButton.classList.toggle('opacity-50', fields.length >= 10);
     removeButton.disabled = fields.length <= 1;
     removeButton.classList.toggle('opacity-50', fields.length <= 1);
+}
+
+// Initialize select all functionality for each modal
+function initializeSelectAll() {
+    // Get all modals
+    const modals = document.querySelectorAll('[id^="editModal-"]');
+    
+    modals.forEach(modal => {
+        const modalId = modal.id;
+        const selectAllBtn = modal.querySelector('#selectAll');
+        
+        if (selectAllBtn) {
+            selectAllBtn.addEventListener('click', function() {
+                // Get checkboxes only within this specific modal
+                const checkboxes = modal.querySelectorAll('input[type="checkbox"][name="permissions[]"]');
+                const isAllChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+                const buttonText = modal.querySelector('#selectAllText');
+                
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = !isAllChecked;
+                });
+                
+                buttonText.textContent = !isAllChecked ? 'برداشتن همه' : 'انتخاب همه';
+            });
+
+            // Set initial button text on load
+            window.addEventListener('load', function() {
+                const checkboxes = modal.querySelectorAll('input[type="checkbox"][name="permissions[]"]');
+                const isAllChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+                const buttonText = modal.querySelector('#selectAllText');
+                
+                buttonText.textContent = isAllChecked ? 'برداشتن همه' : 'انتخاب همه';
+            });
+        }
+    });
 }

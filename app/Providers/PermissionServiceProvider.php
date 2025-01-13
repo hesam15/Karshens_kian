@@ -21,10 +21,10 @@ class PermisionServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Permissions::all()->map(function ($permision){
-            Gate::define($permision->name, function ($user) use ($permision){
-                return $user->hasPermision($permision->name);
-            });
-        });
+        // Permissions::all()->map(function ($permision){
+        //     Gate::define($permision->name, function ($user) use ($permision){
+        //         return $user->hasPermision($permision->name);
+        //     });
+        // });
     }
 }

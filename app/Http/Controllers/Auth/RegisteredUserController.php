@@ -33,7 +33,6 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $token = Token::where("user_phone", $request->phone)->first();
-        $token = $token->used;
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -42,7 +41,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        if($token){
+        if($token->used){
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -50,9 +49,11 @@ class RegisteredUserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
     
-            $user->assignRole('admin');
+            $user->assignRole('adminstrator');
     
             event(new Registered($user));
+
+            $token->delete();
     
             Auth::login($user);
     

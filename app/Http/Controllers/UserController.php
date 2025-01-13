@@ -15,9 +15,17 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with('roles')->get();
+        $users = User::all();
 
-        return view('admin.users.index', compact('users'));
+        $roles = Role::all();
+
+        return view('admin.users.index', compact('users', 'roles'));
+    }
+
+    public function profile($name)
+    {
+        $user = User::where('name', $name)->first();
+        return view('admin.users.profile', compact('user'));
     }
 
 //Create
@@ -26,7 +34,22 @@ class UserController extends Controller
         return view('admin.users.create', compact('roles'));
     }
     public function store(Request $request){
-        $user = User::create($request->only('name', 'email', 'password'));
+        $token = Token::where("user_phone", $request->phone)->first();
+        $token = $token->used;
+
+        if(!$token){
+            return redirect()->back()->with('error', 'کد احراز هویت تایید نشده است.')->withInput();
+        }
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
+            'phone' => 'required|unique:users',
+            'role' => 'required'
+        ]);
+
+        $user = User::create($request->only('name', 'email', 'password', 'phone'));
 
         $user->assignRole($request->role);
 
@@ -42,11 +65,36 @@ class UserController extends Controller
     }
 
     public function update(Request $request, User $user){
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$user->id,
+            'role' => 'required'
+        ]);
+
         $user->refreshRoles($request->role);
-        $user->name = $request->name;
+
+        $user->update($request->only('name', 'email'));
 
         return redirect()->route('users.index')->with("success", "کاربر با موفقیت ویرایش شد.");
     }
+    //Update Phone
+    public function updatePhone(Request $request, User $user){
+        $request->validate([
+            'phone' => 'required|unique:users,phone,'.$user->id,
+        ]);
+
+        $token = Token::where("user_phone", $request->phone)->first();
+
+        if($token->used){
+            $user->update($request->only('phone'));
+            $token->delete();
+
+            return redirect()->route('users.index')->with("success", "شماره تلفن با موفقیت ویرایش شد.");
+        }
+
+        return redirect()->back()->with('error', 'کد احراز هویت تایید نشده است.')->withInput();
+    }
+
 //Delete
     public function destroy(User $user){
         $user->delete();

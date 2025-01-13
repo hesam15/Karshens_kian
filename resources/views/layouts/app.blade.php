@@ -56,5 +56,9 @@
     @if(Route::current()->getName() == "bookings.create" || Route::current()->getName() == "customers.bookings" || Route::current()->getName() == "customers.show"))
         <script src="{{asset("js/datepicker.js")}}"></script>
     @endif
+
+    @if(Route::current()->getName() == "users.index")
+        @vite('resources/js/verify-code.js')
+    @endif
 </body>
 </html>

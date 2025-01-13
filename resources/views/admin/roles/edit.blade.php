@@ -82,24 +82,6 @@
 </div>
 
 <script>
-document.getElementById('selectAll').addEventListener('click', function() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="permissions[]"]');
-    const isAllChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-    const buttonText = document.getElementById('selectAllText');
-    
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = !isAllChecked;
-    });
-    
-    buttonText.textContent = !isAllChecked ? 'برداشتن همه' : 'انتخاب همه';
-});
 
-window.addEventListener('load', function() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="permissions[]"]');
-    const isAllChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-    const buttonText = document.getElementById('selectAllText');
-    
-    buttonText.textContent = isAllChecked ? 'برداشتن همه' : 'انتخاب همه';
-});
 </script>
 @endsection

@@ -19,35 +19,97 @@
                 <table class="w-full">
                     <thead class="bg-gray-100">
                         <tr>
-                            <th class="px-6 py-2 text-right text-sm font-medium text-gray-500 w-2/5">نام کاربر</th>
-                            <th class="px-4 py-2 text-right text-sm font-medium text-gray-500 w-2/5">نقش</th>
-                            <th class="px-4 py-2 text-right text-sm font-medium text-gray-500 w-1/5">عملیات</th>
+                            <th class="px-6 py-2 text-right text-sm font-medium text-gray-500 w-1/4">نام کاربر</th>
+                            <th class="px-4 py-2 text-right text-sm font-medium text-gray-500 w-1/4">نقش</th>
+                            <th class="px-4 py-2 text-right text-sm font-medium text-gray-500 w-1/4">شماره تلفن</th>
+                            <th class="px-4 py-2 text-right text-sm font-medium text-gray-500 w-1/4">عملیات</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         @foreach($users as $user)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-2 text-base text-gray-900">{{ $user->name }}</td>
-                            <td class="px-4 py-2">
-                                @foreach($user->roles as $role)
-                                <span class="inline-flex items-center px-2 py-1 rounded-lg text-sm font-medium bg-blue-100 text-blue-800">
-                                    {{ $role->persian_name }}
-                                </span>
-                                @endforeach
-                            </td>
-                            <td class="px-4 py-2">
-                                <div class="flex items-center gap-1">
-                                    <a href="{{ route('users.edit', $user->id) }}" class="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors duration-200">
-                                        <i class="material-icons-round text-sm">edit</i>
-                                        <span class="text-xs mr-0.5">ویرایش</span>
-                                    </a>
-                                    <button type="button" class="delete-btn inline-flex items-center px-2 py-1 bg-rose-100 text-rose-800 rounded hover:bg-rose-200 transition-colors duration-200" data-route="{{ route("users.destroy", $user->id) }}">
-                                        <i class="material-icons-round text-sm">delete</i>
-                                        <span class="text-xs mr-0.5">حذف</span>
-                                    </button>                                  
+                            <!-- ادیت شماره تلفن -->            
+                            <x-edit-modal :id="'editModal-phone-'.$user->id" title="تغییر شماره تلفن" :action="route('users.update.phone', $user->id)" method='POST'>
+                                @csrf
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">شماره تلفن</label>
+                                    <div class="relative">
+                                        <input type="phone" id="phone-{{$user->id}}" name="phone" value="{{ old('phone') }}"
+                                        placeholder="شماره تلفن خود را وارد کنید"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400">
+                                        <button type="button"
+                                            class="verify-phone-btn absolute left-2 top-1/2 -translate-y-1/2 px-4 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 text-sm" 
+                                            data-phone-id="{{$user->id}}">
+                                            ارسال کد تایید
+                                        </button>                                    
+                                    </div>
+                                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                                 </div>
-                            </td>
-                        </tr>
+                            </x-edit-modal>
+
+                            <!-- ادیت اطلاعات کاربر -->
+                            <x-edit-modal :id="'editModal-'.$user->id" title="ویرایش کاربر" :action="route('users.update', $user->id)" method='POST'>
+                                @csrf
+                                <div class="grid grid-cols-2 gap-4 mt-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">نام کاربر</label>
+                                        <input type="text" name="name" value="{{ old('name', $user->name) }}" class="w-full px-4 py-2.5 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-colors duration-200">
+                                        @error('name')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">ایمیل</label>
+                                        <input type="email" name="email" value="{{ old('email', $user->email) }}" class="w-full px-4 py-2.5 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-colors duration-200">
+                                        @error('email')
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">نقش کاربر</label>
+                                    <select name="role" class="w-full px-4 py-2.5 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-colors duration-200">
+                                        @foreach($roles as $role)
+                                            <option value="{{ $role->id }}" {{ $user->role->id == $role->id ? 'selected' : '' }}>
+                                                {{ $role->persian_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('role')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>               
+                            </x-edit-modal>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 text-base text-gray-900">{{ $user->name }}</td>
+                                <td class="px-4 py-2">
+                                    <span class="inline-flex items-center px-2 py-1 rounded-lg text-sm font-medium bg-blue-100 text-blue-800">
+                                        {{ $user->role->persian_name }}
+                                    </span>
+                                </td>
+                                <td class="py-2 text-base text-gray-900">
+                                    <div class="flex items-center justify-start gap-2">
+                                        <span>{{$user->phone}}</span>
+                                        <button onclick="openModal('editModal-phone-{{$user->id}}')" class="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors duration-200">
+                                            <i class="material-icons-round text-sm">edit</i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="py-2">
+                                    <div class="flex items-center gap-1">
+                                        <button onclick="openModal('editModal-{{$user->id}}')" class="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors duration-200">
+                                            <i class="material-icons-round text-sm">edit</i>
+                                            <span class="text-xs mr-0.5">ویرایش</span>
+                                        </button>
+                                        <button type="button" class="delete-btn inline-flex items-center px-2 py-1 bg-rose-100 text-rose-800 rounded hover:bg-rose-200 transition-colors duration-200" data-route="{{ route("users.destroy", $user->id) }}">
+                                            <i class="material-icons-round text-sm">delete</i>
+                                            <span class="text-xs mr-0.5">حذف</span>
+                                        </button>                                  
+                                    </div>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -56,34 +118,5 @@
     </div>
 </div>
 
-<!-- Delete Modal -->
-<div id="deleteModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden">
-    <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="bg-white rounded-lg shadow-xl w-96">
-            <div class="px-4 py-3 border-b border-gray-200 flex justify-between items-center">
-                <h5 class="text-base font-bold text-gray-800">تایید حذف کاربر</h5>
-                <button type="button" id="closeModal" class="text-gray-400 hover:text-gray-500">
-                    <span class="material-icons-round text-base">close</span>
-                </button>
-            </div>
-
-            <div class="px-4 py-3">
-                <p class="text-sm text-gray-600">آیا از حذف این کاربر اطمینان دارید؟</p>
-            </div>
-
-            <div class="px-4 py-3 bg-gray-50 border-t border-gray-200 flex justify-end gap-2">
-                <button type="button" id="cancelBtn"
-                    class="px-3 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md text-sm transition duration-200">
-                    انصراف
-                </button>
-                <form method="POST" id="deleteForm" action="">
-                    @csrf
-                    <button type="submit" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm transition duration-200">
-                        حذف
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<x-delete-modal />
 @endsection

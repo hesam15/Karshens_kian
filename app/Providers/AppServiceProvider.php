@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Mpdf\Tag\B;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,11 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Blade::directive('role', function ($role) {
-            return "<?php if(auth()->check() && auth()->user()->hasRole({$role})): ?>";
+        Blade::directive('permision', function ($permission) {
+            return "<?php if (auth()->user()->role->permissions->contains('name', $permission)) : ?>";
         });
-    
-        Blade::directive('endrole', function () {
+
+        Blade::directive('endpermision', function () {
             return "<?php endif; ?>";
         });
     }

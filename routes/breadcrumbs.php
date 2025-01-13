@@ -65,9 +65,11 @@ Breadcrumbs::for('users.edit', function (BreadcrumbTrail $trail) {
 });
 
 // User Profile
-Breadcrumbs::for('profile.edit', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('user.profile', function (BreadcrumbTrail $trail) {
+    $user = User::where('name', request()->route('name'))->first();
+
     $trail->parent('home');
-    $trail->push('پروفایل کاربری', route('profile.edit'));
+    $trail->push("{$user->name}", route('user.profile', $user->name));
 });
 
 // Reports List

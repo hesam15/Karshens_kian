@@ -11,7 +11,9 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        return view('admin.roles.index', compact('roles'));
+        $permissions = Permissions::all();
+
+        return view('admin.roles.index', compact('roles', 'permissions'));
     }
 
     public function storePage(){

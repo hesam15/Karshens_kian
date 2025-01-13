@@ -4,7 +4,7 @@ namespace App\Services\Permissions\Traits;
 use App\Models\Role;
 use Doctrine\Inflector\Rules\English\Rules;
 
-trait HasRoles{
+trait HasRole{
     public function roles(){
         return $this->belongsToMany(Role::class);
     }
@@ -43,7 +43,6 @@ trait HasRoles{
                 return true;
             }
         }
-        return false;
     }
 
 }
